@@ -12,4 +12,5 @@ target 'music' do
 	pod 'RxSwift'
 	pod 'RealmSwift'
 	pod 'Alamofire'
+    pod 'SwiftyJSON'
 end
