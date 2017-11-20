@@ -44,6 +44,11 @@ typealias FailureClosure = (_ errorDescription : String) -> Void
 
 final class RequestManager {
     
+    enum ResponseFormat {
+        case json
+        case xml
+    }
+    
     static var sessionManager : SessionManager =
     {
         let configuration = URLSessionConfiguration.default
@@ -54,70 +59,38 @@ final class RequestManager {
         return manager
     }()
     
-    class func startReachability() {
-        _ = serverReachabilityManager
-        _ = networkReachabilityManager
-    }
-    
+    // MARK: - Generic Request
     @discardableResult
     private class func genericRequest(method: String,
                                   httpMethod: HTTPMethod = .post,
                                       params: [String : Any]? = nil,
-                                     success: @escaping (_ responseData: [String : JSON]) -> Void = {_ in },
+                              responseFormat: ResponseFormat = .json,
+                                     success: @escaping (_ responseData: Any) -> Void = {_ in },
                                      failure: @escaping FailureClosure = { error in AlertManager.showAlert(title: "Error", message: error)}) -> DataRequest {
-      
-        let urlString = ApiBaseUrl + method
 
-        return sessionManager.request(urlString, method: .post, parameters: params).responseJSON(completionHandler: { response in
-            let handled = handleGenericResponse(response)
-            if let error = handled.error {
-            
-            failure(error)
-            return
-         }
-         
-         let data = handled.data ?? [:]
-         success(data)
-        })
+        if responseFormat == .xml {
+            return sessionManager.request(ApiBaseUrl, method: .post, parameters: params).responseData(completionHandler: { response in
+                
+                 print(String.init(data: response.data!, encoding: String.Encoding.utf8))
+                
+                if let responseData = response.data {
+                    
+                    let parser = XmlParser()
+                    parser.getSessionKeyFrom(responseData)
+                    
+                    success(responseData)
+                } else {
+                    print("WRONG RESPONSE")
+                }
+            })
+        } else {
+            return sessionManager.request(ApiBaseUrl, method: .post, parameters: params).responseJSON(completionHandler: { response in
+                print(response)
+            })
+        }
     }
     
-     private class func handleGenericResponse(_ response : DataResponse<Any>, responseDataType : Type = .dictionary) -> (error : String?, data : [String : JSON]?) {
-        guard response.result.isSuccess else {
-         var errorDescription : String
-         
-         if !isInternetConnection {
-            errorDescription = "No Internet connection"
-         }
-         else if !isServerConnection {
-            errorDescription = "Server is unavailable"
-         }
-         else if let code = response.response?.statusCode, ((code == 400) || (500...504 ~= code)) {
-            if code == 400 {
-               errorDescription = "Invalid request"
-            }
-            else {
-               errorDescription = "Service is unavailable"
-            }
-         }
-         else if let localizedDescription = response.result.error?.localizedDescription {
-            errorDescription = localizedDescription
-         }
-         else {
-            errorDescription = "Connection failure"
-         }
-         
-         return (errorDescription, nil)
-        }
-      
-        guard let value = response.result.value else {
-            return ("No data", nil)
-        }
-        let json = JSON(value)
-    
-        return (nil, ["value" : json["response"]])
-        
-   }
-    
+    // MARK: - Requests
     class func getMobileSession(userName:String, password:String, success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
         var params = ["api_key": ApiKey,
                        "method": ApiMethodGetMobileSession,
@@ -125,6 +98,16 @@ final class RequestManager {
                      "username": userName]
         
         params["api_sig"] = Md5HashGenerator.getApiSignatureFor(params)
+       
+        genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .xml,
+                       success: { responseData in
+                        print(responseData)
+                        if responseData is Data {
+
+                            
+                        }
+        },
+                       failure: failure)
     }
 }
 

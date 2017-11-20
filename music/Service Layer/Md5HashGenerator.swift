@@ -6,12 +6,17 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
-class Md5HashGenerator {
-    // MARK: API Signature
-    public class func getApiSignatureFor(_ params:[String:String]) -> String {
+final class Md5HashGenerator {
+
+    public class func getApiSignatureFor(_ params:[String:String]) -> String? {
         let paramsArray = Array(params.keys).sorted()
-        let paramsString = paramsArray.flatMap({ $0 }).joined()
-        let signature = String()
+        
+        let paramsString = paramsArray.flatMap({
+            guard let value = params[$0] else { return nil }
+            return $0 + value
+        }).joined()
+        
+        let signature = md5(paramsString + SecretKey)
         return signature
     }
     

@@ -13,4 +13,5 @@ target 'music' do
 	pod 'RealmSwift'
 	pod 'Alamofire'
     pod 'SwiftyJSON'
+    pod 'KissXML'
 end

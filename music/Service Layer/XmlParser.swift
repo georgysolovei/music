@@ -1,0 +1,24 @@
+//
+//  XmlParser.swift
+//  music
+//
+//  Created by mac-167 on 11/20/17.
+//  Copyright © 2017 mac-167. All rights reserved.
+//
+
+import Foundation
+import KissXML
+
+final class XmlParser : NSObject {
+    var data : Data!
+    
+    public func getSessionKeyFrom(_ receivedData:Data) -> String? {
+
+        if let document = try? DDXMLDocument.init(data: receivedData, options: 0) {
+            if let sessionKey = try? document.nodes(forXPath: "//key") {
+                return sessionKey.first?.stringValue
+            }
+        }
+        return nil
+    }
+}
