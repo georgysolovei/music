@@ -9,9 +9,7 @@
 import Foundation
 import KissXML
 
-final class XmlParser : NSObject {
-    var data : Data!
-    
+final class XmlParser {    
     public class func getSessionKeyFrom(_ receivedData:Data) -> String? {
 
         if let document = try? DDXMLDocument.init(data: receivedData, options: 0) {

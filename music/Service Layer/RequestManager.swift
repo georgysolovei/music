@@ -96,8 +96,11 @@ final class RequestManager {
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .xml,
                        success: { responseData in
                         
-                            XmlParser.getSessionKeyFrom(responseData as! Data)
-                            // Write to Realm
+                        if let sessionKey = XmlParser.getSessionKeyFrom(responseData as! Data) {
+
+                            PersistencyManager().shared.saveSessionKey(sessionKey)
+                            success()
+                        }
         },
                        failure: failure)
     }
