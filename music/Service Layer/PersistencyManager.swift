@@ -9,7 +9,7 @@
 import RealmSwift
 
 final class PersistencyManager {
-    public let shared = PersistencyManager()
+    static let shared = PersistencyManager()
     let realm = try! Realm()
 
     public func saveSessionKey(_ key:String) {

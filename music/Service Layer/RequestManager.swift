@@ -12,6 +12,7 @@ import SwiftyJSON
 
 private let ApiBaseUrl = "https://ws.audioscrobbler.com/2.0/"
 private let ApiMethodGetMobileSession = "auth.getMobileSession"
+private let ApiMethodGetTopArtists = "chart.getTopArtists"
 
 // Reachability
 //let serverReachabilityManager: NetworkReachabilityManager? = {
@@ -78,7 +79,21 @@ final class RequestManager {
             })
         } else {
             return sessionManager.request(ApiBaseUrl, method: .post, parameters: params).responseJSON(completionHandler: { response in
-                print(response)
+                
+                if let status = response.response?.statusCode {
+                    switch(status){
+                    case 200:
+                        print("example success")
+                    default:
+                        print("error with response status: \(status)")
+                    }
+                }
+                //to get JSON return value
+                if let result = response.result.value {
+                    let JSON = result as! NSDictionary
+                    print(JSON)
+                }
+                
             })
         }
     }
@@ -98,11 +113,28 @@ final class RequestManager {
                         
                         if let sessionKey = XmlParser.getSessionKeyFrom(responseData as! Data) {
 
-                            PersistencyManager().shared.saveSessionKey(sessionKey)
+                            PersistencyManager.shared.saveSessionKey(sessionKey)
                             success()
                         }
         },
                        failure: failure)
     }
+    
+    class func getTopArtists(success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
+         let params = ["method": ApiMethodGetTopArtists,
+                     "api_key": ApiKey,
+                      "format": "json"]
+        
+        genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
+                       success: { responseData in
+                        
+                        if let sessionKey = XmlParser.getSessionKeyFrom(responseData as! Data) {
+                            
+                            PersistencyManager.shared.saveSessionKey(sessionKey)
+                            success()
+                        }
+        },
+                       failure: failure)
+        
+    }
 }
-

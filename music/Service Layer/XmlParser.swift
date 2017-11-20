@@ -6,7 +6,6 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
-import Foundation
 import KissXML
 
 final class XmlParser {    
