@@ -63,7 +63,6 @@ final class RequestManager {
     private class func genericRequest(method: String,
                                   httpMethod: HTTPMethod = .post,
                                       params: [String : Any]? = nil,
-                                     headers: HTTPHeaders? = nil,
                                      success: @escaping (_ responseData: [String : JSON]) -> Void = {_ in },
                                      failure: @escaping FailureClosure = { error in AlertManager.showAlert(title: "Error", message: error)}) -> DataRequest {
       
@@ -82,11 +81,8 @@ final class RequestManager {
         })
     }
     
-
-     private class func handleGenericResponse(_ response : DataResponse<Any>, responseDataType : Type = .dictionary) -> (error : String?, data : [String : JSON]?)
-   {
-      guard response.result.isSuccess else
-      {
+     private class func handleGenericResponse(_ response : DataResponse<Any>, responseDataType : Type = .dictionary) -> (error : String?, data : [String : JSON]?) {
+        guard response.result.isSuccess else {
          var errorDescription : String
          
          if !isInternetConnection {
@@ -95,8 +91,7 @@ final class RequestManager {
          else if !isServerConnection {
             errorDescription = "Server is unavailable"
          }
-         else if let code = response.response?.statusCode, ((code == 400) || (500...504 ~= code))
-         {
+         else if let code = response.response?.statusCode, ((code == 400) || (500...504 ~= code)) {
             if code == 400 {
                errorDescription = "Invalid request"
             }
@@ -112,45 +107,24 @@ final class RequestManager {
          }
          
          return (errorDescription, nil)
-      }
+        }
       
-      guard let value = response.result.value else {
-         return ("No data", nil)
-      }
-      let json = JSON(value)
-      
-      if json.type != .dictionary {
-         return ("No data", nil)
-      }
+        guard let value = response.result.value else {
+            return ("No data", nil)
+        }
+        let json = JSON(value)
     
-      let status = json["status"].stringValue
-      if status != "SUCCESS"
-      {
-         let errorDescription = json["errorMessage"].stringValue
-         return (errorDescription, nil)
-      }
-      
-      if responseDataType == .null {
-         return (nil, [:])
-      }
-      
-      let responseData = json["response"]
-      let type = responseData.type
-
-      if type != responseDataType {
-         return ("No data", nil)
-      }
-      
-      switch type
-      {
-         case .dictionary: return (nil, responseData.dictionary)
-         case .null, .unknown : return (nil, [:])
-         default : return (nil, ["value" : responseData])
-      }
+        return (nil, ["value" : json["response"]])
+        
    }
-    class func getMobileSession(success: @escaping SuccessClosure) {
+    
+    class func getMobileSession(userName:String, password:String, success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
+        var params = ["api_key": ApiKey,
+                       "method": ApiMethodGetMobileSession,
+                     "password": password,
+                     "username": userName]
         
-        
+        params["api_sig"] = Md5HashGenerator.getApiSignatureFor(params)
     }
 }
 
