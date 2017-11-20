@@ -14,29 +14,29 @@ private let ApiBaseUrl = "https://ws.audioscrobbler.com/2.0/"
 private let ApiMethodGetMobileSession = "auth.getMobileSession"
 
 // Reachability
-let serverReachabilityManager: NetworkReachabilityManager? = {
-    let manager = NetworkReachabilityManager(host: ApiBaseUrl)
-    manager?.startListening()
-    return manager
-}()
-let networkReachabilityManager: NetworkReachabilityManager? = {
-    let manager = NetworkReachabilityManager()
-    manager?.startListening()
-    return manager
-}()
-
-var isServerConnection : Bool {
-    return serverReachabilityManager?.isReachable ?? false
-}
-var isServerWiFiConnection : Bool {
-    return serverReachabilityManager?.isReachableOnEthernetOrWiFi ?? false
-}
-var isInternetConnection : Bool {
-    return networkReachabilityManager?.isReachable ?? false
-}
-var isInternetWiFiConnection : Bool {
-    return networkReachabilityManager?.isReachableOnEthernetOrWiFi ?? false
-}
+//let serverReachabilityManager: NetworkReachabilityManager? = {
+//    let manager = NetworkReachabilityManager(host: ApiBaseUrl)
+//    manager?.startListening()
+//    return manager
+//}()
+//let networkReachabilityManager: NetworkReachabilityManager? = {
+//    let manager = NetworkReachabilityManager()
+//    manager?.startListening()
+//    return manager
+//}()
+//
+//var isServerConnection : Bool {
+//    return serverReachabilityManager?.isReachable ?? false
+//}
+//var isServerWiFiConnection : Bool {
+//    return serverReachabilityManager?.isReachableOnEthernetOrWiFi ?? false
+//}
+//var isInternetConnection : Bool {
+//    return networkReachabilityManager?.isReachable ?? false
+//}
+//var isInternetWiFiConnection : Bool {
+//    return networkReachabilityManager?.isReachableOnEthernetOrWiFi ?? false
+//}
 
 typealias SuccessClosure = () -> Void
 typealias FailureClosure = (_ errorDescription : String) -> Void
@@ -70,14 +70,7 @@ final class RequestManager {
 
         if responseFormat == .xml {
             return sessionManager.request(ApiBaseUrl, method: .post, parameters: params).responseData(completionHandler: { response in
-                
-                 print(String.init(data: response.data!, encoding: String.Encoding.utf8))
-                
                 if let responseData = response.data {
-                    
-                    let parser = XmlParser()
-                    parser.getSessionKeyFrom(responseData)
-                    
                     success(responseData)
                 } else {
                     print("WRONG RESPONSE")
@@ -92,6 +85,7 @@ final class RequestManager {
     
     // MARK: - Requests
     class func getMobileSession(userName:String, password:String, success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
+        
         var params = ["api_key": ApiKey,
                        "method": ApiMethodGetMobileSession,
                      "password": password,
@@ -101,11 +95,9 @@ final class RequestManager {
        
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .xml,
                        success: { responseData in
-                        print(responseData)
-                        if responseData is Data {
-
-                            
-                        }
+                        
+                            XmlParser.getSessionKeyFrom(responseData as! Data)
+                            // Write to Realm
         },
                        failure: failure)
     }

@@ -12,7 +12,7 @@ import KissXML
 final class XmlParser : NSObject {
     var data : Data!
     
-    public func getSessionKeyFrom(_ receivedData:Data) -> String? {
+    public class func getSessionKeyFrom(_ receivedData:Data) -> String? {
 
         if let document = try? DDXMLDocument.init(data: receivedData, options: 0) {
             if let sessionKey = try? document.nodes(forXPath: "//key") {
