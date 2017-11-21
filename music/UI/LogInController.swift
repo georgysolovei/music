@@ -12,7 +12,9 @@ class LogInController: UIViewController {
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var passwordFieldCenterYconstraint: NSLayoutConstraint!
     
+    var passFieldConstraintNormalValue : CGFloat?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -31,6 +33,18 @@ class LogInController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        subscribeForKeyboardNotifications()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if passFieldConstraintNormalValue == nil {
+            passFieldConstraintNormalValue = passwordFieldCenterYconstraint.constant
+        }
     }
     
     // MARK: - Methods
@@ -55,9 +69,42 @@ class LogInController: UIViewController {
             enableLoginButton()
         }
     }
-    // MARK: - IB Actions
-    @IBAction func logInTapped(_ sender: UIButton) {
-        
+    
+    func subscribeForKeyboardNotifications()  {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications()  {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        if let info = notification.userInfo {
+            let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+            
+            guard let keyboardHeight = keyboardSize?.height else { return }
+
+            let isKeyboardOverlaps = keyboardHeight > (view.frame.maxY - logInButton.frame.maxY) ? true : false
+            
+            if isKeyboardOverlaps {
+                let overlapValue = keyboardHeight - (view.frame.maxY - logInButton.frame.maxY)
+
+                passwordFieldCenterYconstraint.constant = -overlapValue
+                view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        if passwordFieldCenterYconstraint.constant != passFieldConstraintNormalValue! {
+            passwordFieldCenterYconstraint.constant = passFieldConstraintNormalValue!
+            view.layoutIfNeeded()
+        }
+    }
+    
+    func login() {
         if let user = userNameField.text, let password = passwordField.text {
             
             if !user.isEmpty && !password.isEmpty {
@@ -75,10 +122,27 @@ class LogInController: UIViewController {
             }
         }
     }
+    
+    // MARK: - IB Actions
+    @IBAction func didTapOnView(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @IBAction func logInTapped(_ sender: UIButton) {
+        login()
+    }
 }
 
 extension LogInController : UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == userNameField {
+            passwordField.becomeFirstResponder()
+        } else {
+            if logInButton.isEnabled {
+                view.endEditing(true)
+                login()
+            }
+        }
         return true
     }
 }

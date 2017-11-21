@@ -57,6 +57,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="xoW-fj-a83" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3o4-pt-afX"/>
                             <constraint firstItem="xoW-fj-a83" firstAttribute="top" secondItem="6s7-YT-sGK" secondAttribute="bottom" constant="15" id="5C1-H2-njf"/>
@@ -72,14 +73,23 @@
                             <constraint firstItem="pw8-ZV-vH0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xGS-ud-QoC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="eD9-r5-STi" appends="YES" id="waB-YM-ZqH"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="logInButton" destination="xoW-fj-a83" id="1QA-sr-zGv"/>
                         <outlet property="passwordField" destination="6s7-YT-sGK" id="oPx-zV-mRH"/>
+                        <outlet property="passwordFieldCenterYconstraint" destination="cCq-vM-vN1" id="tQ0-j7-WBM"/>
                         <outlet property="userNameField" destination="pw8-ZV-vH0" id="aMI-DH-Uui"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="eD9-r5-STi">
+                    <connections>
+                        <action selector="didTapOnView:" destination="BYZ-38-t0r" id="C1W-bu-03A"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>

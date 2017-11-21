@@ -36,7 +36,7 @@ final class Spinner {
                 let width = window.frame.width/Const.downsizeMultiplier
                 let height = window.frame.height/Const.downsizeMultiplier
                 
-                let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY, width: width, height: height)
+                let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY - height/2, width: width, height: height)
                 indicator.frame = indicatorFrame
                 blockView = UIView.init(frame: window.frame)
                 blockView.backgroundColor = UIColor.black
@@ -58,5 +58,4 @@ final class Spinner {
         indicator.stopAnimating()
         blockView.isHidden = true
     }
-    
 }
