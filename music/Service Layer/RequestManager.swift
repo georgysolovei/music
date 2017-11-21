@@ -35,7 +35,7 @@ var isInternetConnection : Bool {
     return networkReachabilityManager?.isReachable ?? false
 }
 
-typealias SuccessClosure = () -> Void
+typealias SuccessClosure = (Any) -> Void
 typealias FailureClosure = (_ errorDescription : String) -> Void
 
 final class RequestManager {
@@ -119,8 +119,12 @@ final class RequestManager {
                 return (errorDescription, nil)
             }
             if let result = jsonResponse.result.value {
-                let JSON = result as! NSDictionary
-                return (nil, JSON)
+                //let JSON =  result as! NSDictionary
+                let json = JSON(result)
+                
+                let artists = JsonParser.parseArtists(json)
+
+                return (nil, artists)
             }
         }
         return("Request failed", nil)
@@ -161,7 +165,7 @@ final class RequestManager {
                             guard let data = responseData.data  else { return }
                             if let sessionKey = XmlParser.getSessionKeyFrom(data) {
                                 PersistencyManager.shared.saveSessionKey(sessionKey)
-                                success()
+                                success(sessionKey)
                             }
                         }
                         
@@ -175,10 +179,12 @@ final class RequestManager {
                        "format": "json"]
         
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
-                       success: { responseData in
-                      
-                        let handledData = handleGenericResponse(responseData)
-                        success()
+                       success: { response in
+                        if let responseData = response as? NSDictionary {
+                            
+                            
+                            success(responseData)
+                        }
 
         },
                        failure: failure)

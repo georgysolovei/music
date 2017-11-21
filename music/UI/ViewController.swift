@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 //        })
         
         
-        RequestManager.getTopArtists(success: {
+        RequestManager.getTopArtists(success: { response in
             print("SUCCESS")
         }, failure: { error in })
     }
