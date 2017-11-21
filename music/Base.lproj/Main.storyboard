@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pw8-ZV-vH0">
-                                <rect key="frame" x="20" y="251" width="335" height="45"/>
+                                <rect key="frame" x="20" y="271" width="335" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="dTr-x4-q2b"/>
                                 </constraints>
@@ -29,8 +29,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="GuA-Ck-McB"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6s7-YT-sGK">
-                                <rect key="frame" x="20" y="311" width="335" height="45"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6s7-YT-sGK">
+                                <rect key="frame" x="20" y="331" width="335" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="6gL-MG-i3Q"/>
                                 </constraints>
@@ -42,7 +42,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xoW-fj-a83">
-                                <rect key="frame" x="20" y="371" width="335" height="45"/>
+                                <rect key="frame" x="20" y="391" width="335" height="45"/>
                                 <color key="backgroundColor" red="1" green="0.57647061347961426" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="i6Z-Pa-wKm"/>
@@ -65,7 +65,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6s7-YT-sGK" secondAttribute="trailing" constant="20" id="CWg-Bm-0d4"/>
                             <constraint firstItem="6s7-YT-sGK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IkO-44-Aom"/>
                             <constraint firstItem="xoW-fj-a83" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="QDP-mG-kMW"/>
-                            <constraint firstItem="6s7-YT-sGK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cCq-vM-vN1"/>
+                            <constraint firstItem="6s7-YT-sGK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="20" id="cCq-vM-vN1"/>
                             <constraint firstItem="6s7-YT-sGK" firstAttribute="top" secondItem="pw8-ZV-vH0" secondAttribute="bottom" constant="15" id="nA4-YU-mBP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pw8-ZV-vH0" secondAttribute="trailing" constant="20" id="rEb-7a-mEh"/>
                             <constraint firstItem="6s7-YT-sGK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="sgY-OS-DKk"/>

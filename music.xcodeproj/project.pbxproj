@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09DA27A8E2A04BA64795A7D6 /* Pods_music.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34559EB322C96EFAD5006C0E /* Pods_music.framework */; };
+		0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A31FC46655000CBD84 /* Spinner.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
 		0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45CD651FBEDF190052761C /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B1E64A31FC46655000CBD84 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
 		0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				8E4A3F8A1FC2034D000820AF /* RequestManager.swift */,
 				0B5BA65E1FC3134300E3FE5D /* PersistencyManager.swift */,
 				0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */,
+				0B1E64A31FC46655000CBD84 /* Spinner.swift */,
 				8E4A3F8C1FC211BF000820AF /* AlertManager.swift */,
 				0BD75BED1FC2EF740030D27D /* XmlParser.swift */,
 				0B5BA6661FC4279600E3FE5D /* JsonParser.swift */,
@@ -308,6 +311,7 @@
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
+				0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */,
 				0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */,

@@ -64,6 +64,9 @@ final class RequestManager {
                                      success: @escaping (_ responseData: Any) -> Void = {_ in },
                                      failure: @escaping FailureClosure = { error in AlertManager.showAlert(title: "Error", message: error)}) -> DataRequest {
 
+        Spinner.shared.startAt()
+        
+        
         if responseFormat == .xml {
             return sessionManager.request(ApiBaseUrl, method: httpMethod, parameters: params).responseData(completionHandler: { response in
                 
@@ -77,6 +80,7 @@ final class RequestManager {
                         failure("No data received")
                     }
                 }
+                Spinner.shared.stop()
             })
         } else {
             return sessionManager.request(ApiBaseUrl, method: httpMethod, parameters: params).responseJSON(completionHandler: { response in
@@ -91,6 +95,7 @@ final class RequestManager {
                         failure("No data received")
                     }
                 }
+                Spinner.shared.stop()
             })
         }
     }
