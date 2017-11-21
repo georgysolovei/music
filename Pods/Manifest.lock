@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (4.5.1)
   - KissXML (5.2.0)
+  - NVActivityIndicatorView (4.0.0):
+    - NVActivityIndicatorView/Presenter (= 4.0.0)
+  - NVActivityIndicatorView/Presenter (4.0.0)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
@@ -15,6 +18,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - KissXML
+  - NVActivityIndicatorView
   - R.swift
   - RealmSwift
   - RxSwift
@@ -23,6 +27,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   KissXML: 1c1eeeb6b94e4522cd2f2373e5d0d03c9227738f
+  NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
@@ -30,6 +35,6 @@ SPEC CHECKSUMS:
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 241730ebb8b00ca6888e064cf57d6ab0569574b5
+PODFILE CHECKSUM: 05a7b1f15f1b3d457d45610ae83a33a9a1a098fc
 
 COCOAPODS: 1.3.1

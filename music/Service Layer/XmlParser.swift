@@ -18,4 +18,13 @@ final class XmlParser {
         }
         return nil
     }
+    
+    public class func parseError(_ receivedData:Data) -> String? {
+        if let document = try? DDXMLDocument.init(data: receivedData, options: 0) {
+            if let sessionKey = try? document.nodes(forXPath: "//error") {
+                return sessionKey.first?.stringValue
+            }
+        }
+        return nil
+    }
 }

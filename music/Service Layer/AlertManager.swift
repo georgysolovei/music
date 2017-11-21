@@ -14,5 +14,6 @@ final class AlertManager {
             
         }
         alertController.addAction(ok)
+        alertController.show(alertController, sender: nil)
     }
 }

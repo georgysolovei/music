@@ -14,4 +14,5 @@ target 'music' do
 	pod 'Alamofire'
     pod 'SwiftyJSON'
     pod 'KissXML'
+    pod 'NVActivityIndicatorView'
 end

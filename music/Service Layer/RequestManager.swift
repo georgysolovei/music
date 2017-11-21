@@ -166,6 +166,11 @@ final class RequestManager {
                             if let sessionKey = XmlParser.getSessionKeyFrom(data) {
                                 PersistencyManager.shared.saveSessionKey(sessionKey)
                                 success(sessionKey)
+                            } else {
+                                
+                                if let error = XmlParser.parseError(data) {
+                                    failure(error)
+                                }
                             }
                         }
                         
