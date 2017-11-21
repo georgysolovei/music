@@ -15,33 +15,28 @@ private let ApiMethodGetMobileSession = "auth.getMobileSession"
 private let ApiMethodGetTopArtists = "chart.getTopArtists"
 
 // Reachability
-//let serverReachabilityManager: NetworkReachabilityManager? = {
-//    let manager = NetworkReachabilityManager(host: ApiBaseUrl)
-//    manager?.startListening()
-//    return manager
-//}()
-//let networkReachabilityManager: NetworkReachabilityManager? = {
-//    let manager = NetworkReachabilityManager()
-//    manager?.startListening()
-//    return manager
-//}()
-//
-//var isServerConnection : Bool {
-//    return serverReachabilityManager?.isReachable ?? false
-//}
-//var isServerWiFiConnection : Bool {
-//    return serverReachabilityManager?.isReachableOnEthernetOrWiFi ?? false
-//}
-//var isInternetConnection : Bool {
-//    return networkReachabilityManager?.isReachable ?? false
-//}
-//var isInternetWiFiConnection : Bool {
-//    return networkReachabilityManager?.isReachableOnEthernetOrWiFi ?? false
-//}
+let serverReachabilityManager: NetworkReachabilityManager? = {
+    let manager = NetworkReachabilityManager(host: ApiBaseUrl)
+    manager?.startListening()
+    return manager
+}()
+
+let networkReachabilityManager: NetworkReachabilityManager? = {
+    let manager = NetworkReachabilityManager()
+    manager?.startListening()
+    return manager
+}()
+
+var isServerConnection : Bool {
+    return serverReachabilityManager?.isReachable ?? false
+}
+
+var isInternetConnection : Bool {
+    return networkReachabilityManager?.isReachable ?? false
+}
 
 typealias SuccessClosure = () -> Void
 typealias FailureClosure = (_ errorDescription : String) -> Void
-
 
 final class RequestManager {
     
@@ -60,7 +55,7 @@ final class RequestManager {
         return manager
     }()
     
-    // MARK: - Generic Request
+    // MARK: - Generic Request Methods
     @discardableResult
     private class func genericRequest(method: String,
                                   httpMethod: HTTPMethod = .post,
@@ -70,32 +65,83 @@ final class RequestManager {
                                      failure: @escaping FailureClosure = { error in AlertManager.showAlert(title: "Error", message: error)}) -> DataRequest {
 
         if responseFormat == .xml {
-            return sessionManager.request(ApiBaseUrl, method: .post, parameters: params).responseData(completionHandler: { response in
-                if let responseData = response.data {
-                    success(responseData)
+            return sessionManager.request(ApiBaseUrl, method: httpMethod, parameters: params).responseData(completionHandler: { response in
+                
+                let handledData = handleGenericResponse(response)
+                if let error = handledData.error {
+                    failure(error)
                 } else {
-                    print("WRONG RESPONSE")
+                    if let data = handledData.data {
+                        success(data)
+                    } else {
+                        failure("No data received")
+                    }
                 }
             })
         } else {
-            return sessionManager.request(ApiBaseUrl, method: .post, parameters: params).responseJSON(completionHandler: { response in
-                
-                if let status = response.response?.statusCode {
-                    switch(status){
-                    case 200:
-                        print("example success")
-                    default:
-                        print("error with response status: \(status)")
+            return sessionManager.request(ApiBaseUrl, method: httpMethod, parameters: params).responseJSON(completionHandler: { response in
+               
+                let handledData = handleGenericResponse(response)
+                if let error = handledData.error {
+                    failure(error)
+                } else {
+                    if let data = handledData.data {
+                        success(data)
+                    } else {
+                        failure("No data received")
                     }
                 }
-                //to get JSON return value
-                if let result = response.result.value {
-                    let JSON = result as! NSDictionary
-                    print(JSON)
-                }
-                
             })
         }
+    }
+
+    private class func handleGenericResponse(_ response : Any) -> (error : String?, data : Any?) {
+        // Data Response
+        if let dataResponse = response as? DataResponse<Data> {
+            
+            guard dataResponse.result.isSuccess else {
+                var errorDescription : String
+                let statusCode = dataResponse.response?.statusCode
+                errorDescription = checkErrorsFor(statusCode:statusCode)
+                
+                return (errorDescription, nil)
+            }
+            
+            return (nil, dataResponse)
+        
+        // JSON Response
+        } else if let jsonResponse = response as? DataResponse<Any> {
+            guard jsonResponse.result.isSuccess else {
+                var errorDescription : String
+                let statusCode = jsonResponse.response?.statusCode
+                errorDescription = checkErrorsFor(statusCode:statusCode)
+                
+                return (errorDescription, nil)
+            }
+            if let result = jsonResponse.result.value {
+                let JSON = result as! NSDictionary
+                return (nil, JSON)
+            }
+        }
+        return("Request failed", nil)
+    }
+    
+    private class func checkErrorsFor(statusCode:Int?) -> String {
+        var error = ""
+        if !isInternetConnection {
+            error = "No Internet conection"
+        } else if !isServerConnection {
+            error = "Server is unavailable"
+        } else if let code = statusCode, ((code == 400) || (500...504 ~= code)) {
+            if code == 400 {
+                error = "Invalid request"
+            } else {
+                error = "Service is temporarily unavailable"
+            }
+        } else {
+            error = "Connection failure"
+        }
+        return error
     }
     
     // MARK: - Requests
@@ -109,32 +155,32 @@ final class RequestManager {
         params["api_sig"] = Md5HashGenerator.getApiSignatureFor(params)
        
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .xml,
-                       success: { responseData in
+                       success: { response in
                         
-                        if let sessionKey = XmlParser.getSessionKeyFrom(responseData as! Data) {
-
-                            PersistencyManager.shared.saveSessionKey(sessionKey)
-                            success()
+                        if let responseData = response as? DataResponse<Data> {
+                            guard let data = responseData.data  else { return }
+                            if let sessionKey = XmlParser.getSessionKeyFrom(data) {
+                                PersistencyManager.shared.saveSessionKey(sessionKey)
+                                success()
+                            }
                         }
+                        
         },
                        failure: failure)
     }
     
     class func getTopArtists(success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
          let params = ["method": ApiMethodGetTopArtists,
-                     "api_key": ApiKey,
-                      "format": "json"]
+                      "api_key": ApiKey,
+                       "format": "json"]
         
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
                        success: { responseData in
-                        
-                        if let sessionKey = XmlParser.getSessionKeyFrom(responseData as! Data) {
-                            
-                            PersistencyManager.shared.saveSessionKey(sessionKey)
-                            success()
-                        }
+                      
+                        let handledData = handleGenericResponse(responseData)
+                        success()
+
         },
                        failure: failure)
-        
     }
 }

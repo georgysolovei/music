@@ -12,13 +12,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-/*
-        RequestManager.getMobileSession(userName: "georgenight777", password: "dreamland88!", success: {
-            print("SUCCESS")
-        }, failure: { error in
-            print(error)
-        })
- */
+//
+//        RequestManager.getMobileSession(userName: "georgenight777", password: "dreamland88!", success: {
+//            print("SUCCESS")
+//        }, failure: { error in
+//            print(error)
+//        })
         
         
         RequestManager.getTopArtists(success: {
