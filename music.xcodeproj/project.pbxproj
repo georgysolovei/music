@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		09DA27A8E2A04BA64795A7D6 /* Pods_music.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34559EB322C96EFAD5006C0E /* Pods_music.framework */; };
 		0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A31FC46655000CBD84 /* Spinner.swift */; };
-		0B1E64A61FC54C6A000CBD84 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A51FC54C6A000CBD84 /* AlbumController.swift */; };
+		0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
 		0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45CD651FBEDF190052761C /* AppDelegate.swift */; };
@@ -28,7 +28,7 @@
 
 /* Begin PBXFileReference section */
 		0B1E64A31FC46655000CBD84 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
-		0B1E64A51FC54C6A000CBD84 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistController.swift; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
 		0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 		0B2FBF701FC2B8DA009C657C /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				0B1E64A51FC54C6A000CBD84 /* AlbumController.swift */,
+				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
 				0B45CD671FBEDF190052761C /* LogInController.swift */,
 			);
 			path = UI;
@@ -258,6 +258,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-music/Pods-music-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/KissXML/KissXML.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
@@ -269,6 +270,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KissXML.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
@@ -315,7 +317,7 @@
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
 				0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */,
-				0B1E64A61FC54C6A000CBD84 /* AlbumController.swift in Sources */,
+				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */,
 				0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */,

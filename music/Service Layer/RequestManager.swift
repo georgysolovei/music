@@ -183,15 +183,14 @@ final class RequestManager {
                        failure: failure)
     }
     
-    class func getTopArtists(success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
+    class func getTopArtists(success: @escaping ([Artist]) -> Void, failure : @escaping FailureClosure) {
          let params = ["method": ApiMethodGetTopArtists,
                       "api_key": ApiKey,
                        "format": "json"]
         
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
                        success: { response in
-                        if let responseData = response as? NSDictionary {
-                            
+                        if let responseData = response as? [Artist] {
                             
                             success(responseData)
                         }

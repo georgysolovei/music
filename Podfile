@@ -15,4 +15,5 @@ target 'music' do
     pod 'SwiftyJSON'
     pod 'KissXML'
     pod 'NVActivityIndicatorView'
+    pod 'Kingfisher'
 end

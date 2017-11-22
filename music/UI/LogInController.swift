@@ -17,9 +17,8 @@ class LogInController: UIViewController {
     var passFieldConstraintNormalValue : CGFloat?
     
     struct Const {
-        static let albumSegue = "AlbumSegue"
+        static let albumSegue = "ArtistSegue"
     }
-    
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -31,10 +30,6 @@ class LogInController: UIViewController {
         }
         updateTextField()
         
-        
-//        RequestManager.getTopArtists(success: { response in
-//            print("SUCCESS")
-//        }, failure: { error in })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +40,7 @@ class LogInController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
+        view.endEditing(true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -116,7 +112,6 @@ class LogInController: UIViewController {
             
             if !user.isEmpty && !password.isEmpty {
                 RequestManager.getMobileSession(userName: user, password: password, success: { response in
-                    print("SUCCESS")
                     self.performSegue(withIdentifier: Const.albumSegue, sender: self)
                 }, failure: { error in
                     print(error)
