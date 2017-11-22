@@ -16,9 +16,15 @@ class LogInController: UIViewController {
     
     var passFieldConstraintNormalValue : CGFloat?
     
+    struct Const {
+        static let albumSegue = "AlbumSegue"
+    }
+    
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         for textField in [userNameField, passwordField] {
             textField?.addTarget(self, action: #selector(LogInController.updateTextField), for: .editingChanged)
@@ -33,6 +39,7 @@ class LogInController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
         subscribeForKeyboardNotifications()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,6 +117,7 @@ class LogInController: UIViewController {
             if !user.isEmpty && !password.isEmpty {
                 RequestManager.getMobileSession(userName: user, password: password, success: { response in
                     print("SUCCESS")
+                    self.performSegue(withIdentifier: Const.albumSegue, sender: self)
                 }, failure: { error in
                     print(error)
                     
