@@ -120,6 +120,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No artists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cIH-g6-8Ab">
+                                <rect key="frame" x="48" y="296" width="278" height="75.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="63"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eHb-nD-LVd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -131,6 +137,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="146.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="Nd3-qd-Tf6">
+                                                    <rect key="frame" x="58" y="52" width="42" height="42"/>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ypx-2i-p4f">
                                                     <rect key="frame" x="15" y="9.5" width="128" height="128"/>
                                                     <constraints>
@@ -168,6 +177,7 @@
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V4O-lx-BFg" secondAttribute="trailing" constant="15" id="0RK-do-Vdf"/>
                                                 <constraint firstItem="atY-qw-5V7" firstAttribute="top" secondItem="C58-xs-7bu" secondAttribute="bottom" constant="20" id="0nO-rW-KT1"/>
                                                 <constraint firstItem="V4O-lx-BFg" firstAttribute="leading" secondItem="C58-xs-7bu" secondAttribute="trailing" constant="3" id="1NF-uk-nMK"/>
+                                                <constraint firstItem="Nd3-qd-Tf6" firstAttribute="centerX" secondItem="Ypx-2i-p4f" secondAttribute="centerX" id="9cc-49-AR2"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="atY-qw-5V7" secondAttribute="trailing" constant="20" symbolic="YES" id="Ajm-Dw-9j3"/>
                                                 <constraint firstItem="9T1-06-ug3" firstAttribute="leading" secondItem="Ypx-2i-p4f" secondAttribute="trailing" constant="15" id="PUu-OH-Pwp"/>
                                                 <constraint firstItem="9T1-06-ug3" firstAttribute="top" secondItem="kEx-Fr-lFW" secondAttribute="topMargin" id="QY0-6J-EPi"/>
@@ -178,7 +188,13 @@
                                                 <constraint firstItem="Ypx-2i-p4f" firstAttribute="centerY" secondItem="kEx-Fr-lFW" secondAttribute="centerY" id="jCL-KZ-FJf"/>
                                                 <constraint firstItem="C58-xs-7bu" firstAttribute="leading" secondItem="9T1-06-ug3" secondAttribute="leading" id="k6v-WW-ey7"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9T1-06-ug3" secondAttribute="trailing" constant="20" symbolic="YES" id="ld6-IQ-fhx"/>
+                                                <constraint firstItem="Nd3-qd-Tf6" firstAttribute="centerY" secondItem="Ypx-2i-p4f" secondAttribute="centerY" id="luM-90-03c"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="Nd3-qd-Tf6"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <connections>
@@ -197,10 +213,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="cIH-g6-8Ab" firstAttribute="centerX" secondItem="e1A-10-vjF" secondAttribute="centerX" id="Zjo-v4-an2"/>
+                            <constraint firstItem="NTf-Vu-xAk" firstAttribute="trailing" secondItem="cIH-g6-8Ab" secondAttribute="trailing" constant="48.5" id="chP-wd-nn0"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="leading" secondItem="NTf-Vu-xAk" secondAttribute="leading" id="fKc-6G-4Dk"/>
+                            <constraint firstItem="cIH-g6-8Ab" firstAttribute="leading" secondItem="NTf-Vu-xAk" secondAttribute="leading" constant="48.5" id="fMQ-w3-6aS"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="trailing" secondItem="NTf-Vu-xAk" secondAttribute="trailing" id="inN-KB-frQ"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="top" secondItem="NTf-Vu-xAk" secondAttribute="top" constant="-64" id="lpm-hl-SKI"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="bottom" secondItem="NTf-Vu-xAk" secondAttribute="bottom" id="rT0-qC-ooV"/>
+                            <constraint firstItem="cIH-g6-8Ab" firstAttribute="centerY" secondItem="e1A-10-vjF" secondAttribute="centerY" id="z99-03-BVr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NTf-Vu-xAk"/>
                     </view>
@@ -221,4 +241,7 @@
             <point key="canvasLocation" x="528.79999999999995" y="205.54722638680661"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera" width="42" height="42"/>
+    </resources>
 </document>

@@ -28,11 +28,15 @@ class ArtistController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
         
+        tableView.isHidden = artists.isEmpty ? true : false
+
         RequestManager.getTopArtists(success: { response in
             
             self.artists = response
             
             self.tableView.reloadData()
+            self.tableView.isHidden = self.artists.isEmpty ? true : false
+
         }, failure: { error in })
     }
     
@@ -78,6 +82,7 @@ extension ArtistController : UITableViewDataSource {
         let currentAlbum = artists[cellNumber]
         let imageUrl = URL.init(string: currentAlbum.imageUrl)
 
+        cell.artistImageView.kf.indicatorType = .activity
         cell.artistImageView.kf.setImage(with: imageUrl)
         cell.artistLabel.text = currentAlbum.name
         cell.listenersCountLabel.text = String(currentAlbum.listeners)
