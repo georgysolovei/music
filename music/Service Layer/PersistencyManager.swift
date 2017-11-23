@@ -18,4 +18,19 @@ final class PersistencyManager {
             realm.add(sessionKey)
         }
     }
+    
+    public func getSessionKey() -> String? {
+        if let sessionKey = realm.objects(SessionKey.self).first?.key {
+            return sessionKey
+        } else {
+            return nil
+        }
+    }
+    
+    public func deleteSessionKey() {
+        let sessionKeyObjects = realm.objects(SessionKey.self)
+        try! realm.write {
+            realm.delete(sessionKeyObjects)
+        }
+    }
 }

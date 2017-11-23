@@ -75,7 +75,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="xoW-fj-a83" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3o4-pt-afX"/>
@@ -115,14 +115,14 @@
         <!--Artists-->
         <scene sceneID="639-I5-DMk">
             <objects>
-                <viewController id="YzA-A3-eIu" customClass="ArtistController" customModule="music" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArtistController" id="YzA-A3-eIu" customClass="ArtistController" customModule="music" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e1A-10-vjF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eHb-nD-LVd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" rowHeight="147" id="QBH-B5-9uz" customClass="ArtistCell" customModule="music" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="147"/>
@@ -180,6 +180,7 @@
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9T1-06-ug3" secondAttribute="trailing" constant="20" symbolic="YES" id="ld6-IQ-fhx"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <connections>
                                             <outlet property="artistImageView" destination="Ypx-2i-p4f" id="Zph-JE-QF7"/>
                                             <outlet property="artistLabel" destination="9T1-06-ug3" id="EuP-pc-Tng"/>

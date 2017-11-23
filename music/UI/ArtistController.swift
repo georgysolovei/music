@@ -18,7 +18,7 @@ class ArtistController: UIViewController {
         static let cell = "Cell"
     }
     
-    // MARK: -
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -41,8 +41,12 @@ class ArtistController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
 
-    // MARK: - Log Out Tapped
+    // MARK: - Methods
+
+    
+    // MARK: - IB Actions
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
+        PersistencyManager.shared.deleteSessionKey()
         navigationController?.popViewController(animated: true)
     }
     @IBAction func linkTapped(_ sender: UIButton) {
@@ -79,6 +83,15 @@ extension ArtistController : UITableViewDataSource {
         cell.listenersCountLabel.text = String(currentAlbum.listeners)
         
         return cell
+    }
+}
+
+extension ArtistController : UITableViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+
+        
+        
+        
     }
 }
 
