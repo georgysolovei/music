@@ -15,7 +15,8 @@ class LogInController: UIViewController {
     @IBOutlet weak var passwordFieldCenterYconstraint: NSLayoutConstraint!
     
     var passFieldConstraintNormalValue : CGFloat?
-    
+    // var viewModel: LoginViewModelProtocol!
+
     struct Const {
         static let albumSegue = "ArtistSegue"
     }
