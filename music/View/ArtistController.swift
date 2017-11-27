@@ -30,7 +30,7 @@ class ArtistController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
         
-        tableView.isHidden = artists.isEmpty ? true : false
+       // tableView.isHidden = artists.isEmpty ? true : false
 
         RequestManager.getTopArtists(page: page, success: { response in
             self.artists.removeAll()
@@ -53,8 +53,8 @@ class ArtistController: UIViewController {
     
     // MARK: - IB Actions
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
-        PersistencyManager.shared.deleteSessionKey()
-        navigationController?.popViewController(animated: true)
+        //  PersistencyManager.shared.deleteSessionKey()
+        // navigationController?.popViewController(animated: true)
     }
     @IBAction func linkTapped(_ sender: UIButton) {
         let cellTapped = sender.superview!.superview

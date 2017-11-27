@@ -120,8 +120,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No artists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cIH-g6-8Ab">
-                                <rect key="frame" x="48" y="296" width="278" height="75.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No artists" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cIH-g6-8Ab">
+                                <rect key="frame" x="0.0" y="296" width="375" height="75.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="63"/>
                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
@@ -214,9 +214,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cIH-g6-8Ab" firstAttribute="centerX" secondItem="e1A-10-vjF" secondAttribute="centerX" id="Zjo-v4-an2"/>
-                            <constraint firstItem="NTf-Vu-xAk" firstAttribute="trailing" secondItem="cIH-g6-8Ab" secondAttribute="trailing" constant="48.5" id="chP-wd-nn0"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="leading" secondItem="NTf-Vu-xAk" secondAttribute="leading" id="fKc-6G-4Dk"/>
-                            <constraint firstItem="cIH-g6-8Ab" firstAttribute="leading" secondItem="NTf-Vu-xAk" secondAttribute="leading" constant="48.5" id="fMQ-w3-6aS"/>
+                            <constraint firstItem="cIH-g6-8Ab" firstAttribute="leading" secondItem="NTf-Vu-xAk" secondAttribute="leading" id="fMQ-w3-6aS"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="trailing" secondItem="NTf-Vu-xAk" secondAttribute="trailing" id="inN-KB-frQ"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="top" secondItem="NTf-Vu-xAk" secondAttribute="top" constant="-64" id="lpm-hl-SKI"/>
                             <constraint firstItem="eHb-nD-LVd" firstAttribute="bottom" secondItem="NTf-Vu-xAk" secondAttribute="bottom" id="rT0-qC-ooV"/>

@@ -168,7 +168,6 @@ final class RequestManager {
                         if let responseData = response as? DataResponse<Data> {
                             guard let data = responseData.data  else { return }
                             if let sessionKey = XmlParser.getSessionKeyFrom(data) {
-                                PersistencyManager.shared.saveSessionKey(sessionKey)
                                 success(sessionKey)
                             } else {
                                 

@@ -15,17 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-//        if let _ = PersistencyManager.shared.getSessionKey() {
-//            guard let navigationController = window?.rootViewController as? UINavigationController else { return true }
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            guard let artistController = storyboard.instantiateViewController(withIdentifier: "ArtistController") as? ArtistController else { return true }
-//            navigationController.pushViewController(artistController, animated: false)
-//        }
-        
+                
         guard let navigationController = window?.rootViewController as? UINavigationController else { return true }
-     
         let coordinator = Coordinator(navigationController: navigationController)
         coordinator.start()
         

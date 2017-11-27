@@ -15,7 +15,8 @@ class LogInController: UIViewController {
     @IBOutlet weak var passwordFieldCenterYconstraint: NSLayoutConstraint!
     
     var passFieldConstraintNormalValue : CGFloat?
-    // var viewModel: LoginViewModelProtocol!
+    
+    var viewModel: LoginViewModelProtocol!
 
     struct Const {
         static let albumSegue = "ArtistSegue"
@@ -25,12 +26,10 @@ class LogInController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         for textField in [userNameField, passwordField] {
             textField?.addTarget(self, action: #selector(LogInController.updateTextField), for: .editingChanged)
         }
         updateTextField()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +37,7 @@ class LogInController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         subscribeForKeyboardNotifications()
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
@@ -110,19 +110,8 @@ class LogInController: UIViewController {
     
     func login() {
         if let user = userNameField.text, let password = passwordField.text {
-            
             if !user.isEmpty && !password.isEmpty {
-                RequestManager.getMobileSession(userName: user, password: password, success: { response in
-                    self.performSegue(withIdentifier: Const.albumSegue, sender: self)
-                }, failure: { error in
-                    print(error)
-                    
-                    // TODO: replace to Alert Manager
-                    let alertController = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "OK", style: .default) { (result : UIAlertAction) -> Void in }
-                    alertController.addAction(ok)
-                    self.present(alertController, animated: true, completion: nil)
-                })
+               viewModel.logIn(userName: user, pass: password)
             }
         }
     }

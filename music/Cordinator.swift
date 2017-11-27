@@ -26,9 +26,21 @@ final class Coordinator {
         var viewController: UIViewController!
 
         if let _ = PersistencyManager.shared.getSessionKey() {
-            viewController = storyboard.instantiateViewController(withIdentifier: Const.artistController) as! ArtistController
+            viewController = storyboard.instantiateViewController(withIdentifier: Const.artistController)
+
         } else {
-            viewController = storyboard.instantiateViewController(withIdentifier: Const.loginController) as! LogInController
+            let loginViewModel = LogInViewModel()
+            viewController = storyboard.instantiateViewController(withIdentifier: Const.loginController)
+            (viewController as! LogInController).viewModel = loginViewModel
+          
+            loginViewModel.sessionKey.bind {
+                if $0.isEmpty {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    viewController = storyboard.instantiateViewController(withIdentifier: Const.artistController)
+                    self.navigationController?.pushViewController(viewController, animated: false)
+                }
+            }
         }
         navigationController?.pushViewController(viewController, animated: false)
     }
