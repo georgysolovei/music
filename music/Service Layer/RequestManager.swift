@@ -66,7 +66,6 @@ final class RequestManager {
 
         Spinner.shared.startAt()
         
-        
         if responseFormat == .xml {
             return sessionManager.request(ApiBaseUrl, method: httpMethod, parameters: params).responseData(completionHandler: { response in
                 
@@ -178,20 +177,23 @@ final class RequestManager {
                                 }
                             }
                         }
-                        
         },
                        failure: failure)
     }
     
-    class func getTopArtists(success: @escaping ([Artist]) -> Void, failure : @escaping FailureClosure) {
+    class func getTopArtists(page:Int, success: @escaping ([Artist]) -> Void, failure : @escaping FailureClosure) {
          let params = ["method": ApiMethodGetTopArtists,
                       "api_key": ApiKey,
-                       "format": "json"]
+                       "format": "json",
+                         "page": page] as [String : Any]
         
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
                        success: { response in
+                       
+                        
                         if let responseData = response as? [Artist] {
-                            
+                            print(responseData.count)
+
                             success(responseData)
                         }
 

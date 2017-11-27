@@ -14,6 +14,8 @@ class ArtistController: UIViewController {
     
     var artists = [Artist]()
     
+    var page = 2
+    
     struct Const {
         static let cell = "Cell"
     }
@@ -30,12 +32,13 @@ class ArtistController: UIViewController {
         
         tableView.isHidden = artists.isEmpty ? true : false
 
-        RequestManager.getTopArtists(success: { response in
-            
+        RequestManager.getTopArtists(page: page, success: { response in
+            self.artists.removeAll()
             self.artists = response
             
             self.tableView.reloadData()
             self.tableView.isHidden = self.artists.isEmpty ? true : false
+            self.page += 1
 
         }, failure: { error in })
     }
@@ -93,10 +96,19 @@ extension ArtistController : UITableViewDataSource {
 
 extension ArtistController : UITableViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        guard let lastVisibleCell =  tableView.visibleCells.last else { return }
+        let lastCellIndexPath = tableView.indexPath(for: lastVisibleCell)
+        
+        if lastCellIndexPath?.row == artists.count - 1 {
 
-        
-        
-        
+            RequestManager.getTopArtists(page: page, success: { response in
+            
+                self.artists.append(contentsOf: response)
+                self.tableView.reloadData()
+                self.page += 1
+            }, failure: { error in })
+        }
     }
 }
 
