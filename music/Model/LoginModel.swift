@@ -10,8 +10,4 @@ final class LogInModel {
     func saveSessionKey(_ key:String) {
         PersistencyManager.shared.saveSessionKey(key)
     }
-    
-    func deleteSessionKey() {
-        
-    }
 }

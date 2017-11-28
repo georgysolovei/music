@@ -8,19 +8,60 @@
 
 import Foundation
 
-protocol ArtistViewModelProtocol {
-    func getNumberOfRows() -> Int
+protocol ArtistViewModelProtocol : class {
+    var numberOfRows: Int{ get }
+    func getArtistForIndex(_ index:Int) -> Artist
+    func didScrollToBottom()
+    func logOut()
 }
 
-
 final class AtristViewModel {
+    var artists = Dynamic([Artist]())
+    var page = 2
+    var artistModel = ArtistModel()
+    var sessionKey : Dynamic<String?> {
+        didSet {
+            if isNilOrEmpty(sessionKey.value) {
+                artistModel.deleteSessionKey()
+            }
+        }
+    }
     
-    
-    
+    init() {
+        sessionKey = Dynamic(nil)
+        sessionKey.value = artistModel.getSessionKey()
+    }
 }
 
 extension AtristViewModel : ArtistViewModelProtocol {
-    func getNumberOfRows() -> Int {
-        return 0
+
+    var numberOfRows: Int {
+        return artists.value.count
+    }
+    
+//    RequestManager.getTopArtists(page: page, success: { response in
+//    self.artists.removeAll()
+//    self.artists = response
+//
+//    self.tableView.reloadData()
+//    self.tableView.isHidden = self.artists.isEmpty ? true : false
+//    self.page += 1
+//
+//    }, failure: { error in })
+//}
+    func getArtistForIndex(_ index:Int) -> Artist {
+        return artists.value[index]
+    }
+    
+    func didScrollToBottom() {
+        RequestManager.getTopArtists(page: page, success: { response in            
+            self.artists.value.append(contentsOf: response)
+            self.page += 1
+        }, failure: { error in })
+    }
+    
+    func logOut() {
+        artistModel.deleteSessionKey()
+        sessionKey.value = ""
     }
 }

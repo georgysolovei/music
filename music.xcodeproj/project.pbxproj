@@ -21,11 +21,14 @@
 		0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6621FC318B400E3FE5D /* SessionKey.swift */; };
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
-		0BD22F8A1FCC0B71004BB863 /* Cordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F891FCC0B71004BB863 /* Cordinator.swift */; };
+		0BB165161FCC756800782FD0 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB165151FCC756800782FD0 /* R.generated.swift */; };
+		0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */; };
+		0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F891FCC0B71004BB863 /* RootCordinator.swift */; };
 		0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */; };
 		0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */; };
-		0BD22F911FCC34A5004BB863 /* DynamicString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F901FCC34A5004BB863 /* DynamicString.swift */; };
+		0BD22F911FCC34A5004BB863 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F901FCC34A5004BB863 /* Dynamic.swift */; };
 		0BD22F931FCC3BA2004BB863 /* AtristViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */; };
+		0BD22F951FCC3FAA004BB863 /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */; };
 		0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD75BED1FC2EF740030D27D /* XmlParser.swift */; };
 		8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A3F8A1FC2034D000820AF /* RequestManager.swift */; };
 		8E4A3F8D1FC211BF000820AF /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A3F8C1FC211BF000820AF /* AlertManager.swift */; };
@@ -48,11 +51,14 @@
 		0B5BA6621FC318B400E3FE5D /* SessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKey.swift; sourceTree = "<group>"; };
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
-		0BD22F891FCC0B71004BB863 /* Cordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cordinator.swift; sourceTree = "<group>"; };
+		0BB165151FCC756800782FD0 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = music/Utility/R.generated.swift; sourceTree = SOURCE_ROOT; };
+		0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		0BD22F891FCC0B71004BB863 /* RootCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCordinator.swift; sourceTree = "<group>"; };
 		0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
-		0BD22F901FCC34A5004BB863 /* DynamicString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicString.swift; sourceTree = "<group>"; };
+		0BD22F901FCC34A5004BB863 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtristViewModel.swift; sourceTree = "<group>"; };
+		0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
 		0BD75BED1FC2EF740030D27D /* XmlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmlParser.swift; sourceTree = "<group>"; };
 		34559EB322C96EFAD5006C0E /* Pods_music.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_music.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		35AD351E5FCB60FF31B2A57D /* Pods-music.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-music.debug.xcconfig"; path = "Pods/Target Support Files/Pods-music/Pods-music.debug.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +84,7 @@
 			children = (
 				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
 				0B45CD671FBEDF190052761C /* LogInController.swift */,
+				0B1E64A31FC46655000CBD84 /* Spinner.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -85,6 +92,7 @@
 		0B2FBF711FC2B94F009C657C /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				0BB165151FCC756800782FD0 /* R.generated.swift */,
 				0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */,
 				0B2FBF721FC2B982009C657C /* Utility.swift */,
 			);
@@ -112,10 +120,10 @@
 		0B45CD641FBEDF190052761C /* music */ = {
 			isa = PBXGroup;
 			children = (
-				0BD22F891FCC0B71004BB863 /* Cordinator.swift */,
 				0B5BA6611FC3187900E3FE5D /* Model */,
 				0B2FBF701FC2B8DA009C657C /* View */,
 				0BD22F8B1FCC15CF004BB863 /* ViewModel */,
+				0BB165171FCD3F2A00782FD0 /* Coordinator */,
 				8E4A3F891FC20339000820AF /* Service Layer */,
 				0B2FBF711FC2B94F009C657C /* Utility */,
 				0B5BA6601FC3139900E3FE5D /* Resources */,
@@ -139,12 +147,22 @@
 		0B5BA6611FC3187900E3FE5D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
 				0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */,
-				0BD22F901FCC34A5004BB863 /* DynamicString.swift */,
+				0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */,
+				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
+				0BD22F901FCC34A5004BB863 /* Dynamic.swift */,
 				0B5BA6641FC4269300E3FE5D /* Artist.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0BB165171FCD3F2A00782FD0 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */,
+				0BD22F891FCC0B71004BB863 /* RootCordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		0BD22F8B1FCC15CF004BB863 /* ViewModel */ = {
@@ -162,7 +180,6 @@
 				8E4A3F8A1FC2034D000820AF /* RequestManager.swift */,
 				0B5BA65E1FC3134300E3FE5D /* PersistencyManager.swift */,
 				0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */,
-				0B1E64A31FC46655000CBD84 /* Spinner.swift */,
 				8E4A3F8C1FC211BF000820AF /* AlertManager.swift */,
 				0BD75BED1FC2EF740030D27D /* XmlParser.swift */,
 				0B5BA6661FC4279600E3FE5D /* JsonParser.swift */,
@@ -195,6 +212,7 @@
 			buildConfigurationList = 0B45CD741FBEDF190052761C /* Build configuration list for PBXNativeTarget "music" */;
 			buildPhases = (
 				B94D7DD73B38C4ADCCA0A84F /* [CP] Check Pods Manifest.lock */,
+				0BB165141FCC74D200782FD0 /* R.swift generation */,
 				0B45CD5E1FBEDF190052761C /* Sources */,
 				0B45CD5F1FBEDF190052761C /* Frameworks */,
 				0B45CD601FBEDF190052761C /* Resources */,
@@ -258,6 +276,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0BB165141FCC74D200782FD0 /* R.swift generation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "R.swift generation";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
+		};
 		2A7B7CA944718BF860E14FF4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -336,20 +368,23 @@
 				0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */,
 				0B2FBF731FC2B982009C657C /* Utility.swift in Sources */,
 				8E4A3F8D1FC211BF000820AF /* AlertManager.swift in Sources */,
+				0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */,
 				8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */,
 				0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */,
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,
+				0BB165161FCC756800782FD0 /* R.generated.swift in Sources */,
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
-				0BD22F8A1FCC0B71004BB863 /* Cordinator.swift in Sources */,
+				0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
 				0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */,
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
-				0BD22F911FCC34A5004BB863 /* DynamicString.swift in Sources */,
+				0BD22F911FCC34A5004BB863 /* Dynamic.swift in Sources */,
 				0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */,
 				0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */,
 				0B5BA65F1FC3134300E3FE5D /* PersistencyManager.swift in Sources */,
 				0BD22F931FCC3BA2004BB863 /* AtristViewModel.swift in Sources */,
+				0BD22F951FCC3FAA004BB863 /* ArtistModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

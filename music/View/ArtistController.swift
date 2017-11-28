@@ -11,10 +11,8 @@ import Kingfisher
 
 class ArtistController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    
-    var artists = [Artist]()
-    
-    var page = 2
+
+    var artistViewModel : ArtistViewModelProtocol?
     
     struct Const {
         static let cell = "Cell"
@@ -32,15 +30,7 @@ class ArtistController: UIViewController {
         
        // tableView.isHidden = artists.isEmpty ? true : false
 
-        RequestManager.getTopArtists(page: page, success: { response in
-            self.artists.removeAll()
-            self.artists = response
-            
-            self.tableView.reloadData()
-            self.tableView.isHidden = self.artists.isEmpty ? true : false
-            self.page += 1
-
-        }, failure: { error in })
+      
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,11 +45,18 @@ class ArtistController: UIViewController {
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
         //  PersistencyManager.shared.deleteSessionKey()
         // navigationController?.popViewController(animated: true)
+        artistViewModel?.logOut()
+        
     }
     @IBAction func linkTapped(_ sender: UIButton) {
         let cellTapped = sender.superview!.superview
         if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
-            guard let link = URL(string: artists[indexTapped].url) else { return }
+
+            guard let artistViewModel = artistViewModel else { return }
+
+            let artist = artistViewModel.getArtistForIndex(indexTapped)
+           
+            guard let link = URL(string: artist.url) else { return }
             UIApplication.shared.open(link, options: [:], completionHandler: nil)
         }
     }
@@ -76,19 +73,22 @@ class ArtistController: UIViewController {
 }
 extension ArtistController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return artists.count
+        guard let artistViewModel = artistViewModel else { return 0 }
+        return artistViewModel.numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
         let cellNumber = indexPath.row
-        let currentAlbum = artists[cellNumber]
-        let imageUrl = URL.init(string: currentAlbum.imageUrl)
+        guard let artistViewModel = artistViewModel else { return cell }
+
+        let currentArtist = artistViewModel.getArtistForIndex(cellNumber)
+        let imageUrl = URL.init(string: currentArtist.imageUrl)
 
         cell.artistImageView.kf.indicatorType = .activity
         cell.artistImageView.kf.setImage(with: imageUrl)
-        cell.artistLabel.text = currentAlbum.name
-        cell.listenersCountLabel.text = String(currentAlbum.listeners)
+        cell.artistLabel.text = currentArtist.name
+        cell.listenersCountLabel.text = String(currentArtist.listeners)
         
         return cell
     }
@@ -99,15 +99,12 @@ extension ArtistController : UITableViewDelegate {
         
         guard let lastVisibleCell =  tableView.visibleCells.last else { return }
         let lastCellIndexPath = tableView.indexPath(for: lastVisibleCell)
-        
-        if lastCellIndexPath?.row == artists.count - 1 {
 
-            RequestManager.getTopArtists(page: page, success: { response in
-            
-                self.artists.append(contentsOf: response)
-                self.tableView.reloadData()
-                self.page += 1
-            }, failure: { error in })
+        guard let artistViewModel = artistViewModel else { return }
+
+        if lastCellIndexPath?.row == artistViewModel.numberOfRows - 1 {
+
+           
         }
     }
 }

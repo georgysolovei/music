@@ -11,15 +11,14 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    var window: UIWindow!
+    var rootCoordinator: CoordinatorProtocol!
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-                
-        guard let navigationController = window?.rootViewController as? UINavigationController else { return true }
-        let coordinator = Coordinator(navigationController: navigationController)
-        coordinator.start()
-        
+        window = UIWindow()
+        rootCoordinator = RootCoordinator(window: window) 
+        rootCoordinator.start()
         return true
     }
 

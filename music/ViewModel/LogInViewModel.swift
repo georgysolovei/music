@@ -5,18 +5,22 @@
 //  Created by mac-167 on 11/27/17.
 //  Copyright © 2017 mac-167. All rights reserved.
 //
-protocol LoginViewModelProtocol {
+protocol LoginViewModelProtocol: class {
     func logIn(userName:String, pass:String)
 }
 
 final class LogInViewModel {
     var loginModel : LogInModel!
+    var sessionKey : Dynamic<String>
+
     init() {
         loginModel = LogInModel()
-        sessionKey = DynamicString("")
+        sessionKey = Dynamic("")
+        if let key = PersistencyManager.shared.getSessionKey() {
+            sessionKey.value = key
+        }
     }
     
-    var sessionKey : DynamicString
 }
 
 extension LogInViewModel : LoginViewModelProtocol {

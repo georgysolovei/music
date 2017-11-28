@@ -21,7 +21,7 @@ class LogInController: UIViewController {
     struct Const {
         static let albumSegue = "ArtistSegue"
     }
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
