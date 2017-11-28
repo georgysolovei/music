@@ -23,39 +23,46 @@ final class Spinner {
     
     let indicator : NVActivityIndicatorView
     var blockView = UIView()
-    
+    var appDelegate : AppDelegate?
+
     static let shared = Spinner()
     
     // MARK: - Initialization
     init() {
         indicator = NVActivityIndicatorView(frame: CGRect.zero, type: .lineScale, color: UIColor.orange, padding: 0)
 
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            if let window = appDelegate.window {
-                
-                let width = window.frame.width/Const.downsizeMultiplier
-                let height = window.frame.height/Const.downsizeMultiplier
-                
-                let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY - height/2, width: width, height: height)
-                indicator.frame = indicatorFrame
-                blockView = UIView.init(frame: window.frame)
-                blockView.backgroundColor = UIColor.black
-                blockView.alpha = Const.blockViewAlpha
-               
-                window.addSubview(blockView)
-                window.addSubview(indicator)
-            }
-        }
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        guard let appDelegate = appDelegate else { return }
+        guard let window = appDelegate.window else { return }
+        
+        let width = window.frame.width/Const.downsizeMultiplier
+        let height = window.frame.height/Const.downsizeMultiplier
+        
+        let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY - height/2, width: width, height: height)
+        indicator.frame = indicatorFrame
+        blockView = UIView.init(frame: window.frame)
+        blockView.backgroundColor = UIColor.black
+        blockView.alpha = Const.blockViewAlpha
     }
     
     // MARK: - Public
     public func startAt(postion:Position = .center, isBlockUI:Bool = true) {
         indicator.startAnimating()
         blockView.isHidden = false
+
+        guard let appDelegate = appDelegate else { return }
+        guard let window = appDelegate.window else { return }
+        
+        window.addSubview(blockView)
+        window.addSubview(indicator)
     }
     
     public func stop() {
         indicator.stopAnimating()
         blockView.isHidden = true
+        
+        blockView.removeFromSuperview()
+        indicator.removeFromSuperview()
     }
 }

@@ -21,16 +21,17 @@ class ArtistController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        artistViewModel!.artists.bind {
+            print($0.count)
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
-        
-       // tableView.isHidden = artists.isEmpty ? true : false
-
-      
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -46,8 +47,8 @@ class ArtistController: UIViewController {
         //  PersistencyManager.shared.deleteSessionKey()
         // navigationController?.popViewController(animated: true)
         artistViewModel?.logOut()
-        
     }
+    
     @IBAction func linkTapped(_ sender: UIButton) {
         let cellTapped = sender.superview!.superview
         if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
@@ -103,8 +104,7 @@ extension ArtistController : UITableViewDelegate {
         guard let artistViewModel = artistViewModel else { return }
 
         if lastCellIndexPath?.row == artistViewModel.numberOfRows - 1 {
-
-           
+            artistViewModel.didScrollToBottom()
         }
     }
 }

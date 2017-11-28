@@ -11,14 +11,19 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow!
-    var rootCoordinator: CoordinatorProtocol!
-
+    var window: UIWindow?
+    
+    var rootCoordinator: RootCoordinatorProtocol!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow()
-        rootCoordinator = RootCoordinator(window: window) 
+        
+        window = UIWindow.init(frame: UIScreen.main.bounds)
+
+        rootCoordinator = RootCoordinator(window: window!)
         rootCoordinator.start()
+
+        window!.isHidden = false
+
         return true
     }
 

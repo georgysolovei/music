@@ -10,22 +10,36 @@ import UIKit
 
 class AuthCoordinator {
     
-    let navigationController : UINavigationController?
+    var navigationController : UINavigationController?
+    weak var window: UIWindow!
+    
+    var sessionKey = Dynamic<String?>(nil)
     
     init(window: UIWindow) {
-        navigationController = window.rootViewController?.navigationController
+        self.window = window
     }
 }
 
 extension AuthCoordinator : CoordinatorProtocol {
     func start() {
+
+        navigationController = R.storyboard.logIn.instantiateInitialViewController()
+        window.rootViewController = navigationController
+        let loginController = navigationController?.childViewControllers.first as! LogInController
         
+        let loginViewModel = LogInViewModel()
+        loginController.viewModel = loginViewModel
+        
+        // LogInViewModel Binding
+        loginViewModel.sessionKey.bind {
+            if !isNilOrEmpty($0) {
+                self.sessionKey.value = $0!
+                self.finish()
+            }
+        }
     }
     
     func finish() {
-        
-        
+        // delegate
     }
-    
-    
 }

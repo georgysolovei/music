@@ -21,8 +21,11 @@
 		0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6621FC318B400E3FE5D /* SessionKey.swift */; };
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
-		0BB165161FCC756800782FD0 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB165151FCC756800782FD0 /* R.generated.swift */; };
+		0B8096011FCD65EE00E7262B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8096001FCD65ED00E7262B /* R.generated.swift */; };
 		0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */; };
+		0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */; };
+		0BB1651D1FCD5BD100782FD0 /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */; };
+		0BB1651F1FCD5C8500782FD0 /* Artist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */; };
 		0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F891FCC0B71004BB863 /* RootCordinator.swift */; };
 		0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */; };
 		0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */; };
@@ -51,8 +54,11 @@
 		0B5BA6621FC318B400E3FE5D /* SessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKey.swift; sourceTree = "<group>"; };
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
-		0BB165151FCC756800782FD0 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = music/Utility/R.generated.swift; sourceTree = SOURCE_ROOT; };
+		0B8096001FCD65ED00E7262B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCoordinator.swift; sourceTree = "<group>"; };
+		0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
+		0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Artist.storyboard; sourceTree = "<group>"; };
 		0BD22F891FCC0B71004BB863 /* RootCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCordinator.swift; sourceTree = "<group>"; };
 		0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -92,7 +98,7 @@
 		0B2FBF711FC2B94F009C657C /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				0BB165151FCC756800782FD0 /* R.generated.swift */,
+				0B8096001FCD65ED00E7262B /* R.generated.swift */,
 				0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */,
 				0B2FBF721FC2B982009C657C /* Utility.swift */,
 			);
@@ -129,6 +135,8 @@
 				0B5BA6601FC3139900E3FE5D /* Resources */,
 				0B45CD651FBEDF190052761C /* AppDelegate.swift */,
 				0B45CD691FBEDF190052761C /* Main.storyboard */,
+				0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */,
+				0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */,
 				0B45CD711FBEDF190052761C /* Info.plist */,
 			);
 			path = music;
@@ -159,8 +167,9 @@
 		0BB165171FCD3F2A00782FD0 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */,
 				0BD22F891FCC0B71004BB863 /* RootCordinator.swift */,
+				0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */,
+				0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -267,9 +276,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BB1651D1FCD5BD100782FD0 /* LogIn.storyboard in Resources */,
 				0B45CD701FBEDF190052761C /* LaunchScreen.storyboard in Resources */,
 				0B45CD6D1FBEDF190052761C /* Assets.xcassets in Resources */,
 				0B45CD6B1FBEDF190052761C /* Main.storyboard in Resources */,
+				0BB1651F1FCD5C8500782FD0 /* Artist.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,11 +383,12 @@
 				8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */,
 				0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */,
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,
-				0BB165161FCC756800782FD0 /* R.generated.swift in Sources */,
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
+				0B8096011FCD65EE00E7262B /* R.generated.swift in Sources */,
 				0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
 				0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */,
+				0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */,
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0BD22F911FCC34A5004BB863 /* Dynamic.swift in Sources */,

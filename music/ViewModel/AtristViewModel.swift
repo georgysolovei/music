@@ -13,23 +13,21 @@ protocol ArtistViewModelProtocol : class {
     func getArtistForIndex(_ index:Int) -> Artist
     func didScrollToBottom()
     func logOut()
+    var artists: Dynamic<[Artist]>{ get }
 }
 
 final class AtristViewModel {
     var artists = Dynamic([Artist]())
     var page = 2
     var artistModel = ArtistModel()
-    var sessionKey : Dynamic<String?> {
-        didSet {
-            if isNilOrEmpty(sessionKey.value) {
-                artistModel.deleteSessionKey()
-            }
-        }
-    }
+    var sessionKey : Dynamic<String?> = Dynamic(nil)
     
     init() {
-        sessionKey = Dynamic(nil)
         sessionKey.value = artistModel.getSessionKey()
+        RequestManager.getTopArtists(page: page, success: { response in
+            self.artists.value = response
+        }, failure: {_ in })
+        
     }
 }
 
@@ -62,6 +60,6 @@ extension AtristViewModel : ArtistViewModelProtocol {
     
     func logOut() {
         artistModel.deleteSessionKey()
-        sessionKey.value = ""
+        sessionKey.value = nil
     }
 }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GRt-rv-bSz">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="X6j-pa-s3k">
+            <objects>
+                <navigationController id="GRt-rv-bSz" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bdu-v3-R2Y">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="UX4-vG-y97" kind="relationship" relationship="rootViewController" id="fEu-Wv-YU9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mTK-Gu-vhE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1018" y="206"/>
+        </scene>
+        <!--Log In Controller-->
+        <scene sceneID="Amf-4g-1jY">
+            <objects>
+                <viewController storyboardIdentifier="LogInController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UX4-vG-y97" customClass="LogInController" customModule="music" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kbf-1L-rBA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xIm-yP-UkA">
+                                <rect key="frame" x="20" y="271" width="335" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="rRr-Un-rfY"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="name"/>
+                                <connections>
+                                    <outlet property="delegate" destination="UX4-vG-y97" id="lGA-gf-kup"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LGe-C8-jcf">
+                                <rect key="frame" x="20" y="331" width="335" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="eBl-ah-ywZ"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="UX4-vG-y97" id="fwy-nH-nOr"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vej-uj-JDe">
+                                <rect key="frame" x="20" y="391" width="335" height="45"/>
+                                <color key="backgroundColor" red="1" green="0.57647061349999995" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="BYd-Rw-hZJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Log in">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInTapped:" destination="UX4-vG-y97" eventType="touchUpInside" id="Zro-4L-MtY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="LGe-C8-jcf" firstAttribute="centerX" secondItem="kbf-1L-rBA" secondAttribute="centerX" id="0Jc-Gr-WO0"/>
+                            <constraint firstItem="LGe-C8-jcf" firstAttribute="leading" secondItem="KNh-6F-Mrd" secondAttribute="leading" constant="20" id="18T-r4-zw4"/>
+                            <constraint firstItem="xIm-yP-UkA" firstAttribute="leading" secondItem="KNh-6F-Mrd" secondAttribute="leading" constant="20" id="DPa-sx-O3w"/>
+                            <constraint firstItem="LGe-C8-jcf" firstAttribute="top" secondItem="xIm-yP-UkA" secondAttribute="bottom" constant="15" id="HuN-XH-b1W"/>
+                            <constraint firstItem="vej-uj-JDe" firstAttribute="top" secondItem="LGe-C8-jcf" secondAttribute="bottom" constant="15" id="VvK-os-smd"/>
+                            <constraint firstItem="vej-uj-JDe" firstAttribute="centerX" secondItem="kbf-1L-rBA" secondAttribute="centerX" id="XIL-ET-o5b"/>
+                            <constraint firstItem="vej-uj-JDe" firstAttribute="leading" secondItem="KNh-6F-Mrd" secondAttribute="leading" constant="20" id="bsr-e2-5oy"/>
+                            <constraint firstItem="LGe-C8-jcf" firstAttribute="centerY" secondItem="kbf-1L-rBA" secondAttribute="centerY" constant="20" id="cB9-Wl-sAF"/>
+                            <constraint firstItem="xIm-yP-UkA" firstAttribute="centerX" secondItem="kbf-1L-rBA" secondAttribute="centerX" id="hmU-pP-fXa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KNh-6F-Mrd"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="2be-gs-K47" appends="YES" id="oRX-qq-MIa"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="prR-2Z-WLh"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="logInButton" destination="vej-uj-JDe" id="uat-1g-lau"/>
+                        <outlet property="passwordField" destination="LGe-C8-jcf" id="YT4-Hp-RwH"/>
+                        <outlet property="passwordFieldCenterYconstraint" destination="cB9-Wl-sAF" id="6wQ-uT-Lp1"/>
+                        <outlet property="userNameField" destination="xIm-yP-UkA" id="DlX-L6-Qhl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aPe-AM-H7l" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="2be-gs-K47">
+                    <connections>
+                        <action selector="didTapOnView:" destination="UX4-vG-y97" id="hSy-Rd-C3T"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-207" y="206"/>
+        </scene>
+    </scenes>
+</document>

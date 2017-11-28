@@ -11,11 +11,12 @@ protocol LoginViewModelProtocol: class {
 
 final class LogInViewModel {
     var loginModel : LogInModel!
-    var sessionKey : Dynamic<String>
+    var sessionKey : Dynamic<String?> = Dynamic(nil)
 
     init() {
         loginModel = LogInModel()
-        sessionKey = Dynamic("")
+        sessionKey = Dynamic(nil)
+        
         if let key = PersistencyManager.shared.getSessionKey() {
             sessionKey.value = key
         }

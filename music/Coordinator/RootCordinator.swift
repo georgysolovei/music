@@ -14,74 +14,38 @@ protocol CoordinatorProtocol {
 }
 
 protocol RootCoordinatorProtocol {
+    func start()
 }
 
-final class RootCoordinator : CoordinatorProtocol {
+final class RootCoordinator : RootCoordinatorProtocol {
+
     weak var window: UIWindow!
     
-    private struct Const {
-        static let artistController = "ArtistController"
-        static let loginController = "LogInController"
-        static let main = "Main"
-    }
-    
-    var authCoordinator : AuthCoordinator!
+    var child: CoordinatorProtocol?
     
     init(window: UIWindow) {
         self.window = window
     }
     
     func start() {
- 
+        
         let sessionKey = PersistencyManager.shared.getSessionKey()
         
         if isNilOrEmpty(sessionKey) {
-            // TODO: create authCoordinator
-            authCoordinator = AuthCoordinator(window:window)
-            authCoordinator.start()
-            
-            // TODO: move to authCoordinator
-//            let loginViewController = R.storyboard.main.logInController()
-//            loginViewController?.viewModel = LogInViewModel()
+            child = AuthCoordinator(window:window)
+            (child as! AuthCoordinator).sessionKey.bind {
+                if !isNilOrEmpty($0) {
+                    self.start()
+                }
+            }
         } else {
-            // TODO: create mainCoordinator
-            // mainCoordinator.start(window)
-            
-            // TODO: move to mainCoordinator
-//            let artistViewController = R.storyboard.main.artistController()
-//            artistViewController?.artistViewModel = ArtistViewModel()
+            child = ArtistCoordinator(window:window)
+            (child as! ArtistCoordinator).sessionKey.bind {
+                if isNilOrEmpty($0) {
+                    self.start()
+                }
+            }
         }
-        
-
-//        // First Load
-//        if navigationController?.viewControllers.first is LogInController {
-//            viewController = navigationController?.viewControllers.first
-//        } else {
-//            viewController = R.storyboard.main.logInController()
-//            navigationController?.pushViewController(viewController, animated: true)
-//        }
-//        (viewController as! LogInController).viewModel = loginViewModel
-//
-//        // LogInViewModel Binding
-//        loginViewModel.sessionKey.bind {
-//            if isNilOrEmpty($0) {
-//                self.navigationController?.popViewController(animated: true)
-//            } else {
-//             //   viewController = storyboard.instantiateViewController(withIdentifier: Const.artistController)
-//                (viewController as! ArtistController).artistViewModel = artistViewModel
-//                self.navigationController?.pushViewController(viewController, animated: true)
-//            }
-//        }
-//
-//        // ArtistViewModel Binding
-//        artistViewModel.sessionKey.bind {
-//            if isNilOrEmpty($0) {
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//        }
-    }
-    
-    func finish() {
-        
+        child!.start()
     }
 }

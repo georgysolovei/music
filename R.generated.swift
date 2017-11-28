@@ -77,16 +77,30 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.storyboard` struct is generated, and contains static references to 2 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 4 storyboards.
   struct storyboard {
+    /// Storyboard `Artist`.
+    static let artist = _R.storyboard.artist()
     /// Storyboard `LaunchScreen`.
     static let launchScreen = _R.storyboard.launchScreen()
+    /// Storyboard `LogIn`.
+    static let logIn = _R.storyboard.logIn()
     /// Storyboard `Main`.
     static let main = _R.storyboard.main()
+    
+    /// `UIStoryboard(name: "Artist", bundle: ...)`
+    static func artist(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.artist)
+    }
     
     /// `UIStoryboard(name: "LaunchScreen", bundle: ...)`
     static func launchScreen(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.launchScreen)
+    }
+    
+    /// `UIStoryboard(name: "LogIn", bundle: ...)`
+    static func logIn(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.logIn)
     }
     
     /// `UIStoryboard(name: "Main", bundle: ...)`
@@ -127,6 +141,27 @@ struct _R: Rswift.Validatable {
   struct storyboard: Rswift.Validatable {
     static func validate() throws {
       try main.validate()
+      try artist.validate()
+      try logIn.validate()
+    }
+    
+    struct artist: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
+      typealias InitialController = UIKit.UINavigationController
+      
+      let artistController = StoryboardViewControllerResource<ArtistController>(identifier: "ArtistController")
+      let bundle = R.hostingBundle
+      let name = "Artist"
+      
+      func artistController(_: Void = ()) -> ArtistController? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: artistController)
+      }
+      
+      static func validate() throws {
+        if UIKit.UIImage(named: "camera") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'camera' is used in storyboard 'Artist', but couldn't be loaded.") }
+        if _R.storyboard.artist().artistController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'artistController' could not be loaded from storyboard 'Artist' as 'ArtistController'.") }
+      }
+      
+      fileprivate init() {}
     }
     
     struct launchScreen: Rswift.StoryboardResourceWithInitialControllerType {
@@ -134,6 +169,24 @@ struct _R: Rswift.Validatable {
       
       let bundle = R.hostingBundle
       let name = "LaunchScreen"
+      
+      fileprivate init() {}
+    }
+    
+    struct logIn: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
+      typealias InitialController = UIKit.UINavigationController
+      
+      let bundle = R.hostingBundle
+      let logInController = StoryboardViewControllerResource<LogInController>(identifier: "LogInController")
+      let name = "LogIn"
+      
+      func logInController(_: Void = ()) -> LogInController? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: logInController)
+      }
+      
+      static func validate() throws {
+        if _R.storyboard.logIn().logInController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'logInController' could not be loaded from storyboard 'LogIn' as 'LogInController'.") }
+      }
       
       fileprivate init() {}
     }
