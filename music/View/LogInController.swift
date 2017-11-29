@@ -30,6 +30,10 @@ class LogInController: UIViewController {
             textField?.addTarget(self, action: #selector(LogInController.updateTextField), for: .editingChanged)
         }
         updateTextField()
+        
+        if passFieldConstraintNormalValue == nil {
+            passFieldConstraintNormalValue = passwordFieldCenterYconstraint.constant
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,13 +46,6 @@ class LogInController: UIViewController {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
         view.endEditing(true)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if passFieldConstraintNormalValue == nil {
-            passFieldConstraintNormalValue = passwordFieldCenterYconstraint.constant
-        }
     }
     
     // MARK: - Methods

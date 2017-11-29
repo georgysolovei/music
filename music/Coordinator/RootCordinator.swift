@@ -33,19 +33,21 @@ final class RootCoordinator : RootCoordinatorProtocol {
         
         if isNilOrEmpty(sessionKey) {
             child = AuthCoordinator(window:window)
-            (child as! AuthCoordinator).sessionKey.bind {
-                if !isNilOrEmpty($0) {
-                    self.start()
-                }
-            }
+            (child as! AuthCoordinator).authDelegate = self
+
         } else {
             child = ArtistCoordinator(window:window)
-            (child as! ArtistCoordinator).sessionKey.bind {
-                if isNilOrEmpty($0) {
-                    self.start()
-                }
-            }
+            (child as! ArtistCoordinator).authDelegate = self
         }
         child!.start()
+    }
+}
+extension RootCoordinator : AuthDelegate {
+    func logIn() {
+        start()
+    }
+    
+    func logOut() {
+        start()
     }
 }

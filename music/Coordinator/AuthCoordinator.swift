@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol AuthDelegate : class {
+    func logIn()
+    func logOut()
+}
+
 class AuthCoordinator {
     
     var navigationController : UINavigationController?
     weak var window: UIWindow!
     
-    var sessionKey = Dynamic<String?>(nil)
+    weak var authDelegate : AuthDelegate!
     
     init(window: UIWindow) {
         self.window = window
@@ -33,13 +38,14 @@ extension AuthCoordinator : CoordinatorProtocol {
         // LogInViewModel Binding
         loginViewModel.sessionKey.bind {
             if !isNilOrEmpty($0) {
-                self.sessionKey.value = $0!
                 self.finish()
             }
         }
     }
     
     func finish() {
-        // delegate
+        authDelegate.logIn()
     }
 }
+
+

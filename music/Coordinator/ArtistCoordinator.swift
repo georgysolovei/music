@@ -13,8 +13,8 @@ class ArtistCoordinator {
     var navigationController : UINavigationController?
     weak var window: UIWindow!
     
-    var sessionKey = Dynamic<String?>(nil)
-    
+    weak var authDelegate : AuthDelegate!
+
     init(window: UIWindow) {
         self.window = window
     }
@@ -34,12 +34,13 @@ extension ArtistCoordinator : CoordinatorProtocol {
         artistViewModel.sessionKey.bind {
             if isNilOrEmpty($0) {
                 self.finish()
-                self.sessionKey.value = nil
+                self.finish()
+
             }
         }
     }
     
     func finish() {
-        print("finish")
+        authDelegate.logOut()
     }
 }
