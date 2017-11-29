@@ -15,5 +15,7 @@ final class AlertManager {
         }
         alertController.addAction(ok)
         alertController.show(alertController, sender: nil)
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        rootViewController.present(alertController, animated: true, completion: nil)
     }
 }

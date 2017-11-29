@@ -23,7 +23,8 @@ class ArtistController: UIViewController {
         super.viewDidLoad()
         
         artistViewModel!.artists.bind {
-            print($0.count)
+            let _ = $0
+            
             self.tableView.reloadData()
         }
     }

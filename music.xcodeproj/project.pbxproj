@@ -91,6 +91,7 @@
 				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
 				0B45CD671FBEDF190052761C /* LogInController.swift */,
 				0B1E64A31FC46655000CBD84 /* Spinner.swift */,
+				8E4A3F8C1FC211BF000820AF /* AlertManager.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -134,9 +135,6 @@
 				0B2FBF711FC2B94F009C657C /* Utility */,
 				0B5BA6601FC3139900E3FE5D /* Resources */,
 				0B45CD651FBEDF190052761C /* AppDelegate.swift */,
-				0B45CD691FBEDF190052761C /* Main.storyboard */,
-				0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */,
-				0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */,
 				0B45CD711FBEDF190052761C /* Info.plist */,
 			);
 			path = music;
@@ -146,6 +144,9 @@
 			isa = PBXGroup;
 			children = (
 				0B45CD6E1FBEDF190052761C /* LaunchScreen.storyboard */,
+				0B45CD691FBEDF190052761C /* Main.storyboard */,
+				0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */,
+				0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */,
 				0B45CD6C1FBEDF190052761C /* Assets.xcassets */,
 			);
 			name = Resources;
@@ -189,7 +190,6 @@
 				8E4A3F8A1FC2034D000820AF /* RequestManager.swift */,
 				0B5BA65E1FC3134300E3FE5D /* PersistencyManager.swift */,
 				0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */,
-				8E4A3F8C1FC211BF000820AF /* AlertManager.swift */,
 				0BD75BED1FC2EF740030D27D /* XmlParser.swift */,
 				0B5BA6661FC4279600E3FE5D /* JsonParser.swift */,
 			);
