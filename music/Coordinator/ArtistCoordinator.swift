@@ -8,11 +8,14 @@
 
 import UIKit
 
+protocol TransitionProtocol : class {
+    func transitionToArtist(_ artist: Artist)
+}
+
 class ArtistCoordinator {
     
     var navigationController : UINavigationController?
     weak var window: UIWindow!
-    
     weak var authDelegate : AuthDelegate!
 
     init(window: UIWindow) {
@@ -28,19 +31,27 @@ extension ArtistCoordinator : CoordinatorProtocol {
         let artistController = navigationController?.childViewControllers.first as! ArtistController 
       
         let artistViewModel = AtristViewModel()
+        artistViewModel.transitionDelegate = self
         artistController.artistViewModel = artistViewModel
 
         // ArtistViewModel Binding
         artistViewModel.sessionKey.bind {
             if isNilOrEmpty($0) {
                 self.finish()
-                self.finish()
-
             }
         }
     }
     
     func finish() {
         authDelegate.logOut()
+    }
+}
+
+extension ArtistCoordinator : TransitionProtocol {
+    
+    func transitionToArtist(_ artist: Artist) {
+     
+        let trackListCoorinator = TrackListCoordinator(window: window, artist:artist)
+        trackListCoorinator.start()
     }
 }

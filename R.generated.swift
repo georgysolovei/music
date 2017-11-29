@@ -151,13 +151,19 @@ struct _R: Rswift.Validatable {
       let artistController = StoryboardViewControllerResource<ArtistController>(identifier: "ArtistController")
       let bundle = R.hostingBundle
       let name = "Artist"
+      let trackListController = StoryboardViewControllerResource<TrackListController>(identifier: "TrackListController")
       
       func artistController(_: Void = ()) -> ArtistController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: artistController)
       }
       
+      func trackListController(_: Void = ()) -> TrackListController? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: trackListController)
+      }
+      
       static func validate() throws {
         if UIKit.UIImage(named: "camera") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'camera' is used in storyboard 'Artist', but couldn't be loaded.") }
+        if _R.storyboard.artist().trackListController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'trackListController' could not be loaded from storyboard 'Artist' as 'TrackListController'.") }
         if _R.storyboard.artist().artistController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'artistController' could not be loaded from storyboard 'Artist' as 'ArtistController'.") }
       }
       

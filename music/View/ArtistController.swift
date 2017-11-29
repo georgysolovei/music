@@ -93,6 +93,10 @@ extension ArtistController : UITableViewDataSource {
 }
 
 extension ArtistController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        artistViewModel?.didSelectItemAt(indexPath.row)
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         guard let lastVisibleCell =  tableView.visibleCells.last else { return }

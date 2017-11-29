@@ -13,6 +13,7 @@ import SwiftyJSON
 private let ApiBaseUrl = "https://ws.audioscrobbler.com/2.0/"
 private let ApiMethodGetMobileSession = "auth.getMobileSession"
 private let ApiMethodGetTopArtists = "chart.getTopArtists"
+private let ApiMethodGetArtistTopTracks = "artist.getTopTracks"
 
 // Reachability
 let serverReachabilityManager: NetworkReachabilityManager? = {
@@ -123,12 +124,9 @@ final class RequestManager {
                 return (errorDescription, nil)
             }
             if let result = jsonResponse.result.value {
-                //let JSON =  result as! NSDictionary
                 let json = JSON(result)
-                
-                let artists = JsonParser.parseArtists(json)
 
-                return (nil, artists)
+                return (nil, json)
             }
         }
         return("Request failed", nil)
@@ -154,7 +152,7 @@ final class RequestManager {
     
     // MARK: - Requests
     class func getMobileSession(userName:String, password:String, success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
-        
+    
         var params = ["api_key": ApiKey,
                        "method": ApiMethodGetMobileSession,
                      "password": password,
@@ -166,11 +164,10 @@ final class RequestManager {
                        success: { response in
                         
                         if let responseData = response as? DataResponse<Data> {
-                            guard let data = responseData.data  else { return }
+                            guard let data = responseData.data else { return }
                             if let sessionKey = XmlParser.getSessionKeyFrom(data) {
                                 success(sessionKey)
                             } else {
-                                
                                 if let error = XmlParser.parseError(data) {
                                     failure(error)
                                 }
@@ -181,21 +178,36 @@ final class RequestManager {
     }
     
     class func getTopArtists(page:Int, success: @escaping ([Artist]) -> Void, failure : @escaping FailureClosure) {
-         let params = ["method": ApiMethodGetTopArtists,
-                      "api_key": ApiKey,
-                       "format": "json",
-                         "page": page] as [String : Any]
+     
+        let params = ["method": ApiMethodGetTopArtists,
+                     "api_key": ApiKey,
+                      "format": "json",
+                        "page": page] as [String : Any]
         
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
                        success: { response in
-                       
                         
-                        if let responseData = response as? [Artist] {
-                            print(responseData.count)
-
-                            success(responseData)
+                        if let jsonResponse = response as? JSON {
+                            let artists = JsonParser.parseArtists(jsonResponse)
+                            success(artists)
                         }
+        },
+                       failure: failure)
+    }
 
+    class func getTracksForArtist(_ artist:String, page:Int = 1, success: @escaping ([Track]) -> Void, failure : @escaping FailureClosure) {
+        let params = ["method": ApiMethodGetArtistTopTracks,
+                     "api_key": ApiKey,
+                      "format": "json",
+                        "page": page] as [String : Any]
+        
+        genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
+                       success: { response in
+                        
+                        if let responseData = response as? JSON {
+                            let tracks = JsonParser.parseTracks(responseData)
+                            success(tracks)
+                        }
         },
                        failure: failure)
     }

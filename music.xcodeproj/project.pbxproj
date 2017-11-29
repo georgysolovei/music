@@ -21,7 +21,12 @@
 		0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6621FC318B400E3FE5D /* SessionKey.swift */; };
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
-		0B8096011FCD65EE00E7262B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8096001FCD65ED00E7262B /* R.generated.swift */; };
+		0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF71FCEA7BB00E6104A /* Track.swift */; };
+		0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */; };
+		0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */; };
+		0B9E8AFE1FCED99700E6104A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AFD1FCED99700E6104A /* Coordinator.swift */; };
+		0B9E8B061FCEE52B00E6104A /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8B051FCEE52A00E6104A /* R.generated.swift */; };
+		0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8B071FCEE70300E6104A /* TrackListViewModel.swift */; };
 		0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */; };
 		0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */; };
 		0BB1651D1FCD5BD100782FD0 /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */; };
@@ -54,7 +59,12 @@
 		0B5BA6621FC318B400E3FE5D /* SessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKey.swift; sourceTree = "<group>"; };
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
-		0B8096001FCD65ED00E7262B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		0B9E8AF71FCEA7BB00E6104A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListController.swift; sourceTree = "<group>"; };
+		0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListCoordinator.swift; sourceTree = "<group>"; };
+		0B9E8AFD1FCED99700E6104A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		0B9E8B051FCEE52A00E6104A /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		0B9E8B071FCEE70300E6104A /* TrackListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListViewModel.swift; sourceTree = "<group>"; };
 		0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCoordinator.swift; sourceTree = "<group>"; };
 		0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
@@ -88,6 +98,7 @@
 		0B2FBF701FC2B8DA009C657C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */,
 				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
 				0B45CD671FBEDF190052761C /* LogInController.swift */,
 				0B1E64A31FC46655000CBD84 /* Spinner.swift */,
@@ -99,7 +110,7 @@
 		0B2FBF711FC2B94F009C657C /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				0B8096001FCD65ED00E7262B /* R.generated.swift */,
+				0B9E8B051FCEE52A00E6104A /* R.generated.swift */,
 				0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */,
 				0B2FBF721FC2B982009C657C /* Utility.swift */,
 			);
@@ -143,10 +154,10 @@
 		0B5BA6601FC3139900E3FE5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */,
 				0B45CD6E1FBEDF190052761C /* LaunchScreen.storyboard */,
 				0B45CD691FBEDF190052761C /* Main.storyboard */,
 				0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */,
-				0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */,
 				0B45CD6C1FBEDF190052761C /* Assets.xcassets */,
 			);
 			name = Resources;
@@ -161,6 +172,7 @@
 				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
 				0BD22F901FCC34A5004BB863 /* Dynamic.swift */,
 				0B5BA6641FC4269300E3FE5D /* Artist.swift */,
+				0B9E8AF71FCEA7BB00E6104A /* Track.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -171,6 +183,8 @@
 				0BD22F891FCC0B71004BB863 /* RootCordinator.swift */,
 				0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */,
 				0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */,
+				0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */,
+				0B9E8AFD1FCED99700E6104A /* Coordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -178,6 +192,7 @@
 		0BD22F8B1FCC15CF004BB863 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				0B9E8B071FCEE70300E6104A /* TrackListViewModel.swift */,
 				0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */,
 				0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */,
 			);
@@ -377,6 +392,7 @@
 			files = (
 				0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */,
 				0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */,
+				0B9E8AFE1FCED99700E6104A /* Coordinator.swift in Sources */,
 				0B2FBF731FC2B982009C657C /* Utility.swift in Sources */,
 				8E4A3F8D1FC211BF000820AF /* AlertManager.swift in Sources */,
 				0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */,
@@ -384,14 +400,18 @@
 				0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */,
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
-				0B8096011FCD65EE00E7262B /* R.generated.swift in Sources */,
+				0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */,
 				0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
 				0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */,
 				0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */,
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
+				0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0BD22F911FCC34A5004BB863 /* Dynamic.swift in Sources */,
+				0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */,
+				0B9E8B061FCEE52B00E6104A /* R.generated.swift in Sources */,
+				0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */,
 				0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */,
 				0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */,
 				0B5BA65F1FC3134300E3FE5D /* PersistencyManager.swift in Sources */,

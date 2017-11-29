@@ -10,10 +10,12 @@ import Foundation
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
+    var artists: Dynamic<[Artist]>{ get }
+    
     func getArtistForIndex(_ index:Int) -> Artist
     func didScrollToBottom()
     func logOut()
-    var artists: Dynamic<[Artist]>{ get }
+    func didSelectItemAt(_ index:Int)
 }
 
 final class AtristViewModel {
@@ -22,12 +24,13 @@ final class AtristViewModel {
     var artistModel = ArtistModel()
     var sessionKey : Dynamic<String?> = Dynamic(nil)
     
+    weak var transitionDelegate : TransitionProtocol?
+    
     init() {
         sessionKey.value = artistModel.getSessionKey()
         RequestManager.getTopArtists(page: page, success: { response in
             self.artists.value = response
         }, failure: {_ in })
-        
     }
 }
 
@@ -37,16 +40,6 @@ extension AtristViewModel : ArtistViewModelProtocol {
         return artists.value.count
     }
     
-//    RequestManager.getTopArtists(page: page, success: { response in
-//    self.artists.removeAll()
-//    self.artists = response
-//
-//    self.tableView.reloadData()
-//    self.tableView.isHidden = self.artists.isEmpty ? true : false
-//    self.page += 1
-//
-//    }, failure: { error in })
-//}
     func getArtistForIndex(_ index:Int) -> Artist {
         return artists.value[index]
     }
@@ -61,5 +54,10 @@ extension AtristViewModel : ArtistViewModelProtocol {
     func logOut() {
         artistModel.deleteSessionKey()
         sessionKey.value = nil
+    }
+    
+    func didSelectItemAt(_ index:Int) {
+        let selectedArtist = artists.value[index]
+        transitionDelegate?.transitionToArtist(selectedArtist)
     }
 }

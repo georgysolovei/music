@@ -42,6 +42,7 @@ final class RootCoordinator : RootCoordinatorProtocol {
         child!.start()
     }
 }
+
 extension RootCoordinator : AuthDelegate {
     func logIn() {
         start()
