@@ -18,10 +18,6 @@ class LogInController: UIViewController {
     
     var viewModel: LoginViewModelProtocol!
 
-    struct Const {
-        static let albumSegue = "ArtistSegue"
-    }
-
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()

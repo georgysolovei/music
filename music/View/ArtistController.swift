@@ -22,11 +22,9 @@ class ArtistController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        artistViewModel!.artists.bind {
-            let _ = $0
-            
+        artistViewModel!.artists.bind (listener: { _ in
             self.tableView.reloadData()
-        }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,8 +43,6 @@ class ArtistController: UIViewController {
     
     // MARK: - IB Actions
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
-        //  PersistencyManager.shared.deleteSessionKey()
-        // navigationController?.popViewController(animated: true)
         artistViewModel?.logOut()
     }
     
