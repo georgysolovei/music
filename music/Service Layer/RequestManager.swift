@@ -197,6 +197,7 @@ final class RequestManager {
 
     class func getTracksForArtist(_ artist:String, page:Int = 1, success: @escaping ([Track]) -> Void, failure : @escaping FailureClosure) {
         let params = ["method": ApiMethodGetArtistTopTracks,
+                      "artist": artist,
                      "api_key": ApiKey,
                       "format": "json",
                         "page": page] as [String : Any]

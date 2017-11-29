@@ -8,17 +8,29 @@
 
 protocol TrackListViewModelProtocol : class {
     var tracksCount: Int { get }
+    func trackAt(index:Int) -> Track?
 }
 
 class TrackListViewModel  {
-    var tracks : [Track]?
+    var tracks : Dynamic<[Track]?>
     let artist : Artist
+    let page = 1
     init(artist:Artist) {
         self.artist = artist
+        self.tracks = Dynamic(nil)
+        RequestManager.getTracksForArtist(artist.name, success: { response in
+            self.tracks.value = response
+        }, failure: { _ in })
     }
 }
+
 extension TrackListViewModel : TrackListViewModelProtocol {
     var tracksCount: Int {
-        return tracks?.count ?? 0
+        return tracks.value?.count ?? 0
+    }
+
+    func trackAt(index:Int) -> Track? {
+        guard let track = tracks.value?[index] else { return nil }
+        return track
     }
 }

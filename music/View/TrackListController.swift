@@ -15,7 +15,9 @@ class TrackListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isOpaque = true
+        (viewModel as! TrackListViewModel).tracks.bind (listener: {_ in
+            self.tableView.reloadData()
+        })
     }
 }
 
@@ -25,7 +27,9 @@ extension TrackListController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackCell
+        cell.track = viewModel.trackAt(index: indexPath.row)
+        return cell
     }
 }
 

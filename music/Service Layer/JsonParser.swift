@@ -41,8 +41,28 @@ final class JsonParser {
     class func parseTracks(_ json:JSON) -> [Track] {
         var tracks = [Track]()
         
-        guard let jsonSongDictionary = json.dictionary else { return tracks }
-
+        guard let jsonTracksDictionary = json.dictionary               else { return tracks }
+        guard let tracksDictionary = jsonTracksDictionary["toptracks"] else { return tracks }
+        guard let jsonTracksArray = tracksDictionary["track"].array    else { return tracks }
+        
+        for jsonTrack in jsonTracksArray {
+            let track = Track()
+            
+            track.name      = jsonTrack.dictionaryValue["name"]?.stringValue ?? ""
+            track.listeners = jsonTrack.dictionaryValue["listeners"]?.intValue ?? 0
+            track.playcount = jsonTrack.dictionaryValue["playcount"]?.intValue ?? 0
+            
+            guard let imageUrls = jsonTrack.dictionaryValue["image"]?.array else { continue }
+            
+            for imageUrl in imageUrls {
+                guard let imageDict = imageUrl.dictionary else { continue }
+                
+                if imageDict["size"] == "extralarge" {
+                    track.imageUrl  = imageDict["#text"]?.stringValue ?? ""
+                }
+            }
+            tracks.append(track)
+        }
         
         return tracks
     }
