@@ -12,12 +12,18 @@ protocol TransitionProtocol : class {
     func transitionToArtist(_ artist: Artist)
 }
 
-class ArtistCoordinator {
+protocol TrackListCoordinatorDelegate : class {
+    func didFinishTrackList()
+}
+
+class ArtistCoordinator  {
     
     var navigationController : UINavigationController?
     weak var window: UIWindow!
     weak var authDelegate : AuthDelegate!
-
+    
+    var childCoordinators = [Any]()
+    
     init(window: UIWindow) {
         self.window = window
     }
@@ -28,6 +34,7 @@ extension ArtistCoordinator : CoordinatorProtocol {
         
         navigationController = R.storyboard.artist.instantiateInitialViewController()
         window.rootViewController = navigationController
+        
         let artistController = navigationController?.childViewControllers.first as! ArtistController 
       
         let artistViewModel = AtristViewModel()
@@ -53,5 +60,15 @@ extension ArtistCoordinator : TransitionProtocol {
      
         let trackListCoorinator = TrackListCoordinator(window: window, artist:artist)
         trackListCoorinator.start()
+        trackListCoorinator.trackListDelegate = self
+        childCoordinators.append(trackListCoorinator)
+    }
+}
+
+extension ArtistCoordinator : TrackListCoordinatorDelegate {
+    func didFinishTrackList() {
+        childCoordinators.removeAll()
+       // navigationController?.popViewController(animated: true)
+       // window.rootViewController = navigationController
     }
 }

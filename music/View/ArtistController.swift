@@ -25,6 +25,7 @@ class ArtistController: UIViewController {
         artistViewModel!.artists.bind (listener: { _ in
             self.tableView.reloadData()
         })
+        navigationController?.navigationBar.tintColor = UIColor.orange
     }
     
     override func viewWillAppear(_ animated: Bool) {

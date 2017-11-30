@@ -23,6 +23,8 @@ class TrackCell: UITableViewCell {
             playCountLabel.text = track != nil ? String(describing: track!.playcount) : ""
             listenersLabel.text = track != nil ? String(describing: track!.listeners) : ""
             rankLabel.text      = track != nil ? String(describing: track!.rank)      : ""
+            
+            nameLabel.textColor = UIColor.orange
         }
     }
 }

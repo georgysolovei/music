@@ -51,6 +51,7 @@ final class JsonParser {
             track.name      = jsonTrack.dictionaryValue["name"]?.stringValue ?? ""
             track.listeners = jsonTrack.dictionaryValue["listeners"]?.intValue ?? 0
             track.playcount = jsonTrack.dictionaryValue["playcount"]?.intValue ?? 0
+            track.rank      = jsonTrack.dictionaryValue["@attr"]?.dictionaryValue["rank"]?.intValue ?? 0
             
             guard let imageUrls = jsonTrack.dictionaryValue["image"]?.array else { continue }
             

@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol TrackListViewModelDelegate : class {
+    func didPressBackButton()
+}
+
 class TrackListCoordinator : Coordinator {
     
     var artist : Artist
+    var navigationController : UINavigationController?
+
+    weak var trackListDelegate : TrackListCoordinatorDelegate?
     
     init(window:UIWindow, artist: Artist) {
         self.artist = artist
@@ -20,8 +27,18 @@ class TrackListCoordinator : Coordinator {
     override func start() {
         let trackListController = R.storyboard.artist.trackListController()
         let trackListViewModel  = TrackListViewModel(artist:artist)
+       
         trackListController?.viewModel = trackListViewModel
-        
-        window.rootViewController = trackListController
+        trackListViewModel.trackListDelegate = self
+      
+        navigationController = window.rootViewController as? UINavigationController
+        navigationController?.pushViewController(trackListController!, animated: true)
+    }
+}
+
+extension TrackListCoordinator : TrackListViewModelDelegate {
+    func didPressBackButton() {
+        navigationController?.popViewController(animated: true)
+        trackListDelegate?.didFinishTrackList()
     }
 }

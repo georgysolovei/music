@@ -9,12 +9,16 @@
 protocol TrackListViewModelProtocol : class {
     var tracksCount: Int { get }
     func trackAt(index:Int) -> Track?
+    func didPressBackButton()
 }
 
 class TrackListViewModel  {
     var tracks : Dynamic<[Track]?>
     let artist : Artist
     let page = 1
+    
+    weak var trackListDelegate: TrackListViewModelDelegate?
+
     init(artist:Artist) {
         self.artist = artist
         self.tracks = Dynamic(nil)
@@ -25,6 +29,7 @@ class TrackListViewModel  {
 }
 
 extension TrackListViewModel : TrackListViewModelProtocol {
+    
     var tracksCount: Int {
         return tracks.value?.count ?? 0
     }
@@ -32,5 +37,8 @@ extension TrackListViewModel : TrackListViewModelProtocol {
     func trackAt(index:Int) -> Track? {
         guard let track = tracks.value?[index] else { return nil }
         return track
+    }
+    func didPressBackButton() {
+        trackListDelegate?.didPressBackButton()
     }
 }
