@@ -2,9 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:music/MyPlayground.playground">
+   </FileRef>
+   <FileRef
       location = "container:music.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:music.xcodeproj">
    </FileRef>
 </Workspace>

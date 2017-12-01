@@ -186,9 +186,13 @@ final class RequestManager {
         
         genericRequest(method: ApiMethodGetMobileSession, params: params, responseFormat: .json,
                        success: { response in
+                        // должен возвращать Observable от Artisits
+                        // RxAlamofire
+                        // обработка onNext, onError...
                         
+                        // в background
                         if let jsonResponse = response as? JSON {
-                            let artists = JsonParser.parseArtists(jsonResponse)
+                            let artists = JsonParser.parseArtists(jsonResponse) // Observable
                             success(artists)
                         }
         },
