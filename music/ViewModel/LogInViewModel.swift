@@ -26,15 +26,16 @@ final class LogInViewModel {
 
 extension LogInViewModel : LoginViewModelProtocol {
     func logIn(userName: String, pass: String) {
-        RequestManager.getMobileSession(userName: userName, password: pass, success: { response in
-            if let sessionKey = response as? String {
-                self.loginModel.saveSessionKey(sessionKey)
-                self.sessionKey.value = sessionKey
-            }
-        }, failure: { error in
-            print(error)
-            AlertManager.showAlert(title: "Error", message: error)
-        })
+//        RequestManager.getMobileSession(userName: userName, password: pass, success: { response in
+//            if let sessionKey = response as? String {
+//                self.loginModel.saveSessionKey(sessionKey)
+//                self.sessionKey.value = sessionKey
+//            }
+//        }, failure: { error in
+//            print(error)
+//            AlertManager.showAlert(title: "Error", message: error)
+//        })
+        RequestManager.getMobileSession(userName: userName, password: pass)
     }
 }
 

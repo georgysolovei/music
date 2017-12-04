@@ -52,7 +52,7 @@ final class RequestManager {
     {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        
+
         let manager = SessionManager(configuration: configuration)
         
         return manager
@@ -151,8 +151,9 @@ final class RequestManager {
     }
     
     // MARK: - Requests
-    class func getMobileSession(userName:String, password:String, success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
-    
+  //  class func getMobileSession(userName:String, password:String, success: @escaping SuccessClosure, failure : @escaping FailureClosure) {
+    class func getMobileSession(userName:String, password:String) -> Observable<String> {
+
         var params = ["api_key": ApiKey,
                        "method": ApiMethodGetMobileSession,
                      "password": password,
@@ -160,21 +161,32 @@ final class RequestManager {
         
         params["api_sig"] = Md5HashGenerator.getApiSignatureFor(params)
        
-        genericRequest(params: params, responseFormat: .xml,
-                       success: { response in
-                        
-                        if let responseData = response as? DataResponse<Data> {
-                            guard let data = responseData.data else { return }
-                            if let sessionKey = XmlParser.getSessionKeyFrom(data) {
-                                success(sessionKey)
-                            } else {
-                                if let error = XmlParser.parseError(data) {
-                                    failure(error)
-                                }
-                            }
-                        }
-        },
-                       failure: failure)
+//        genericRequest(params: params, responseFormat: .xml,
+//                       success: { response in
+//
+//                        if let responseData = response as? DataResponse<Data> {
+//                            guard let data = responseData.data else { return }
+//                            if let sessionKey = XmlParser.getSessionKeyFrom(data) {
+//                                success(sessionKey)
+//                            } else {
+//                                if let error = XmlParser.parseError(data) {
+//                                    failure(error)
+//                                }
+//                            }
+//                        }
+//        },
+//                       failure: failure)
+        
+        let sessionKey = sessionManager.rx.data(.post, ApiBaseUrl, parameters: params).map({ data in
+//            if let sessionKey = XmlParser.getSessionKeyFrom(data) {
+//                print(sessionKey)
+//                return sessionKey
+//            } else {
+//                return ""
+//            }
+        }).subscribe()
+        
+        return Observable.of("")
     }
     
     class func getTopArtists(page:Int) -> Observable<[Artist]> {
