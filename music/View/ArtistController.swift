@@ -8,12 +8,14 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 class ArtistController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var artistViewModel : ArtistViewModelProtocol?
-    
+    let disposeBag = DisposeBag()
     struct Const {
         static let cell = "Cell"
     }
@@ -21,10 +23,14 @@ class ArtistController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.rx.setDataSource(self).disposed(by: disposeBag)
+//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
-        artistViewModel!.artists.bind (listener: { _ in
-            self.tableView.reloadData()
-        })
+//        artistViewModel!.artists.bind (listener: { _ in
+//            DispatchQueue.main.sync {
+//                self.tableView.reloadData()
+//            }
+//        })
         navigationController?.navigationBar.tintColor = UIColor.orange
     }
     
@@ -59,17 +65,8 @@ class ArtistController: UIViewController {
             UIApplication.shared.open(link, options: [:], completionHandler: nil)
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
+
 extension ArtistController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let artistViewModel = artistViewModel else { return 0 }

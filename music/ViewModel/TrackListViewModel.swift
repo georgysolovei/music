@@ -22,9 +22,9 @@ class TrackListViewModel  {
     init(artist:Artist) {
         self.artist = artist
         self.tracks = Dynamic(nil)
-        RequestManager.getTracksForArtist(artist.name, success: { response in
-            self.tracks.value = response
-        }, failure: { _ in })
+//        RequestManager.getTracksForArtist(artist.name, success: { response in
+//            self.tracks.value = response
+//        }, failure: { _ in })
     }
 }
 

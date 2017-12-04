@@ -122,7 +122,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="jYf-li-onM" id="qo6-MR-1IC"/>
-                                    <outlet property="delegate" destination="jYf-li-onM" id="kcb-Tm-oDb"/>
+                                    <outlet property="delegate" destination="jYf-li-onM" id="rBm-Xh-ogO"/>
                                 </connections>
                             </tableView>
                         </subviews>

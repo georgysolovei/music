@@ -80,7 +80,7 @@ example("Merge", action: {
     let firstSeq = Observable.of(1,2,3)
     let secSeq   = Observable.of(4,5,6)
     
-    let bothSeq = Observable.of(firstSeq, secSeq)
+    let bothSeq = .of(firstSeq, secSeq)
     
     let mergeSeq = bothSeq.merge()
     

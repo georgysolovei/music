@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
-    var artists: Dynamic<[Artist]>{ get }
+    var artists: Observable<[Artist]>{ get }
     
     func getArtistForIndex(_ index:Int) -> Artist
     func didScrollToBottom()
@@ -19,7 +20,7 @@ protocol ArtistViewModelProtocol : class {
 }
 
 final class AtristViewModel {
-    var artists = Dynamic([Artist]())
+    var artists : Observable<[Artist]>
     var page = 2
     var artistModel = ArtistModel()
     var sessionKey : Dynamic<String?> = Dynamic(nil)
@@ -28,27 +29,31 @@ final class AtristViewModel {
     
     init() {
         sessionKey.value = artistModel.getSessionKey()
-        RequestManager.getTopArtists(page: page, success: { response in
-            self.artists.value = response
-        }, failure: {_ in })
+//        RequestManager.getTopArtists(page: page, success: { response in
+//            self.artists.value = response
+//        }, failure: {_ in })
+        
+        artists = RequestManager.getTopArtists(page: page)
+        artists.subscribe({ event in
+            print(event.element)
+        })
     }
 }
 
 extension AtristViewModel : ArtistViewModelProtocol {
 
     var numberOfRows: Int {
-        return artists.value.count
+        return 0
     }
-    
     func getArtistForIndex(_ index:Int) -> Artist {
-        return artists.value[index]
+        return Artist()// artists.value[index]
     }
     
     func didScrollToBottom() {
-        RequestManager.getTopArtists(page: page, success: { response in            
-            self.artists.value.append(contentsOf: response)
-            self.page += 1
-        }, failure: { error in })
+//        RequestManager.getTopArtists(page: page, success: { response in            
+//            self.artists.value.append(contentsOf: response)
+//            self.page += 1
+//        }, failure: { error in })
     }
     
     func logOut() {
@@ -57,7 +62,7 @@ extension AtristViewModel : ArtistViewModelProtocol {
     }
     
     func didSelectItemAt(_ index:Int) {
-        let selectedArtist = artists.value[index]
-        transitionDelegate?.transitionToArtist(selectedArtist)
+ //       let selectedArtist = artists.value[index]
+ //       transitionDelegate?.transitionToArtist(selectedArtist)
     }
 }

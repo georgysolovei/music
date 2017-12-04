@@ -10,10 +10,12 @@ target 'music' do
   # Pods for music
 	pod 'R.swift'
 	pod 'RxSwift'
+    pod 'RxCocoa'
 	pod 'RealmSwift'
 	pod 'Alamofire'
     pod 'SwiftyJSON'
     pod 'KissXML'
     pod 'NVActivityIndicatorView'
     pod 'Kingfisher'
+    pod 'RxAlamofire'
 end
