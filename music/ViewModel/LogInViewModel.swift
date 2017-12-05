@@ -6,37 +6,33 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
+import RxSwift
+
 protocol LoginViewModelProtocol: class {
     func logIn(userName:String, pass:String)
 }
 
 final class LogInViewModel {
-    var loginModel : LogInModel!
-    var sessionKey : Dynamic<String?> = Dynamic(nil)
+    var loginModel : LogInModel
+    var sessionKey : Variable<String?> = Variable(nil)
+    let disposeBag = DisposeBag()
 
     init() {
         loginModel = LogInModel()
-        sessionKey = Dynamic(nil)
-        
-        if let key = PersistencyManager.shared.getSessionKey() {
-            sessionKey.value = key
-        }
     }
 }
 
 extension LogInViewModel : LoginViewModelProtocol {
     func logIn(userName: String, pass: String) {
-//        RequestManager.getMobileSession(userName: userName, password: pass, success: { response in
-//            if let sessionKey = response as? String {
-//                self.loginModel.saveSessionKey(sessionKey)
-//                self.sessionKey.value = sessionKey
-//            }
-//        }, failure: { error in
-//            print(error)
-//            AlertManager.showAlert(title: "Error", message: error)
-//        })
-        RequestManager.getMobileSession(userName: userName, password: pass)
+        RequestManager.getMobileSession(userName: userName, password: pass).subscribe(onNext: { event in
+            if !isNilOrEmpty(event) {
+                self.loginModel.saveSessionKey(event!)
+                self.sessionKey.value = event!
+            }
+        }, onError: { error in
+            Spinner.shared.stop()
+            AlertManager.showAlert(title: "Error", message: "Login failed")
+            print(error.localizedDescription)
+        }).disposed(by: disposeBag)
     }
 }
-
-

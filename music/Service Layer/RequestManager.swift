@@ -28,7 +28,8 @@ final class RequestManager {
 // MARK: - Requests
 //--------------------------------------------------------------------------------------------
     class func getMobileSession(userName:String, password:String) -> Observable<String?> {
-
+        Spinner.shared.startAt()
+        
         var params:[String: String] = ["api_key": ApiKey,
                                         "method": ApiMethodGetMobileSession,
                                       "password": password,
@@ -38,12 +39,14 @@ final class RequestManager {
         
         return sessionManager.rx.data(.post, ApiBaseUrl, parameters: params)
             .map({ data -> String? in
+                Spinner.shared.stop()
                 return XmlParser.getSessionKeyFrom(data)
         })
     }
     
     class func getTopArtists(page:Int) -> Observable<[Artist]?> {
-    
+        Spinner.shared.startAt()
+
         let params = ["method": ApiMethodGetTopArtists,
                      "api_key": ApiKey,
                       "format": "json",
@@ -52,12 +55,14 @@ final class RequestManager {
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
             .map({ jsonArtists -> [Artist]? in
                 let artists = JSON(jsonArtists)
+                Spinner.shared.stop()
                 return JsonParser.parseArtists(artists)
             })
     }
 
     class func getTracksForArtist(_ artist:String, page:Int = 1) -> Observable<[Track]?> {
-    
+        Spinner.shared.startAt()
+
         let params = ["method": ApiMethodGetArtistTopTracks,
                       "artist": artist,
                      "api_key": ApiKey,
@@ -65,9 +70,10 @@ final class RequestManager {
                         "page": page] as [String : Any]
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
-            .map({ jsonTracks in
-                guard let tracks = jsonTracks as? JSON else { return nil }
-                return JsonParser.parseTracks(tracks)
+            .map({ rawTracks in
+                let jsonTracks = JSON(rawTracks)
+                Spinner.shared.stop()
+                return JsonParser.parseTracks(jsonTracks)
             })
     }
 }

@@ -6,13 +6,12 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
-    var artists: Observable<[Artist]?>{ get }
-    
+    var artists: Variable<[Artist]?>{ get }
+
     func getArtistForIndex(_ index:Int) -> Artist
     func didScrollToBottom()
     func logOut()
@@ -20,51 +19,53 @@ protocol ArtistViewModelProtocol : class {
 }
 
 final class AtristViewModel {
-    var artists : Observable<[Artist]?>
+    var artists : Variable<[Artist]?>
     var page = 2
     var artistModel = ArtistModel()
-    var sessionKey : Dynamic<String?> = Dynamic(nil)
+    var isFinished = Variable(false)
     
+    var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
     
     init() {
-        sessionKey.value = artistModel.getSessionKey()
-//        RequestManager.getTopArtists(page: page, success: { response in
-//            self.artists.value = response
-//        }, failure: {_ in })
+        artists = Variable(nil)
         
-        artists = RequestManager.getTopArtists(page: page)
-        artists.subscribe({ event in
-            print(event.element as Any)
-        })
+        RequestManager.getTopArtists(page: page).subscribe(onNext: {
+            self.artists.value = $0
+        }).disposed(by: disposeBag)
     }
 }
 
 extension AtristViewModel : ArtistViewModelProtocol {
 
-    
-
     var numberOfRows: Int {
-        return 0
+        return artists.value?.count ?? 0
     }
+    
     func getArtistForIndex(_ index:Int) -> Artist {
-        return Artist()// artists.value[index]
+        guard let artists = artists.value else { return Artist() }
+        let artist = artists[index]
+        return artist
     }
     
     func didScrollToBottom() {
-//        RequestManager.getTopArtists(page: page, success: { response in            
-//            self.artists.value.append(contentsOf: response)
-//            self.page += 1
-//        }, failure: { error in })
+
+        RequestManager.getTopArtists(page: page).subscribe(onNext: {
+            if let appendArtists = $0 {
+                self.artists.value?.append(contentsOf: appendArtists)
+                self.page += 1
+            }
+        }).disposed(by: disposeBag)
     }
     
     func logOut() {
         artistModel.deleteSessionKey()
-        sessionKey.value = nil
+        isFinished.value = true
     }
     
     func didSelectItemAt(_ index:Int) {
- //       let selectedArtist = artists.value[index]
- //       transitionDelegate?.transitionToArtist(selectedArtist)
+        guard let artists = artists.value else { return }
+         let selectedArtist = artists[index]
+        transitionDelegate?.transitionToArtist(selectedArtist)
     }
 }

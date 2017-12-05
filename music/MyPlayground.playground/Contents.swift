@@ -148,15 +148,15 @@ import RxSwift
  
  
  example("Variable", action: {
- let disposableBag = DisposeBag()
+     let disposableBag = DisposeBag()
  
- let variable = Variable("A")
+     let variable = Variable("A")
  
- variable.asObservable().subscribe(onNext: {
- print($0)
- }).disposed(by: disposableBag)
+     variable.asObservable().subscribe(onNext: {
+        print($0)
+     }).disposed(by: disposableBag)
  
- variable.value = "B"
+     variable.value = "B"
  })
  
  // позволяет вклиниваться между действиями операторов
@@ -356,7 +356,7 @@ import RxSwift
  }
  .addDisposableTo(disposeBag)
  }
- */
+
 
 example("variable", action: {
     var variable = Variable("Initial value")
@@ -372,8 +372,9 @@ example("variable", action: {
         .subscribe {
             print(label: "2)", event: $0)
         }
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
     // 3
     variable.value = "2"
 })
 
+ */

@@ -17,20 +17,16 @@ class ArtistController: UIViewController {
     var artistViewModel : ArtistViewModelProtocol?
     let disposeBag = DisposeBag()
     struct Const {
-        static let cell = "Cell"
+        static let cell = "ArtistCell"
     }
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.rx.setDataSource(self).disposed(by: disposeBag)
-//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-        
-//        artistViewModel!.artists.bind (listener: { _ in
-//            DispatchQueue.main.sync {
-//                self.tableView.reloadData()
-//            }
-//        })
+
+        artistViewModel?.artists.asObservable().subscribe({ _ in
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
         navigationController?.navigationBar.tintColor = UIColor.orange
     }
     

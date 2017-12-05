@@ -20,7 +20,8 @@ protocol RootCoordinatorProtocol {
 final class RootCoordinator : RootCoordinatorProtocol {
 
     weak var window: UIWindow!
-    
+
+
     var child: CoordinatorProtocol?
     
     init(window: UIWindow) {

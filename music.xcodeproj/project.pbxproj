@@ -34,7 +34,6 @@
 		0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F891FCC0B71004BB863 /* RootCordinator.swift */; };
 		0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */; };
 		0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */; };
-		0BD22F911FCC34A5004BB863 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F901FCC34A5004BB863 /* Dynamic.swift */; };
 		0BD22F931FCC3BA2004BB863 /* AtristViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */; };
 		0BD22F951FCC3FAA004BB863 /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */; };
 		0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD75BED1FC2EF740030D27D /* XmlParser.swift */; };
@@ -73,7 +72,6 @@
 		0BD22F891FCC0B71004BB863 /* RootCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCordinator.swift; sourceTree = "<group>"; };
 		0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
-		0BD22F901FCC34A5004BB863 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtristViewModel.swift; sourceTree = "<group>"; };
 		0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
 		0BD75BED1FC2EF740030D27D /* XmlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmlParser.swift; sourceTree = "<group>"; };
@@ -173,7 +171,6 @@
 				0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */,
 				0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */,
 				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
-				0BD22F901FCC34A5004BB863 /* Dynamic.swift */,
 				0B5BA6641FC4269300E3FE5D /* Artist.swift */,
 				0B9E8AF71FCEA7BB00E6104A /* Track.swift */,
 			);
@@ -416,7 +413,6 @@
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
 				0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
-				0BD22F911FCC34A5004BB863 /* Dynamic.swift in Sources */,
 				0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */,
 				0B9E8B061FCEE52B00E6104A /* R.generated.swift in Sources */,
 				0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */,
@@ -565,9 +561,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 96YAFFZLHL;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				INFOPLIST_FILE = music/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itechart.music;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -585,9 +582,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 96YAFFZLHL;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				INFOPLIST_FILE = music/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itechart.music;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

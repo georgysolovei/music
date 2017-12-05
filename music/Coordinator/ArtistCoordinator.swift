@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol TransitionProtocol : class {
     func transitionToArtist(_ artist: Artist)
@@ -21,7 +22,8 @@ class ArtistCoordinator  {
     var navigationController : UINavigationController?
     weak var window: UIWindow!
     weak var authDelegate : AuthDelegate!
-    
+    var disposeBag = DisposeBag()
+
     var childCoordinators = [Any]()
     
     init(window: UIWindow) {
@@ -41,12 +43,11 @@ extension ArtistCoordinator : CoordinatorProtocol {
         artistViewModel.transitionDelegate = self
         artistController.artistViewModel = artistViewModel
 
-        // ArtistViewModel Binding
-        artistViewModel.sessionKey.bind {
-            if isNilOrEmpty($0) {
+        artistViewModel.isFinished.asObservable().subscribe(onNext: { event in
+            if event == true {
                 self.finish()
             }
-        }
+        }).disposed(by: disposeBag)
     }
     
     func finish() {

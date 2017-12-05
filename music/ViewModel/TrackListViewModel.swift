@@ -6,6 +6,8 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
+import RxSwift
+
 protocol TrackListViewModelProtocol : class {
     var tracksCount: Int { get }
     func trackAt(index:Int) -> Track?
@@ -13,18 +15,24 @@ protocol TrackListViewModelProtocol : class {
 }
 
 class TrackListViewModel  {
-    var tracks : Dynamic<[Track]?>
+    var tracks : Variable<[Track]?>
     let artist : Artist
     let page = 1
-    
+    var disposeBag = DisposeBag()
+
     weak var trackListDelegate: TrackListViewModelDelegate?
 
     init(artist:Artist) {
         self.artist = artist
-        self.tracks = Dynamic(nil)
-//        RequestManager.getTracksForArtist(artist.name, success: { response in
-//            self.tracks.value = response
-//        }, failure: { _ in })
+        self.tracks = Variable(nil)
+        
+        RequestManager.getTracksForArtist(artist.name).subscribe({ event in
+            if let tracks = event.element {
+                if !isNilOrEmpty(tracks) {
+                    self.tracks.value = tracks!
+                }
+            }
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -35,9 +43,11 @@ extension TrackListViewModel : TrackListViewModelProtocol {
     }
 
     func trackAt(index:Int) -> Track? {
-        guard let track = tracks.value?[index] else { return nil }
+        guard let tracks = tracks.value else { return Track() }
+        let track = tracks[index]
         return track
     }
+    
     func didPressBackButton() {
         trackListDelegate?.didPressBackButton()
     }

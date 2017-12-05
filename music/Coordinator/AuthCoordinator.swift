@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol AuthDelegate : class {
     func logIn()
@@ -17,7 +18,8 @@ class AuthCoordinator {
     
     var navigationController : UINavigationController?
     weak var window: UIWindow!
-    
+    let disposeBag = DisposeBag()
+
     weak var authDelegate : AuthDelegate!
     
     init(window: UIWindow) {
@@ -35,12 +37,12 @@ extension AuthCoordinator : CoordinatorProtocol {
         let loginViewModel = LogInViewModel()
         loginController.viewModel = loginViewModel
         
-        // LogInViewModel Binding
-        loginViewModel.sessionKey.bind {
-            if !isNilOrEmpty($0) {
+        loginViewModel.sessionKey.asObservable().subscribe(onNext: { event in
+            if !isNilOrEmpty(event) {
+                print(event!)
                 self.finish()
             }
-        }
+        }).disposed(by: disposeBag)
     }
     
     func finish() {

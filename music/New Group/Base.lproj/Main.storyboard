@@ -206,8 +206,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="YzA-A3-eIu" id="wdb-WL-b4G"/>
-                                    <outlet property="delegate" destination="YzA-A3-eIu" id="6cu-Tj-QWb"/>
+                                    <outlet property="dataSource" destination="YzA-A3-eIu" id="avT-bp-ESr"/>
+                                    <outlet property="delegate" destination="YzA-A3-eIu" id="FoQ-qB-RBF"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -232,7 +232,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="tableView" destination="eHb-nD-LVd" id="jhy-wb-XKz"/>
+                        <outlet property="tableView" destination="eHb-nD-LVd" id="woN-41-yBC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="krH-U8-d3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
