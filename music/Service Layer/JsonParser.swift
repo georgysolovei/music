@@ -10,13 +10,14 @@ import Foundation
 import SwiftyJSON
 
 final class JsonParser {
-    class func parseArtists(_ json:JSON) -> [Artist] {
+    class func parseArtists(_ json:JSON) -> [Artist]? {
+
+        guard let jsonArtistsDictionary = json.dictionary              else { return nil }
+        guard let artistsDictionary = jsonArtistsDictionary["artists"] else { return nil }
+        guard let jsonArtistArray = artistsDictionary["artist"].array  else { return nil }
+
         var artists = [Artist]()
 
-        guard let jsonArtistsDictionary = json.dictionary              else { return artists }
-        guard let artistsDictionary = jsonArtistsDictionary["artists"] else { return artists }
-        guard let jsonArtistArray = artistsDictionary["artist"].array  else { return artists }
-        
         for jsonArtist in jsonArtistArray {
             let artist = Artist()
             
@@ -38,12 +39,13 @@ final class JsonParser {
         return artists
     }
     
-    class func parseTracks(_ json:JSON) -> [Track] {
-        var tracks = [Track]()
+    class func parseTracks(_ json:JSON) -> [Track]? {
         
-        guard let jsonTracksDictionary = json.dictionary               else { return tracks }
-        guard let tracksDictionary = jsonTracksDictionary["toptracks"] else { return tracks }
-        guard let jsonTracksArray = tracksDictionary["track"].array    else { return tracks }
+        guard let jsonTracksDictionary = json.dictionary               else { return nil }
+        guard let tracksDictionary = jsonTracksDictionary["toptracks"] else { return nil }
+        guard let jsonTracksArray = tracksDictionary["track"].array    else { return nil }
+        
+        var tracks = [Track]()
         
         for jsonTrack in jsonTracksArray {
             let track = Track()
@@ -64,7 +66,6 @@ final class JsonParser {
             }
             tracks.append(track)
         }
-        
         return tracks
     }
 }

@@ -11,7 +11,7 @@ import RxSwift
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
-    var artists: Observable<[Artist]>{ get }
+    var artists: Observable<[Artist]?>{ get }
     
     func getArtistForIndex(_ index:Int) -> Artist
     func didScrollToBottom()
@@ -20,7 +20,7 @@ protocol ArtistViewModelProtocol : class {
 }
 
 final class AtristViewModel {
-    var artists : Observable<[Artist]>
+    var artists : Observable<[Artist]?>
     var page = 2
     var artistModel = ArtistModel()
     var sessionKey : Dynamic<String?> = Dynamic(nil)
@@ -35,12 +35,14 @@ final class AtristViewModel {
         
         artists = RequestManager.getTopArtists(page: page)
         artists.subscribe({ event in
-            print(event.element)
+            print(event.element as Any)
         })
     }
 }
 
 extension AtristViewModel : ArtistViewModelProtocol {
+
+    
 
     var numberOfRows: Int {
         return 0
