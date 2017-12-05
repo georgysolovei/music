@@ -42,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="147" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vbP-Up-UW0">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ArtistCell" rowHeight="147" id="AMv-MV-T2p" customClass="ArtistCell" customModule="music" customModuleProvider="target">
@@ -128,7 +128,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vbP-Up-UW0" firstAttribute="top" secondItem="8z6-x6-Cmf" secondAttribute="top" constant="-64" id="0Vg-9B-MwB"/>
+                            <constraint firstItem="vbP-Up-UW0" firstAttribute="top" secondItem="8z6-x6-Cmf" secondAttribute="top" id="0Vg-9B-MwB"/>
                             <constraint firstItem="e5J-08-xkq" firstAttribute="centerX" secondItem="6Mx-34-3dp" secondAttribute="centerX" id="2dR-My-z0h"/>
                             <constraint firstItem="e5J-08-xkq" firstAttribute="leading" secondItem="8z6-x6-Cmf" secondAttribute="leading" id="MRE-EN-xfD"/>
                             <constraint firstItem="vbP-Up-UW0" firstAttribute="leading" secondItem="8z6-x6-Cmf" secondAttribute="leading" id="V1S-jB-Mau"/>
@@ -145,10 +145,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="vbP-Up-UW0" id="JnB-AC-cYi"/>
-                        <segue destination="JzC-gU-FoG" kind="show" id="K4G-I4-zm6"/>
+                        <segue destination="JzC-gU-FoG" kind="show" identifier="TracksSegue" id="K4G-I4-zm6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lb9-mS-1dO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -164,7 +163,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="147" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LBl-yV-kQK">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TrackCell" rowHeight="142" id="QgN-ex-xNJ" customClass="TrackCell" customModule="music" customModuleProvider="target">
@@ -277,12 +276,17 @@
                             <constraint firstItem="LBl-yV-kQK" firstAttribute="bottom" secondItem="g1p-Ff-9ao" secondAttribute="bottom" id="004-3c-fVm"/>
                             <constraint firstItem="LBl-yV-kQK" firstAttribute="trailing" secondItem="g1p-Ff-9ao" secondAttribute="trailing" id="D1R-46-YIK"/>
                             <constraint firstItem="ysz-8w-aUe" firstAttribute="top" secondItem="g1p-Ff-9ao" secondAttribute="top" id="GhU-ak-OE7"/>
-                            <constraint firstItem="LBl-yV-kQK" firstAttribute="top" secondItem="ysz-8w-aUe" secondAttribute="bottom" id="MHV-ft-S6c"/>
+                            <constraint firstItem="LBl-yV-kQK" firstAttribute="top" secondItem="g1p-Ff-9ao" secondAttribute="top" id="XeM-3P-a3O"/>
                             <constraint firstItem="ysz-8w-aUe" firstAttribute="trailing" secondItem="g1p-Ff-9ao" secondAttribute="trailing" id="XsO-Ot-Pyy"/>
                             <constraint firstItem="LBl-yV-kQK" firstAttribute="leading" secondItem="g1p-Ff-9ao" secondAttribute="leading" id="eDh-GS-k9Z"/>
                             <constraint firstItem="ysz-8w-aUe" firstAttribute="leading" secondItem="g1p-Ff-9ao" secondAttribute="leading" id="qbd-hn-vxt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="g1p-Ff-9ao"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="ysz-8w-aUe"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="QmM-3w-G1I" id="j7s-1n-Htc"/>

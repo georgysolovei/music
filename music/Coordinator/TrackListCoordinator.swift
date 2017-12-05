@@ -30,15 +30,15 @@ class TrackListCoordinator : Coordinator {
        
         trackListController?.viewModel = trackListViewModel
         trackListViewModel.trackListDelegate = self
-      
+        
         navigationController = window.rootViewController as? UINavigationController
+
         navigationController?.pushViewController(trackListController!, animated: true)
     }
 }
 
 extension TrackListCoordinator : TrackListViewModelDelegate {
     func didPressBackButton() {
-        navigationController?.popViewController(animated: true)
         trackListDelegate?.didFinishTrackList()
     }
 }

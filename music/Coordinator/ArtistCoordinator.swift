@@ -37,11 +37,13 @@ extension ArtistCoordinator : CoordinatorProtocol {
         navigationController = R.storyboard.artist.instantiateInitialViewController()
         window.rootViewController = navigationController
         
-        let artistController = navigationController?.childViewControllers.first as! ArtistController 
+        let artistController = R.storyboard.artist.artistController()
       
+        navigationController?.pushViewController(artistController!, animated: true)
+        
         let artistViewModel = AtristViewModel()
         artistViewModel.transitionDelegate = self
-        artistController.artistViewModel = artistViewModel
+        artistController?.artistViewModel = artistViewModel
 
         artistViewModel.isFinished.asObservable().subscribe(onNext: { event in
             if event == true {
@@ -56,9 +58,8 @@ extension ArtistCoordinator : CoordinatorProtocol {
 }
 
 extension ArtistCoordinator : TransitionProtocol {
-    
+
     func transitionToArtist(_ artist: Artist) {
-     
         let trackListCoorinator = TrackListCoordinator(window: window, artist:artist)
         trackListCoorinator.start()
         trackListCoorinator.trackListDelegate = self
@@ -67,9 +68,9 @@ extension ArtistCoordinator : TransitionProtocol {
 }
 
 extension ArtistCoordinator : TrackListCoordinatorDelegate {
+   
     func didFinishTrackList() {
+        navigationController?.popViewController(animated: true)
         childCoordinators.removeAll()
-       // navigationController?.popViewController(animated: true)
-       // window.rootViewController = navigationController
     }
 }

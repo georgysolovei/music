@@ -32,6 +32,9 @@ final class AtristViewModel {
         
         RequestManager.getTopArtists(page: page).subscribe(onNext: {
             self.artists.value = $0
+        }, onError:{ error in
+            AlertManager.showAlert(title: "Error", message: "Loading failed")
+            print(error.localizedDescription)
         }).disposed(by: disposeBag)
     }
 }
@@ -55,6 +58,9 @@ extension AtristViewModel : ArtistViewModelProtocol {
                 self.artists.value?.append(contentsOf: appendArtists)
                 self.page += 1
             }
+        }, onError:{ error in
+            AlertManager.showAlert(title: "Error", message: "Loading failed")
+            print(error.localizedDescription)
         }).disposed(by: disposeBag)
     }
     

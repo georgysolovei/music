@@ -49,12 +49,10 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 3 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 2 reuse identifiers.
   struct reuseIdentifier {
     /// Reuse identifier `ArtistCell`.
     static let artistCell: Rswift.ReuseIdentifier<ArtistCell> = Rswift.ReuseIdentifier(identifier: "ArtistCell")
-    /// Reuse identifier `Cell`.
-    static let cell: Rswift.ReuseIdentifier<ArtistCell> = Rswift.ReuseIdentifier(identifier: "Cell")
     /// Reuse identifier `TrackCell`.
     static let trackCell: Rswift.ReuseIdentifier<TrackCell> = Rswift.ReuseIdentifier(identifier: "TrackCell")
     
@@ -63,16 +61,16 @@ struct R: Rswift.Validatable {
   
   /// This `R.segue` struct is generated, and contains static references to 1 view controllers.
   struct segue {
-    /// This struct is generated for `LogInController`, and contains static references to 1 segues.
-    struct logInController {
-      /// Segue identifier `ArtistSegue`.
-      static let artistSegue: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, LogInController, ArtistController> = Rswift.StoryboardSegueIdentifier(identifier: "ArtistSegue")
+    /// This struct is generated for `ArtistController`, and contains static references to 1 segues.
+    struct artistController {
+      /// Segue identifier `TracksSegue`.
+      static let tracksSegue: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, ArtistController, TrackListController> = Rswift.StoryboardSegueIdentifier(identifier: "TracksSegue")
       
-      /// Optionally returns a typed version of segue `ArtistSegue`.
+      /// Optionally returns a typed version of segue `TracksSegue`.
       /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
       /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func artistSegue(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, LogInController, ArtistController>? {
-        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.logInController.artistSegue, segue: segue)
+      static func tracksSegue(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, ArtistController, TrackListController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.artistController.tracksSegue, segue: segue)
       }
       
       fileprivate init() {}
@@ -81,7 +79,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.storyboard` struct is generated, and contains static references to 4 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 3 storyboards.
   struct storyboard {
     /// Storyboard `Artist`.
     static let artist = _R.storyboard.artist()
@@ -89,8 +87,6 @@ struct R: Rswift.Validatable {
     static let launchScreen = _R.storyboard.launchScreen()
     /// Storyboard `LogIn`.
     static let logIn = _R.storyboard.logIn()
-    /// Storyboard `Main`.
-    static let main = _R.storyboard.main()
     
     /// `UIStoryboard(name: "Artist", bundle: ...)`
     static func artist(_: Void = ()) -> UIKit.UIStoryboard {
@@ -105,11 +101,6 @@ struct R: Rswift.Validatable {
     /// `UIStoryboard(name: "LogIn", bundle: ...)`
     static func logIn(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.logIn)
-    }
-    
-    /// `UIStoryboard(name: "Main", bundle: ...)`
-    static func main(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.main)
     }
     
     fileprivate init() {}
@@ -144,9 +135,8 @@ struct _R: Rswift.Validatable {
   
   struct storyboard: Rswift.Validatable {
     static func validate() throws {
-      try main.validate()
-      try artist.validate()
       try logIn.validate()
+      try artist.validate()
     }
     
     struct artist: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
@@ -196,31 +186,6 @@ struct _R: Rswift.Validatable {
       
       static func validate() throws {
         if _R.storyboard.logIn().logInController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'logInController' could not be loaded from storyboard 'LogIn' as 'LogInController'.") }
-      }
-      
-      fileprivate init() {}
-    }
-    
-    struct main: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
-      typealias InitialController = UIKit.UINavigationController
-      
-      let artistController = StoryboardViewControllerResource<ArtistController>(identifier: "ArtistController")
-      let bundle = R.hostingBundle
-      let logInController = StoryboardViewControllerResource<LogInController>(identifier: "LogInController")
-      let name = "Main"
-      
-      func artistController(_: Void = ()) -> ArtistController? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: artistController)
-      }
-      
-      func logInController(_: Void = ()) -> LogInController? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: logInController)
-      }
-      
-      static func validate() throws {
-        if UIKit.UIImage(named: "camera") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'camera' is used in storyboard 'Main', but couldn't be loaded.") }
-        if _R.storyboard.main().logInController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'logInController' could not be loaded from storyboard 'Main' as 'LogInController'.") }
-        if _R.storyboard.main().artistController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'artistController' could not be loaded from storyboard 'Main' as 'ArtistController'.") }
       }
       
       fileprivate init() {}

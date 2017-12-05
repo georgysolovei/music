@@ -19,6 +19,8 @@ class TrackListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.tintColor = UIColor.orange
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        
         (viewModel as! TrackListViewModel).tracks.asObservable().subscribe({ _ in
             self.tableView.reloadData()
         }).disposed(by: disposeBag)

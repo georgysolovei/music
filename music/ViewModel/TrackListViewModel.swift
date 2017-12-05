@@ -26,12 +26,15 @@ class TrackListViewModel  {
         self.artist = artist
         self.tracks = Variable(nil)
         
-        RequestManager.getTracksForArtist(artist.name).subscribe({ event in
-            if let tracks = event.element {
-                if !isNilOrEmpty(tracks) {
-                    self.tracks.value = tracks!
+        RequestManager.getTracksForArtist(artist.name).subscribe(onNext: {
+                if let tracks = $0 {
+                    if !isNilOrEmpty(tracks) {
+                        self.tracks.value = tracks
+                    }
                 }
-            }
+            }, onError: { error in
+                AlertManager.showAlert(title: "Error", message: "Loading failed")
+                print(error.localizedDescription)
         }).disposed(by: disposeBag)
     }
 }
