@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import NVActivityIndicatorView
 
 class LogInController: UIViewController {
     @IBOutlet weak var userNameField: UITextField!
@@ -17,6 +19,7 @@ class LogInController: UIViewController {
     var passFieldConstraintNormalValue : CGFloat?
     
     var viewModel: LoginViewModelProtocol!
+    var disposeBag = DisposeBag()
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -36,6 +39,14 @@ class LogInController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         subscribeForKeyboardNotifications()
+        
+        viewModel.isLoading
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { isLoading in
+                isLoading == true ? self.startActivityIndicator() : self.stopActivityIndicator()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

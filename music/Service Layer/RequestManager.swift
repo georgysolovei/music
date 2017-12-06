@@ -27,8 +27,7 @@ final class RequestManager {
     
 // MARK: - Requests
 //--------------------------------------------------------------------------------------------
-    class func getMobileSession(userName:String, password:String) -> Observable<String?> {
-        Spinner.shared.startAt()
+    class func getMobileSession(userName:String, password:String) -> Observable<String> {
         
         var params:[String: String] = ["api_key": ApiKey,
                                         "method": ApiMethodGetMobileSession,
@@ -38,14 +37,19 @@ final class RequestManager {
         params["api_sig"] = Md5HashGenerator.getApiSignatureFor(params)
         
         return sessionManager.rx.data(.post, ApiBaseUrl, parameters: params)
-            .map({ data -> String? in
-                Spinner.shared.stop()
-                return XmlParser.getSessionKeyFrom(data)
+            .map({ data -> String in
+                if let key = XmlParser.getSessionKeyFrom(data) {
+                    return key
+                } else {
+                    
+                    // parse error
+                  //  throw AFError.ResponseSerializationFailureReason()
+                    return "ERROR"
+                }
         })
     }
     
-    class func getTopArtists(page:Int) -> Observable<[Artist]?> {
-        Spinner.shared.startAt()
+    class func getTopArtists(page:Int) -> Observable<[Artist]> {
 
         let params = ["method": ApiMethodGetTopArtists,
                      "api_key": ApiKey,
@@ -53,15 +57,13 @@ final class RequestManager {
                         "page": page] as [String : Any]
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
-            .map({ jsonArtists -> [Artist]? in
+            .map({ jsonArtists -> [Artist] in
                 let artists = JSON(jsonArtists)
-                Spinner.shared.stop()
                 return JsonParser.parseArtists(artists)
             })
     }
 
-    class func getTracksForArtist(_ artist:String, page:Int = 1) -> Observable<[Track]?> {
-        Spinner.shared.startAt()
+    class func getTracksForArtist(_ artist:String, page:Int = 1) -> Observable<[Track]> {
 
         let params = ["method": ApiMethodGetArtistTopTracks,
                       "artist": artist,
@@ -72,7 +74,6 @@ final class RequestManager {
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
             .map({ rawTracks in
                 let jsonTracks = JSON(rawTracks)
-                Spinner.shared.stop()
                 return JsonParser.parseTracks(jsonTracks)
             })
     }

@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 import RxSwift
-import RxCocoa
+import NVActivityIndicatorView
 
 class ArtistController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -34,6 +34,14 @@ class ArtistController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
+        
+        artistViewModel?.isLoading
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { isLoading in
+                isLoading == true ? self.startActivityIndicator() : self.stopActivityIndicator()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -102,6 +110,8 @@ extension ArtistController : UITableViewDelegate {
             artistViewModel.didScrollToBottom()
         }
     }
+    
+    
 }
 
 class ArtistCell : UITableViewCell {

@@ -10,12 +10,15 @@ import RxSwift
 
 protocol LoginViewModelProtocol: class {
     func logIn(userName:String, pass:String)
+    var isLoading: Variable<Bool> { get }
 }
 
 final class LogInViewModel {
     var loginModel : LogInModel
     var sessionKey : Variable<String?> = Variable(nil)
     let disposeBag = DisposeBag()
+    
+    let isLoading = Variable(false)
 
     init() {
         loginModel = LogInModel()
@@ -24,15 +27,22 @@ final class LogInViewModel {
 
 extension LogInViewModel : LoginViewModelProtocol {
     func logIn(userName: String, pass: String) {
-        RequestManager.getMobileSession(userName: userName, password: pass).subscribe(onNext: { event in
-            if !isNilOrEmpty(event) {
-                self.loginModel.saveSessionKey(event!)
-                self.sessionKey.value = event!
-            }
-        }, onError: { error in
-            Spinner.shared.stop()
-            AlertManager.showAlert(title: "Error", message: "Login failed")
-            print(error.localizedDescription)
-        }).disposed(by: disposeBag)
+        let spinner = isLoading
+        
+        spinner.value = true
+        RequestManager.getMobileSession(userName: userName, password: pass)
+            .subscribe(onNext: { event in
+                if !isNilOrEmpty(event) {
+                    self.loginModel.saveSessionKey(event)
+                    self.sessionKey.value = event
+                }
+            }, onError: { error in
+                spinner.value = false
+                AlertManager.showAlert(title: "Error", message: "Login failed")
+                print(error.localizedDescription)
+                
+            }, onCompleted: {
+                spinner.value = false
+            }).disposed(by: disposeBag)
     }
 }

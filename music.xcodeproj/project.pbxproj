@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		09DA27A8E2A04BA64795A7D6 /* Pods_music.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34559EB322C96EFAD5006C0E /* Pods_music.framework */; };
-		0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A31FC46655000CBD84 /* Spinner.swift */; };
 		0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
@@ -20,6 +19,7 @@
 		0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6621FC318B400E3FE5D /* SessionKey.swift */; };
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
+		0B94B4FC1FD80C2600F6A30B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94B4FB1FD80C2600F6A30B /* Extensions.swift */; };
 		0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF71FCEA7BB00E6104A /* Track.swift */; };
 		0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */; };
 		0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */; };
@@ -42,7 +42,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0B1E64A31FC46655000CBD84 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistController.swift; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
@@ -57,6 +56,7 @@
 		0B5BA6621FC318B400E3FE5D /* SessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKey.swift; sourceTree = "<group>"; };
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
+		0B94B4FB1FD80C2600F6A30B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		0B9E8AF71FCEA7BB00E6104A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListController.swift; sourceTree = "<group>"; };
 		0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListCoordinator.swift; sourceTree = "<group>"; };
@@ -100,7 +100,6 @@
 				8E2987881FCF49FC00C1F24B /* TrackCell.swift */,
 				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
 				0B45CD671FBEDF190052761C /* LogInController.swift */,
-				0B1E64A31FC46655000CBD84 /* Spinner.swift */,
 				8E4A3F8C1FC211BF000820AF /* AlertManager.swift */,
 			);
 			path = View;
@@ -112,6 +111,7 @@
 				0B9E8B051FCEE52A00E6104A /* R.generated.swift */,
 				0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */,
 				0B2FBF721FC2B982009C657C /* Utility.swift */,
+				0B94B4FB1FD80C2600F6A30B /* Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -391,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */,
+				0B94B4FC1FD80C2600F6A30B /* Extensions.swift in Sources */,
 				0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */,
 				0B9E8AFE1FCED99700E6104A /* Coordinator.swift in Sources */,
 				0B2FBF731FC2B982009C657C /* Utility.swift in Sources */,
@@ -404,7 +405,6 @@
 				0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */,
 				0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
-				0B1E64A41FC46655000CBD84 /* Spinner.swift in Sources */,
 				0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */,
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
 				0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */,

@@ -10,6 +10,7 @@ import RxSwift
 
 protocol TrackListViewModelProtocol : class {
     var tracksCount: Int { get }
+    var isLoading: Variable<Bool> { get }
     func trackAt(index:Int) -> Track?
     func didPressBackButton()
 }
@@ -19,22 +20,28 @@ class TrackListViewModel  {
     let artist : Artist
     let page = 1
     var disposeBag = DisposeBag()
+    var isFinished = Variable(false)
+
+    let isLoading = Variable(false)
 
     weak var trackListDelegate: TrackListViewModelDelegate?
 
     init(artist:Artist) {
         self.artist = artist
         self.tracks = Variable(nil)
-        
+        isLoading.value = true
+
         RequestManager.getTracksForArtist(artist.name).subscribe(onNext: {
-                if let tracks = $0 {
-                    if !isNilOrEmpty(tracks) {
-                        self.tracks.value = tracks
-                    }
+                if !isNilOrEmpty($0) {
+                    self.tracks.value = $0
                 }
+                self.isLoading.value = false
+            
             }, onError: { error in
                 AlertManager.showAlert(title: "Error", message: "Loading failed")
                 print(error.localizedDescription)
+                self.isLoading.value = false
+                
         }).disposed(by: disposeBag)
     }
 }

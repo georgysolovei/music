@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import NVActivityIndicatorView
 
 class TrackListController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -16,6 +17,10 @@ class TrackListController: UIViewController {
     var viewModel : TrackListViewModelProtocol!
     let disposeBag = DisposeBag()
 
+    struct Const {
+        static let trackCell = "TrackCell"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.tintColor = UIColor.orange
@@ -24,6 +29,18 @@ class TrackListController: UIViewController {
         (viewModel as! TrackListViewModel).tracks.asObservable().subscribe({ _ in
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel?.isLoading
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { isLoading in
+                isLoading == true ? self.startActivityIndicator() : self.stopActivityIndicator()
+            })
+            .disposed(by: disposeBag)
     }
     
     @IBAction func backTapped(_ sender: UIBarButtonItem) {
@@ -37,7 +54,7 @@ extension TrackListController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Const.trackCell) as! TrackCell
         cell.track = viewModel.trackAt(index: indexPath.row)
         return cell
     }
