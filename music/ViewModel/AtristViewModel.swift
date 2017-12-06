@@ -28,6 +28,11 @@ final class AtristViewModel {
     var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
     
+    struct Const {
+        static let error = "Error"
+        static let loadFailed = "Loading failed"
+    }
+    
     let isLoading = Variable(false)
     
     init() {
@@ -38,7 +43,7 @@ final class AtristViewModel {
             self.isLoading.value = false
             
         }, onError:{ error in
-            AlertManager.showAlert(title: "Error", message: "Loading failed")
+            AlertManager.showAlert(title: Const.error, message: Const.loadFailed)
             print(error.localizedDescription)
             self.isLoading.value = false
             
@@ -65,7 +70,7 @@ extension AtristViewModel : ArtistViewModelProtocol {
             self.page += 1
             self.isLoading.value = false
         }, onError:{ error in
-            AlertManager.showAlert(title: "Error", message: "Loading failed")
+            AlertManager.showAlert(title: Const.error, message: Const.loadFailed)
             print(error.localizedDescription)
             self.isLoading.value = false
         }, onCompleted: {

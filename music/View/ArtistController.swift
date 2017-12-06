@@ -24,9 +24,13 @@ class ArtistController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        artistViewModel?.artists.asObservable().subscribe({ _ in
-            self.tableView.reloadData()
-        }).disposed(by: disposeBag)
+        artistViewModel?.artists
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe({ _ in
+                self.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
         navigationController?.navigationBar.tintColor = UIColor.orange
     }
     

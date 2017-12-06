@@ -51,12 +51,13 @@ final class RequestManager {
     
     class func getTopArtists(page:Int) -> Observable<[Artist]> {
 
-        let params = ["method": ApiMethodGetTopArtists,
-                     "api_key": ApiKey,
-                      "format": "json",
-                        "page": page] as [String : Any]
+        let params: [String : Any] = ["method": ApiMethodGetTopArtists,
+                                     "api_key": ApiKey,
+                                      "format": "json",
+                                        "page": page]
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ jsonArtists -> [Artist] in
                 let artists = JSON(jsonArtists)
                 return JsonParser.parseArtists(artists)
@@ -72,6 +73,7 @@ final class RequestManager {
                         "page": page] as [String : Any]
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .map({ rawTracks in
                 let jsonTracks = JSON(rawTracks)
                 return JsonParser.parseTracks(jsonTracks)
