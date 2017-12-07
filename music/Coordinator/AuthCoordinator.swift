@@ -37,7 +37,10 @@ extension AuthCoordinator : CoordinatorProtocol {
         let loginViewModel = LogInViewModel()
         loginController.viewModel = loginViewModel
         
-        loginViewModel.sessionKey.asObservable().subscribe(onNext: { event in
+        loginViewModel.sessionKey
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { event in
             if !isNilOrEmpty(event) {
                 print(event!)
                 self.finish()

@@ -9,6 +9,8 @@
 import UIKit
 import NVActivityIndicatorView
 
+
+
 extension UIViewController {
     private struct Const {
         static let downsizeMultiplier : CGFloat = 7
@@ -60,6 +62,7 @@ extension UIViewController {
     }
     
     func stopActivityIndicator() {
+        
         activityIndicator.stopAnimating()
         blockView.removeFromSuperview()
     }

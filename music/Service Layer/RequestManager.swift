@@ -17,7 +17,6 @@ private let ApiMethodGetTopArtists = "chart.getTopArtists"
 private let ApiMethodGetArtistTopTracks = "artist.getTopTracks"
 
 final class RequestManager {
-    static let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
     static var sessionManager : SessionManager = {
         let configuration = URLSessionConfiguration.default
@@ -47,7 +46,9 @@ final class RequestManager {
                 } else {
                     
                     // parse error
-                  //  throw AFError.ResponseSerializationFailureReason()
+                  //
+                
+                    throw AFError.ResponseSerializationFailureReason.inputDataNil
                     return "ERROR"
                 }
         })
