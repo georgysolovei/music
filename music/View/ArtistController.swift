@@ -101,21 +101,36 @@ extension ArtistController : UITableViewDataSource {
 extension ArtistController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         artistViewModel?.didSelectItemAt(indexPath.row)
+        
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
-        guard let lastVisibleCell =  tableView.visibleCells.last else { return }
-        let lastCellIndexPath = tableView.indexPath(for: lastVisibleCell)
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//
+//        guard let lastVisibleCell =  tableView.visibleCells.last else { return }
+//        let lastCellIndexPath = tableView.indexPath(for: lastVisibleCell)
+//
+//        guard let artistViewModel = artistViewModel else { return }
+//
+//        if lastCellIndexPath?.row == artistViewModel.numberOfRows - 1 {
+//            artistViewModel.didScrollToBottom()
+//        }
+//    }
+    
+    
+}
 
-        guard let artistViewModel = artistViewModel else { return }
+extension ArtistController : UITableViewDataSourcePrefetching {
 
-        if lastCellIndexPath?.row == artistViewModel.numberOfRows - 1 {
-            artistViewModel.didScrollToBottom()
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let artistCount = artistViewModel?.numberOfRows else { return }
+        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 10 {
+            artistViewModel?.didScrollToBottom()
         }
     }
     
-    
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+
+    }
 }
 
 class ArtistCell : UITableViewCell {

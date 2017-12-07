@@ -17,7 +17,8 @@ private let ApiMethodGetTopArtists = "chart.getTopArtists"
 private let ApiMethodGetArtistTopTracks = "artist.getTopTracks"
 
 final class RequestManager {
-    
+    static let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+
     static var sessionManager : SessionManager = {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
@@ -36,7 +37,10 @@ final class RequestManager {
         
         params["api_sig"] = Md5HashGenerator.getApiSignatureFor(params)
         
-        return sessionManager.rx.data(.post, ApiBaseUrl, parameters: params)
+        return sessionManager.rx
+            .data(.post, ApiBaseUrl, parameters: params)
+            .observeOn(backgroundScheduler)
+            .subscribeOn(backgroundScheduler)
             .map({ data -> String in
                 if let key = XmlParser.getSessionKeyFrom(data) {
                     return key
@@ -57,7 +61,7 @@ final class RequestManager {
                                         "page": page]
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(backgroundScheduler)
             .map({ jsonArtists -> [Artist] in
                 let artists = JSON(jsonArtists)
                 return JsonParser.parseArtists(artists)
@@ -73,7 +77,7 @@ final class RequestManager {
                         "page": page] as [String : Any]
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(backgroundScheduler)
             .map({ rawTracks in
                 let jsonTracks = JSON(rawTracks)
                 return JsonParser.parseTracks(jsonTracks)

@@ -123,6 +123,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="jYf-li-onM" id="qo6-MR-1IC"/>
                                     <outlet property="delegate" destination="jYf-li-onM" id="rBm-Xh-ogO"/>
+                                    <outlet property="prefetchDataSource" destination="jYf-li-onM" id="P5u-kn-IXh"/>
                                 </connections>
                             </tableView>
                         </subviews>
