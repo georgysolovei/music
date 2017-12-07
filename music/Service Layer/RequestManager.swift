@@ -38,18 +38,15 @@ final class RequestManager {
         
         return sessionManager.rx
             .data(.post, ApiBaseUrl, parameters: params)
-            .observeOn(backgroundScheduler)
             .subscribeOn(backgroundScheduler)
+            .do(onError: { error in
+                throw "Fng error"
+            })
             .map({ data -> String in
                 if let key = XmlParser.getSessionKeyFrom(data) {
                     return key
                 } else {
-                    
-                    // parse error
-                  //
-                
-                    throw AFError.ResponseSerializationFailureReason.inputDataNil
-                    return "ERROR"
+                    throw "ERROR"
                 }
         })
     }

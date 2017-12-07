@@ -80,3 +80,5 @@ func associatedObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<
 func associateObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<String>, value: ValueType) {
     objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN)
 }
+extension String: Error {}
+

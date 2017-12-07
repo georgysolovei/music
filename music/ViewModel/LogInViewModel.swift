@@ -44,7 +44,7 @@ extension LogInViewModel : LoginViewModelProtocol {
             }, onError: { error in
                 spinner.value = false
                 // AlertManager.showAlert(title: "Error", message: "Login failed")
-                print(error.localizedDescription)
+                print(error)
                 
             }, onCompleted: {
                 spinner.value = false
