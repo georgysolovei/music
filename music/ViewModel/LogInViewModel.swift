@@ -11,6 +11,7 @@ import RxSwift
 protocol LoginViewModelProtocol: class {
     func logIn(userName:String, pass:String)
     var isLoading: Variable<Bool> { get }
+    var errorMessage : Variable<String?> { get }
 }
 
 final class LogInViewModel {
@@ -18,6 +19,8 @@ final class LogInViewModel {
     var sessionKey : Variable<String?> = Variable(nil)
     let disposeBag = DisposeBag()
     
+    var errorMessage : Variable<String?> = Variable(nil)
+
     let isLoading = Variable(false)
 
     init() {
@@ -31,19 +34,15 @@ extension LogInViewModel : LoginViewModelProtocol {
     
         spinner.value = true
         RequestManager.getMobileSession(userName: userName, password: pass)
-          //  .observeOn(backgroundScheduler)
             .subscribe(onNext: { event in
-                print(Thread.current)
-                
-
-                
                 if !isNilOrEmpty(event) {
                     self.loginModel.saveSessionKey(event)
                     self.sessionKey.value = event
                 }
             }, onError: { error in
                 spinner.value = false
-                // AlertManager.showAlert(title: "Error", message: "Login failed")
+               //  AlertManager.showAlert(title: "Error", message: String(describing: error))
+                self.errorMessage.value = String(describing: error)
                 print(error)
                 
             }, onCompleted: {

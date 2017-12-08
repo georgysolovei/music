@@ -40,13 +40,13 @@ final class RequestManager {
             .data(.post, ApiBaseUrl, parameters: params)
             .subscribeOn(backgroundScheduler)
             .do(onError: { error in
-                throw "Fng error"
+                throw XmlParser.parseHttpError(error)
             })
             .map({ data -> String in
                 if let key = XmlParser.getSessionKeyFrom(data) {
                     return key
                 } else {
-                    throw "ERROR"
+                    throw XmlParser.parseError(data)
                 }
         })
     }

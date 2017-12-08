@@ -47,6 +47,15 @@ class LogInController: UIViewController {
                 isLoading == true ? self.startActivityIndicator() : self.stopActivityIndicator()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .asObservable()
+            .skip(1)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { errorMessage in
+                self.showAlert(title: "Error", message: errorMessage!)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

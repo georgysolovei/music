@@ -9,8 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-
-
+// Activity indicator
 extension UIViewController {
     private struct Const {
         static let downsizeMultiplier : CGFloat = 7
@@ -51,34 +50,36 @@ extension UIViewController {
         blockView.alpha = Const.blockViewAlpha
         view.addSubview(blockView)
 
-        if activityIndicator.frame == CGRect.zero {
-            let width  = window.frame.width/Const.downsizeMultiplier
-            let height = window.frame.height/Const.downsizeMultiplier
-            let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY - height/2, width: width, height: height)
-            activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .lineScale, color: UIColor.orange, padding: 0)
-            view.addSubview(activityIndicator)
-        }
+        let width  = window.frame.width/Const.downsizeMultiplier
+        let height = window.frame.height/Const.downsizeMultiplier
+        let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY - height/2, width: width, height: height)
+        activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .lineScale, color: UIColor.orange, padding: 0)
+        view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
     }
     
     func stopActivityIndicator() {
         
         activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
         blockView.removeFromSuperview()
     }
 }
 
-func associatedObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<String>, initialiser: () -> ValueType) -> ValueType {
-    if let associated = objc_getAssociatedObject(base, key) as? ValueType {
-        return associated
+// Alert
+extension UIViewController {
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { (result : UIAlertAction) -> Void in
+        }
+        alertController.addAction(ok)
+        alertController.show(alertController, sender: nil)
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        rootViewController.present(alertController, animated: true, completion: nil)
     }
-    let associated = initialiser()
-    objc_setAssociatedObject(base, key, associated, .OBJC_ASSOCIATION_RETAIN)
-    return associated
 }
 
-func associateObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<String>, value: ValueType) {
-    objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN)
-}
+
+
 extension String: Error {}
-

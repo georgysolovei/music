@@ -19,12 +19,22 @@ final class XmlParser {
         return nil
     }
     
-    public class func parseError(_ receivedData:Data) -> String? {
+    public class func parseHttpError(_ error:Error) -> String {
+        var errorDescription = error.localizedDescription
+        if errorDescription.range(of: "403") != nil {
+            errorDescription = "Log in failed. Wrong username or password"
+        }
+        return errorDescription
+    }
+    
+    public class func parseError(_ receivedData:Data) -> String {
+        let error = "Unknown error"
         if let document = try? DDXMLDocument.init(data: receivedData, options: 0) {
             if let sessionKey = try? document.nodes(forXPath: "//error") {
-                return sessionKey.first?.stringValue
+                guard let parsedError = sessionKey.first?.stringValue else { return error }
+                return parsedError
             }
         }
-        return nil
+        return error
     }
 }

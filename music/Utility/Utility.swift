@@ -25,3 +25,16 @@ func isNilOrEmpty(_ value : String?) -> Bool {
 func isNilOrEmpty<T: Collection>(_ value : T?) -> Bool {
     return (value == nil) || value!.isEmpty
 }
+
+func associatedObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<String>, initialiser: () -> ValueType) -> ValueType {
+    if let associated = objc_getAssociatedObject(base, key) as? ValueType {
+        return associated
+    }
+    let associated = initialiser()
+    objc_setAssociatedObject(base, key, associated, .OBJC_ASSOCIATION_RETAIN)
+    return associated
+}
+
+func associateObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<String>, value: ValueType) {
+    objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN)
+}
