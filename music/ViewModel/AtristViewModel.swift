@@ -66,6 +66,9 @@ extension AtristViewModel : ArtistViewModelProtocol {
             print(error)
             self.errorMessage.value = String(describing: error)
             self.isLoading.value = false
+            if self.isRefreshing.value == true {
+                self.isRefreshing.value = false
+            }
         }, onCompleted: {
             self.isLoading.value = false
         }).disposed(by: disposeBag)

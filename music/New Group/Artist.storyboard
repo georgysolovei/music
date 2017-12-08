@@ -212,7 +212,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ldv-Pz-qHy">
-                                                    <rect key="frame" x="13" y="80" width="10" height="17"/>
+                                                    <rect key="frame" x="53" y="73" width="10" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -223,7 +223,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="YnJ-TX-BH7" secondAttribute="trailing" constant="25" id="77U-09-Yte"/>
                                                 <constraint firstItem="s0Z-d3-IKi" firstAttribute="leading" secondItem="wTv-sH-GRU" secondAttribute="leading" constant="15" id="8QZ-ZD-o3s"/>
                                                 <constraint firstItem="s0Z-d3-IKi" firstAttribute="centerY" secondItem="wTv-sH-GRU" secondAttribute="centerY" id="B5H-2Q-cWW"/>
-                                                <constraint firstItem="Ldv-Pz-qHy" firstAttribute="leading" secondItem="wTv-sH-GRU" secondAttribute="leading" constant="13" id="Ctx-Uc-SvQ"/>
+                                                <constraint firstItem="Ldv-Pz-qHy" firstAttribute="leading" secondItem="wTv-sH-GRU" secondAttribute="leading" constant="53" id="Ctx-Uc-SvQ"/>
                                                 <constraint firstItem="ydK-Dx-toI" firstAttribute="top" secondItem="s0Z-d3-IKi" secondAttribute="top" id="DmK-yA-t7G"/>
                                                 <constraint firstAttribute="trailing" secondItem="ydK-Dx-toI" secondAttribute="trailing" constant="5" id="Myc-sd-7iK"/>
                                                 <constraint firstItem="OiH-rq-TPa" firstAttribute="top" relation="lessThanOrEqual" secondItem="ydK-Dx-toI" secondAttribute="bottom" priority="750" constant="14" id="Ofi-EL-VCM"/>
@@ -233,7 +233,7 @@
                                                 <constraint firstItem="WP4-7g-0Gq" firstAttribute="trailing" secondItem="OiH-rq-TPa" secondAttribute="trailing" id="ccf-3Y-2aC"/>
                                                 <constraint firstItem="WP4-7g-0Gq" firstAttribute="top" secondItem="OiH-rq-TPa" secondAttribute="bottom" id="iIA-XN-COK"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="WP4-7g-0Gq" secondAttribute="bottom" id="nFb-gC-6Eq"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ldv-Pz-qHy" secondAttribute="bottom" constant="2" id="qbi-V3-IYc"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ldv-Pz-qHy" secondAttribute="bottom" constant="9" id="qbi-V3-IYc"/>
                                                 <constraint firstItem="ydK-Dx-toI" firstAttribute="leading" secondItem="s0Z-d3-IKi" secondAttribute="trailing" constant="15" id="rbI-Xj-GmX"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -252,7 +252,7 @@
                                     <outlet property="delegate" destination="JzC-gU-FoG" id="8D1-aR-0dK"/>
                                 </connections>
                             </tableView>
-                            <navigationBar hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysz-8w-aUe">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysz-8w-aUe">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Tracks" id="K0U-ni-T3s">
