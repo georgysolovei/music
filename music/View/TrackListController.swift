@@ -13,6 +13,7 @@ import NVActivityIndicatorView
 class TrackListController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var customNavBar: UINavigationBar!
     
     var viewModel : TrackListViewModelProtocol!
     let disposeBag = DisposeBag()
@@ -36,12 +37,23 @@ class TrackListController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
+        navigationController?.navigationBar.topItem?.title = viewModel.artistName
+        customNavBar.topItem?.title = viewModel.artistName
         viewModel?.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { isLoading in
                 isLoading == true ? self.startActivityIndicator() : self.stopActivityIndicator()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .asObservable()
+            .skip(1)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { errorMessage in
+                self.showAlert(title: "Error", message: errorMessage!)
             })
             .disposed(by: disposeBag)
     }

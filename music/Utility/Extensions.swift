@@ -75,8 +75,8 @@ extension UIViewController {
         }
         alertController.addAction(ok)
         alertController.show(alertController, sender: nil)
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
-        rootViewController.present(alertController, animated: true, completion: nil)
+      //  guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

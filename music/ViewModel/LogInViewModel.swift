@@ -40,11 +40,9 @@ extension LogInViewModel : LoginViewModelProtocol {
                     self.sessionKey.value = event
                 }
             }, onError: { error in
-                spinner.value = false
-               //  AlertManager.showAlert(title: "Error", message: String(describing: error))
-                self.errorMessage.value = String(describing: error)
                 print(error)
-                
+                spinner.value = false
+                self.errorMessage.value = String(describing: error)
             }, onCompleted: {
                 spinner.value = false
             }).disposed(by: disposeBag)

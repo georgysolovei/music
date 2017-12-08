@@ -13,6 +13,8 @@ protocol TrackListViewModelProtocol : class {
     var isLoading: Variable<Bool> { get }
     func trackAt(index:Int) -> Track?
     func didPressBackButton()
+    var errorMessage : Variable<String?> { get }
+    var artistName: String { set get }
 }
 
 class TrackListViewModel  {
@@ -21,6 +23,8 @@ class TrackListViewModel  {
     let page = 1
     var disposeBag = DisposeBag()
     var isFinished = Variable(false)
+    var errorMessage : Variable<String?> = Variable(nil)
+    var artistName: String
 
     let isLoading = Variable(false)
 
@@ -28,9 +32,9 @@ class TrackListViewModel  {
 
     init(artist:Artist) {
         self.artist = artist
-        self.tracks = Variable(nil)
+        tracks = Variable(nil)
         isLoading.value = true
-
+        artistName = artist.name
         RequestManager.getTracksForArtist(artist.name).subscribe(onNext: {
                 if !isNilOrEmpty($0) {
                     self.tracks.value = $0
@@ -38,8 +42,8 @@ class TrackListViewModel  {
                 self.isLoading.value = false
             
             }, onError: { error in
-                AlertManager.showAlert(title: "Error", message: "Loading failed")
                 print(error.localizedDescription)
+                self.errorMessage.value = String(describing: error)
                 self.isLoading.value = false
                 
         }).disposed(by: disposeBag)

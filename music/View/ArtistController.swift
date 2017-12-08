@@ -20,9 +20,20 @@ class ArtistController: UIViewController {
         static let cell = "ArtistCell"
     }
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(ArtistController.handleRefresh),
+                                 for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = UIColor.orange
+        
+        return refreshControl
+    }()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.addSubview(self.refreshControl)
 
         artistViewModel?.artists
             .asObservable()
@@ -46,6 +57,25 @@ class ArtistController: UIViewController {
                 isLoading == true ? self.startActivityIndicator() : self.stopActivityIndicator()
             })
             .disposed(by: disposeBag)
+        
+        artistViewModel?.isRefreshing
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { isRefreshing in
+                if isRefreshing == false {
+                    self.refreshControl.endRefreshing()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        artistViewModel?.errorMessage
+            .asObservable()
+            .skip(1)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { errorMessage in
+                self.showAlert(title: "Error", message: errorMessage!)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -54,7 +84,9 @@ class ArtistController: UIViewController {
     }
 
     // MARK: - Methods
-
+    @objc func handleRefresh() {
+        artistViewModel?.loadArtists()
+    }
     
     // MARK: - IB Actions
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
@@ -103,27 +135,14 @@ extension ArtistController : UITableViewDelegate {
         artistViewModel?.didSelectItemAt(indexPath.row)
         
     }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//
-//        guard let lastVisibleCell =  tableView.visibleCells.last else { return }
-//        let lastCellIndexPath = tableView.indexPath(for: lastVisibleCell)
-//
-//        guard let artistViewModel = artistViewModel else { return }
-//
-//        if lastCellIndexPath?.row == artistViewModel.numberOfRows - 1 {
-//            artistViewModel.didScrollToBottom()
-//        }
-//    }
-    
-    
 }
 
 extension ArtistController : UITableViewDataSourcePrefetching {
-
+   
+    // TODO: Magic Numbers
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let artistCount = artistViewModel?.numberOfRows else { return }
-        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 10 {
+        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 {
             artistViewModel?.didScrollToBottom()
         }
     }

@@ -17,8 +17,8 @@ class TrackCell: UITableViewCell {
     
     var track: Track? {
         didSet {
-            let imageUrl = URL.init(string: track?.imageUrl ?? "")
-            trackImageView.kf.setImage(with: imageUrl)
+            //let imageUrl = URL.init(string: track?.imageUrl ?? "")
+            //trackImageView.kf.setImage(with: imageUrl)
             nameLabel.text = track?.name ?? "Song name"
             playCountLabel.text = track != nil ? String(describing: track!.playcount) : ""
             listenersLabel.text = track != nil ? String(describing: track!.listeners) : ""

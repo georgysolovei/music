@@ -31,14 +31,21 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.image` struct is generated, and contains static references to 1 images.
+  /// This `R.image` struct is generated, and contains static references to 2 images.
   struct image {
     /// Image `camera`.
     static let camera = Rswift.ImageResource(bundle: R.hostingBundle, name: "camera")
+    /// Image `cd`.
+    static let cd = Rswift.ImageResource(bundle: R.hostingBundle, name: "cd")
     
     /// `UIImage(named: "camera", bundle: ..., traitCollection: ...)`
     static func camera(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.camera, compatibleWith: traitCollection)
+    }
+    
+    /// `UIImage(named: "cd", bundle: ..., traitCollection: ...)`
+    static func cd(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.cd, compatibleWith: traitCollection)
     }
     
     fileprivate init() {}
@@ -156,6 +163,7 @@ struct _R: Rswift.Validatable {
       }
       
       static func validate() throws {
+        if UIKit.UIImage(named: "cd") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'cd' is used in storyboard 'Artist', but couldn't be loaded.") }
         if UIKit.UIImage(named: "camera") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'camera' is used in storyboard 'Artist', but couldn't be loaded.") }
         if _R.storyboard.artist().trackListController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'trackListController' could not be loaded from storyboard 'Artist' as 'TrackListController'.") }
         if _R.storyboard.artist().artistController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'artistController' could not be loaded from storyboard 'Artist' as 'ArtistController'.") }
