@@ -8,15 +8,15 @@ target 'music' do
   use_frameworks!
 
   # Pods for music
-	pod 'R.swift'
-	pod 'RxSwift'
-    pod 'RxCocoa'
-	pod 'RealmSwift'
-	pod 'Alamofire'
-    pod 'SwiftyJSON'
-    pod 'KissXML'
-    pod 'NVActivityIndicatorView'
-    pod 'Kingfisher'
-    pod 'RxAlamofire'
+    pod 'R.swift', '~> 4.0'
+    pod 'RxSwift', '~> 4.0'
+    pod 'RxCocoa', '~> 4.0'
+    pod 'RealmSwift', '~> 3.0'
+    pod 'Alamofire', '~> 4.6'
+    pod 'SwiftyJSON', '~> 4.0'
+    pod 'KissXML', '~> 5.2'
+    pod 'NVActivityIndicatorView', '~> 4.1'
+    pod 'Kingfisher', '~> 4.0'
+    pod 'RxAlamofire', '~> 4.0'
     pod 'TPKeyboardAvoiding', '~> 1.3'
 end
