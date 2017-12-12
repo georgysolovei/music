@@ -42,19 +42,18 @@ extension UIViewController {
     
     func startActivityIndicator() {
         
-        guard let unwrappedWindow = AppWindow else { return }
-        guard let window    = unwrappedWindow else { return }
+        let controllerFrame = view.frame
         
-        blockView = UIView(frame: window.frame)
+        blockView = UIView(frame: controllerFrame)
         blockView.backgroundColor = UIColor.black
         blockView.alpha = Const.blockViewAlpha
         view.addSubview(blockView)
 
-        let width  = window.frame.width/Const.downsizeMultiplier
-        let height = window.frame.height/Const.downsizeMultiplier
+        let width  = controllerFrame.width/Const.downsizeMultiplier
+        let height = controllerFrame.height/Const.downsizeMultiplier
         
-        let indicatorFrame = CGRect(x: window.frame.midX - width/2, y: window.frame.midY - height/2, width: width, height: height)
-        activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .audioEqualizer, color: UIColor.orange, padding: 0)
+        let indicatorFrame = CGRect(x: controllerFrame.midX - width/2, y: controllerFrame.midY - height/2, width: width, height: height)
+        activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .audioEqualizer, color: OrangeColor, padding: 0)
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
     }
@@ -66,21 +65,3 @@ extension UIViewController {
         blockView.removeFromSuperview()
     }
 }
-
-// Alert
-extension UIViewController {
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default) { (result : UIAlertAction) -> Void in
-        }
-        alertController.addAction(ok)
-        alertController.show(alertController, sender: nil)
-      //  guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
-        self.present(alertController, animated: true, completion: nil)
-    }
-}
-
-
-
-extension String: Error {}

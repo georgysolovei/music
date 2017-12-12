@@ -16,8 +16,12 @@ class LogInController: UIViewController {
     @IBOutlet weak var logInButton: UIButton!
     
     var viewModel: LoginViewModelProtocol!
-    var disposeBag = DisposeBag()
+    var disposeBag : DisposeBag!
 
+    private struct Const {
+        static let error = "Error"
+    }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,8 @@ class LogInController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         
+        disposeBag = DisposeBag()
+        
         viewModel.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
@@ -45,7 +51,7 @@ class LogInController: UIViewController {
             .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { errorMessage in
-                self.showAlert(title: "Error", message: errorMessage!)
+                self.showAlert(title: Const.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
     }
@@ -53,6 +59,7 @@ class LogInController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         view.endEditing(true)
+        disposeBag = nil
     }
     
     // MARK: - Methods

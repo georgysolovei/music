@@ -15,9 +15,10 @@ class ArtistController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var artistViewModel : ArtistViewModelProtocol?
-    let disposeBag = DisposeBag()
+    var disposeBag : DisposeBag!
     struct Const {
         static let cell = "ArtistCell"
+        static let error = "Error"
     }
     
     lazy var refreshControl: UIRefreshControl = {
@@ -25,7 +26,7 @@ class ArtistController: UIViewController {
         refreshControl.addTarget(self, action:
             #selector(ArtistController.handleRefresh),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.orange
+        refreshControl.tintColor = OrangeColor
         
         return refreshControl
     }()
@@ -34,6 +35,16 @@ class ArtistController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.addSubview(self.refreshControl)
+       
+        navigationController?.navigationBar.tintColor = UIColor.orange
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.backBarButtonItem?.title = ""
+        
+        disposeBag = DisposeBag()
 
         artistViewModel?.artists
             .asObservable()
@@ -42,13 +53,7 @@ class ArtistController: UIViewController {
                 self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
-        navigationController?.navigationBar.tintColor = UIColor.orange
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
-        navigationItem.backBarButtonItem?.title = ""
+
         
         artistViewModel?.isLoading
             .asObservable()
@@ -73,7 +78,7 @@ class ArtistController: UIViewController {
             .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { errorMessage in
-                self.showAlert(title: "Error", message: errorMessage!)
+                self.showAlert(title: Const.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
     }
@@ -81,6 +86,7 @@ class ArtistController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
+        disposeBag = nil
     }
 
     // MARK: - Methods
@@ -142,7 +148,7 @@ extension ArtistController : UITableViewDataSourcePrefetching {
     // TODO: Magic Numbers
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let artistCount = artistViewModel?.numberOfRows else { return }
-        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 {
+        if indexPaths.last?.row == artistCount - 60 || indexPaths.last?.row == artistCount - 1 {
             artistViewModel?.didScrollToBottom()
         }
     }

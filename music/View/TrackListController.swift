@@ -12,10 +12,9 @@ import NVActivityIndicatorView
 
 class TrackListController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var backButton: UIBarButtonItem!
     
     var viewModel : TrackListViewModelProtocol!
-    let disposeBag = DisposeBag()
+    var disposeBag : DisposeBag!
 
     struct Const {
         static let trackCell = "TrackCell"
@@ -24,22 +23,27 @@ class TrackListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.tintColor = UIColor.orange
-        (viewModel as! TrackListViewModel).tracks
-            .asObservable()
-            .observeOn(MainScheduler.instance)
-            .subscribe({ _ in
-            self.tableView.reloadData()
-        }).disposed(by: disposeBag)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
-
-        navigationController?.navigationBar.topItem?.title = ""
+     
+        guard let navBar = navigationController?.navigationBar else { return }
+        navBar.isHidden = false
+        navBar.tintColor = OrangeColor
+        navBar.topItem?.title = ""
         navigationItem.title = viewModel.artistName
         
+        disposeBag = DisposeBag()
+        
+        (viewModel as! TrackListViewModel).tracks
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe({ _ in
+                self.tableView.reloadData()
+            }).disposed(by: disposeBag)
+                
         viewModel?.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
@@ -57,6 +61,12 @@ class TrackListController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        disposeBag = nil
+    }
+    
     
     @IBAction func backTapped(_ sender: UIBarButtonItem) {
         viewModel.didPressBackButton()

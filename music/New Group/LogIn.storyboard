@@ -76,6 +76,9 @@
                                                     <constraint firstAttribute="height" constant="160" id="I7n-cl-gjz"/>
                                                 </constraints>
                                             </stackView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speakers" translatesAutoresizingMaskIntoConstraints="NO" id="S3G-Tk-q2I" customClass="sp">
+                                                <rect key="frame" x="87" y="497" width="200" height="150"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -83,6 +86,8 @@
                                             <constraint firstItem="r9e-Yy-FHh" firstAttribute="centerX" secondItem="cFu-ff-gCv" secondAttribute="centerX" id="ObR-HS-d4a"/>
                                             <constraint firstAttribute="trailing" secondItem="r9e-Yy-FHh" secondAttribute="trailing" constant="20" id="VkX-v3-y4u"/>
                                             <constraint firstItem="r9e-Yy-FHh" firstAttribute="leading" secondItem="cFu-ff-gCv" secondAttribute="leading" constant="20" id="b8m-yR-uUi"/>
+                                            <constraint firstItem="S3G-Tk-q2I" firstAttribute="centerX" secondItem="cFu-ff-gCv" secondAttribute="centerX" id="feg-Ho-D26"/>
+                                            <constraint firstAttribute="bottom" secondItem="S3G-Tk-q2I" secondAttribute="bottom" id="h94-C4-lzy"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -128,4 +133,7 @@
             <point key="canvasLocation" x="-207.19999999999999" y="205.54722638680661"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="speakers" width="200" height="150"/>
+    </resources>
 </document>

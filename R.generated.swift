@@ -212,6 +212,7 @@ struct _R: Rswift.Validatable {
       }
       
       static func validate() throws {
+        if UIKit.UIImage(named: "speakers") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'speakers' is used in storyboard 'LogIn', but couldn't be loaded.") }
         if _R.storyboard.logIn().logInController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'logInController' could not be loaded from storyboard 'LogIn' as 'LogInController'.") }
       }
       
