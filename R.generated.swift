@@ -33,33 +33,33 @@ struct R: Rswift.Validatable {
   
   /// This `R.image` struct is generated, and contains static references to 4 images.
   struct image {
-    /// Image `Image`.
-    static let image = Rswift.ImageResource(bundle: R.hostingBundle, name: "Image")
     /// Image `camera`.
     static let camera = Rswift.ImageResource(bundle: R.hostingBundle, name: "camera")
-    /// Image `cd`.
-    static let cd = Rswift.ImageResource(bundle: R.hostingBundle, name: "cd")
+    /// Image `play`.
+    static let play = Rswift.ImageResource(bundle: R.hostingBundle, name: "play")
     /// Image `sound-wave`.
     static let soundWave = Rswift.ImageResource(bundle: R.hostingBundle, name: "sound-wave")
-    
-    /// `UIImage(named: "Image", bundle: ..., traitCollection: ...)`
-    static func image(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.image, compatibleWith: traitCollection)
-    }
+    /// Image `speakers`.
+    static let speakers = Rswift.ImageResource(bundle: R.hostingBundle, name: "speakers")
     
     /// `UIImage(named: "camera", bundle: ..., traitCollection: ...)`
     static func camera(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.camera, compatibleWith: traitCollection)
     }
     
-    /// `UIImage(named: "cd", bundle: ..., traitCollection: ...)`
-    static func cd(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.cd, compatibleWith: traitCollection)
+    /// `UIImage(named: "play", bundle: ..., traitCollection: ...)`
+    static func play(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.play, compatibleWith: traitCollection)
     }
     
     /// `UIImage(named: "sound-wave", bundle: ..., traitCollection: ...)`
     static func soundWave(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.soundWave, compatibleWith: traitCollection)
+    }
+    
+    /// `UIImage(named: "speakers", bundle: ..., traitCollection: ...)`
+    static func speakers(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.speakers, compatibleWith: traitCollection)
     }
     
     fileprivate init() {}
@@ -178,8 +178,8 @@ struct _R: Rswift.Validatable {
       }
       
       static func validate() throws {
-        if UIKit.UIImage(named: "cd") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'cd' is used in storyboard 'Artist', but couldn't be loaded.") }
         if UIKit.UIImage(named: "camera") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'camera' is used in storyboard 'Artist', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "play") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'play' is used in storyboard 'Artist', but couldn't be loaded.") }
         if _R.storyboard.artist().trackListController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'trackListController' could not be loaded from storyboard 'Artist' as 'TrackListController'.") }
         if _R.storyboard.artist().artistController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'artistController' could not be loaded from storyboard 'Artist' as 'ArtistController'.") }
       }
@@ -212,6 +212,7 @@ struct _R: Rswift.Validatable {
       }
       
       static func validate() throws {
+        if UIKit.UIImage(named: "speakers") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'speakers' is used in storyboard 'LogIn', but couldn't be loaded.") }
         if _R.storyboard.logIn().logInController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'logInController' could not be loaded from storyboard 'LogIn' as 'LogInController'.") }
       }
       

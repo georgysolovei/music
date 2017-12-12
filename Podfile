@@ -18,4 +18,5 @@ target 'music' do
     pod 'NVActivityIndicatorView'
     pod 'Kingfisher'
     pod 'RxAlamofire'
+    pod 'TPKeyboardAvoiding', '~> 1.3'
 end

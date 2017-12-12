@@ -14,9 +14,9 @@ class LogInController: UIViewController {
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-    @IBOutlet weak var passwordFieldCenterYconstraint: NSLayoutConstraint!
+    //@IBOutlet weak var passwordFieldCenterYconstraint: NSLayoutConstraint!
     
-    var passFieldConstraintNormalValue : CGFloat?
+  //  var passFieldConstraintNormalValue : CGFloat?
     
     var viewModel: LoginViewModelProtocol!
     var disposeBag = DisposeBag()
@@ -30,9 +30,9 @@ class LogInController: UIViewController {
         }
         updateTextField()
         
-        if passFieldConstraintNormalValue == nil {
-            passFieldConstraintNormalValue = passwordFieldCenterYconstraint.constant
-        }
+   //     if passFieldConstraintNormalValue == nil {
+          //  passFieldConstraintNormalValue = passwordFieldCenterYconstraint.constant
+  //      }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,19 +106,19 @@ class LogInController: UIViewController {
             let isKeyboardOverlaps = keyboardHeight > (view.frame.maxY - logInButton.frame.maxY) ? true : false
             
             if isKeyboardOverlaps {
-                let overlapValue = keyboardHeight - (view.frame.maxY - logInButton.frame.maxY)
+   //             let overlapValue = keyboardHeight - (view.frame.maxY - logInButton.frame.maxY)
 
-                passwordFieldCenterYconstraint.constant = -overlapValue
+  //              passwordFieldCenterYconstraint.constant = -overlapValue
                 view.layoutIfNeeded()
             }
         }
     }
     
     @objc func keyboardWillHide(notification: Notification) {
-        if passwordFieldCenterYconstraint.constant != passFieldConstraintNormalValue! {
-            passwordFieldCenterYconstraint.constant = passFieldConstraintNormalValue!
-            view.layoutIfNeeded()
-        }
+//        if passwordFieldCenterYconstraint.constant != passFieldConstraintNormalValue! {
+//            passwordFieldCenterYconstraint.constant = passFieldConstraintNormalValue!
+//            view.layoutIfNeeded()
+//        }
     }
     
     func login() {

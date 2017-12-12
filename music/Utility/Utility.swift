@@ -15,6 +15,7 @@ let SecretKey = "0ff85c899eef572bf1626832c1c69ca1"
 let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
 let AppWindow = UIApplication.shared.delegate?.window
+
 //let LoadingBackgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
 let OrangeColor = UIColor.orange
 
