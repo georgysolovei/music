@@ -43,6 +43,9 @@ final class RequestManager {
                 throw XmlParser.parseHttpError(error)
             })
             .map({ data -> String in
+                
+
+                
                 if let key = XmlParser.getSessionKeyFrom(data) {
                     return key
                 } else {
@@ -64,6 +67,9 @@ final class RequestManager {
                 throw error.localizedDescription
             })
             .map({ jsonArtists -> [Artist] in
+                
+                
+               
                 let artists = JSON(jsonArtists)
                 return JsonParser.parseArtists(artists)
             })

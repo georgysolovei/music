@@ -13,7 +13,6 @@ import NVActivityIndicatorView
 class TrackListController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var customNavBar: UINavigationBar!
     
     var viewModel : TrackListViewModelProtocol!
     let disposeBag = DisposeBag()
@@ -24,9 +23,8 @@ class TrackListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backButton.tintColor = UIColor.orange
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        
+
+        navigationController?.navigationBar.tintColor = UIColor.orange
         (viewModel as! TrackListViewModel).tracks
             .asObservable()
             .observeOn(MainScheduler.instance)
@@ -37,9 +35,11 @@ class TrackListController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
 
-        navigationController?.navigationBar.topItem?.title = viewModel.artistName
-        customNavBar.topItem?.title = viewModel.artistName
+        navigationController?.navigationBar.topItem?.title = ""
+        navigationItem.title = viewModel.artistName
+        
         viewModel?.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)

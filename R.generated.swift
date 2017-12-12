@@ -31,12 +31,21 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.image` struct is generated, and contains static references to 2 images.
+  /// This `R.image` struct is generated, and contains static references to 4 images.
   struct image {
+    /// Image `Image`.
+    static let image = Rswift.ImageResource(bundle: R.hostingBundle, name: "Image")
     /// Image `camera`.
     static let camera = Rswift.ImageResource(bundle: R.hostingBundle, name: "camera")
     /// Image `cd`.
     static let cd = Rswift.ImageResource(bundle: R.hostingBundle, name: "cd")
+    /// Image `sound-wave`.
+    static let soundWave = Rswift.ImageResource(bundle: R.hostingBundle, name: "sound-wave")
+    
+    /// `UIImage(named: "Image", bundle: ..., traitCollection: ...)`
+    static func image(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.image, compatibleWith: traitCollection)
+    }
     
     /// `UIImage(named: "camera", bundle: ..., traitCollection: ...)`
     static func camera(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
@@ -46,6 +55,11 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "cd", bundle: ..., traitCollection: ...)`
     static func cd(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.cd, compatibleWith: traitCollection)
+    }
+    
+    /// `UIImage(named: "sound-wave", bundle: ..., traitCollection: ...)`
+    static func soundWave(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.soundWave, compatibleWith: traitCollection)
     }
     
     fileprivate init() {}
@@ -70,14 +84,14 @@ struct R: Rswift.Validatable {
   struct segue {
     /// This struct is generated for `ArtistController`, and contains static references to 1 segues.
     struct artistController {
-      /// Segue identifier `TracksSegue`.
-      static let tracksSegue: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, ArtistController, TrackListController> = Rswift.StoryboardSegueIdentifier(identifier: "TracksSegue")
+      /// Segue identifier `TrackListSegue`.
+      static let trackListSegue: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, ArtistController, TrackListController> = Rswift.StoryboardSegueIdentifier(identifier: "TrackListSegue")
       
-      /// Optionally returns a typed version of segue `TracksSegue`.
+      /// Optionally returns a typed version of segue `TrackListSegue`.
       /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
       /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func tracksSegue(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, ArtistController, TrackListController>? {
-        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.artistController.tracksSegue, segue: segue)
+      static func trackListSegue(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, ArtistController, TrackListController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.artistController.trackListSegue, segue: segue)
       }
       
       fileprivate init() {}
@@ -144,6 +158,7 @@ struct _R: Rswift.Validatable {
     static func validate() throws {
       try logIn.validate()
       try artist.validate()
+      try launchScreen.validate()
     }
     
     struct artist: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
@@ -172,11 +187,15 @@ struct _R: Rswift.Validatable {
       fileprivate init() {}
     }
     
-    struct launchScreen: Rswift.StoryboardResourceWithInitialControllerType {
+    struct launchScreen: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UIViewController
       
       let bundle = R.hostingBundle
       let name = "LaunchScreen"
+      
+      static func validate() throws {
+        if UIKit.UIImage(named: "sound-wave") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'sound-wave' is used in storyboard 'LaunchScreen', but couldn't be loaded.") }
+      }
       
       fileprivate init() {}
     }

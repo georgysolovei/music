@@ -32,19 +32,19 @@ final class RootCoordinator : RootCoordinatorProtocol {
         let sessionKey = PersistencyManager.shared.getSessionKey()
         
         if isNilOrEmpty(sessionKey) {
-            showAuthScreen()
+            showAuthCoordinator()
         } else {
-           showArtistScreen()
+           showArtistCoordinator()
         }
     }
     
-    func showAuthScreen() {
+    func showAuthCoordinator() {
         child = AuthCoordinator(window:window)
         (child as! AuthCoordinator).authDelegate = self
         child!.start()
     }
     
-    func showArtistScreen() {
+    func showArtistCoordinator() {
         child = ArtistCoordinator(window:window)
         (child as! ArtistCoordinator).authDelegate = self
         child!.start()
@@ -53,10 +53,10 @@ final class RootCoordinator : RootCoordinatorProtocol {
 
 extension RootCoordinator : AuthDelegate {
     func logIn() {
-        showArtistScreen()
+        showArtistCoordinator()
     }
     
     func logOut() {
-        showAuthScreen()
+        showAuthCoordinator()
     }
 }

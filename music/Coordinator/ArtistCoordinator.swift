@@ -37,13 +37,11 @@ extension ArtistCoordinator : CoordinatorProtocol {
         navigationController = R.storyboard.artist.instantiateInitialViewController()
         window.rootViewController = navigationController
         
-        let artistController = R.storyboard.artist.artistController()
-      
-        navigationController?.pushViewController(artistController!, animated: true)
+        let artistController = navigationController?.childViewControllers.first as! ArtistController
         
         let artistViewModel = AtristViewModel()
         artistViewModel.transitionDelegate = self
-        artistController?.artistViewModel = artistViewModel
+        artistController.artistViewModel = artistViewModel
 
         artistViewModel.isFinished.asObservable().subscribe(onNext: { event in
             if event == true {
