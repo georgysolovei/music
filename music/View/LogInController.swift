@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import NVActivityIndicatorView
+import RxCocoa
 
 class LogInController: UIViewController {
     @IBOutlet weak var userNameField: UITextField!
@@ -25,19 +26,29 @@ class LogInController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for textField in [userNameField, passwordField] {
-            textField?.addTarget(self, action: #selector(LogInController.updateTextField), for: .editingChanged)
-        }
-        updateTextField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        
+        disableLoginButton()
         disposeBag = DisposeBag()
         
+        viewModel.isValid
+            .asObservable()
+            .bind(onNext: { isEnabled in
+                isEnabled ? self.enableLoginButton() : self.disableLoginButton()
+        })
+            .disposed(by: disposeBag)
+        
+        logInButton.rx
+            .tap.asObservable()
+            .bind(to: viewModel.buttonPressed)
+            .disposed(by: disposeBag)
+        
+        (userNameField.rx.value <-> viewModel.username).disposed(by: disposeBag)
+        (passwordField.rx.value <-> viewModel.password).disposed(by: disposeBag)
+
         viewModel.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
@@ -73,17 +84,6 @@ class LogInController: UIViewController {
         logInButton.backgroundColor = OrangeColor
     }
     
-    @objc func updateTextField() {
-        let textFields = [userNameField, passwordField]
-
-        let oneOfTheTextFieldsIsBlank = textFields.contains(where: {($0?.text ?? "").isEmpty})
-        if oneOfTheTextFieldsIsBlank {
-            disableLoginButton()
-        } else {
-            enableLoginButton()
-        }
-    }
-    
     func login() {
         if let user = userNameField.text, let password = passwordField.text {
             if !user.isEmpty && !password.isEmpty {
@@ -95,10 +95,6 @@ class LogInController: UIViewController {
     // MARK: - IB Actions
     @IBAction func didTapOnView(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
-    }
-    
-    @IBAction func logInTapped(_ sender: UIButton) {
-        login()
     }
 }
 

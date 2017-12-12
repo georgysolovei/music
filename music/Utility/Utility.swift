@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 let ApiKey = "4f9192f1780beda512a56b2bea792be0"
 let SecretKey = "0ff85c899eef572bf1626832c1c69ca1"
@@ -34,4 +35,20 @@ func associatedObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<
 
 func associateObject<ValueType: AnyObject>(base: AnyObject, key: UnsafePointer<String>, value: ValueType) {
     objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN)
+}
+
+// Bidirectional binding
+infix operator <-> : DefaultPrecedence
+func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable{
+    let bindToUIDisposable = variable.asObservable()
+        .bind(to: property)
+    
+    let bindToVariable = property
+        .subscribe(onNext: { n in
+            variable.value = n
+        }, onCompleted:  {
+            bindToUIDisposable.dispose()
+        })
+    
+    return Disposables.create(bindToUIDisposable, bindToVariable)
 }

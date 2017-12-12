@@ -67,9 +67,6 @@
                                                         <state key="normal" title="Log in">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="logInTapped:" destination="UX4-vG-y97" eventType="touchUpInside" id="Zro-4L-MtY"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>

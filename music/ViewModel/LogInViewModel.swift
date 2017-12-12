@@ -12,11 +12,21 @@ protocol LoginViewModelProtocol: class {
     func logIn(userName:String, pass:String)
     var isLoading: Variable<Bool> { get }
     var errorMessage : Variable<String?> { get }
+    var username: Variable<String?>{ get }
+    var password: Variable<String?>{ get }
+    var isValid: Observable<Bool>{ get }
+    var buttonPressed: PublishSubject<Void> { get set }
 }
 
 final class LogInViewModel {
     var loginModel : LogInModel
     var sessionKey : Variable<String?> = Variable(nil)
+    var username = Variable<String?>(nil)
+    var password = Variable<String?>(nil)
+    let isValid: Observable<Bool>
+
+    var buttonPressed = PublishSubject<Void>()
+    
     let disposeBag = DisposeBag()
     
     var errorMessage : Variable<String?> = Variable(nil)
@@ -25,10 +35,21 @@ final class LogInViewModel {
 
     init() {
         loginModel = LogInModel()
+        isValid = Observable.combineLatest(self.username.asObservable(), self.password.asObservable()) { (username, password) in
+            guard let username = username else { return false }
+            guard let password = password else { return false }
+
+            return username.count > 0 && password.count > 0
+        }
+        
+        buttonPressed.subscribe(onNext: {
+            self.logIn(userName: self.username.value!, pass: self.password.value!)
+        }).disposed(by: disposeBag)
     }
 }
 
 extension LogInViewModel : LoginViewModelProtocol {
+
     func logIn(userName: String, pass: String) {
         let spinner = isLoading
     
