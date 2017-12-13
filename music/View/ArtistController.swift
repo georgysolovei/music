@@ -18,7 +18,6 @@ class ArtistController: UIViewController {
     var disposeBag : DisposeBag!
     struct Const {
         static let cell = "ArtistCell"
-        static let error = "Error"
     }
     
     lazy var refreshControl: UIRefreshControl = {
@@ -78,7 +77,7 @@ class ArtistController: UIViewController {
             .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { errorMessage in
-                self.showAlert(title: Const.error, message: errorMessage!)
+                self.showAlert(title: Global.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
     }

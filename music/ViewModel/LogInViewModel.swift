@@ -10,28 +10,26 @@ import RxSwift
 
 protocol LoginViewModelProtocol: class {
     func logIn(userName:String, pass:String)
-    var isLoading: Variable<Bool> { get }
-    var errorMessage : Variable<String?> { get }
-    var username: Variable<String?>{ get }
-    var password: Variable<String?>{ get }
-    var isValid: Observable<Bool>{ get }
-    var buttonPressed: PublishSubject<Void> { get set }
+    var isLoading:    Variable<Bool>   { get }
+    var errorMessage: Variable<String?>{ get }
+    var username:     Variable<String?>{ get }
+    var password:     Variable<String?>{ get }
+    var isValid:      Observable<Bool> { get }
+    var buttonPressed: PublishSubject<Void>{ get }
 }
 
 final class LogInViewModel {
-    var loginModel : LogInModel
-    var sessionKey : Variable<String?> = Variable(nil)
-    var username = Variable<String?>(nil)
-    var password = Variable<String?>(nil)
-    let isValid: Observable<Bool>
-
+    var isLoading    = Variable(false)
+    var errorMessage = Variable<String?>(nil)
+    var username     = Variable<String?>(nil)
+    var password     = Variable<String?>(nil)
+    var sessionKey   = Variable<String?>(nil)
+    var isValid: Observable<Bool>
     var buttonPressed = PublishSubject<Void>()
-    
-    let disposeBag = DisposeBag()
-    
-    var errorMessage : Variable<String?> = Variable(nil)
 
-    let isLoading = Variable(false)
+    let loginModel : LogInModel
+    let disposeBag = DisposeBag()
+
 
     init() {
         loginModel = LogInModel()

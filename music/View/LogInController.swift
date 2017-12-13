@@ -18,10 +18,6 @@ class LogInController: UIViewController {
     
     var viewModel: LoginViewModelProtocol!
     var disposeBag : DisposeBag!
-
-    private struct Const {
-        static let error = "Error"
-    }
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -42,7 +38,8 @@ class LogInController: UIViewController {
             .disposed(by: disposeBag)
         
         logInButton.rx
-            .tap.asObservable()
+            .tap
+            .asObservable()
             .bind(to: viewModel.buttonPressed)
             .disposed(by: disposeBag)
         
@@ -62,7 +59,7 @@ class LogInController: UIViewController {
             .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { errorMessage in
-                self.showAlert(title: Const.error, message: errorMessage!)
+                self.showAlert(title: Global.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
     }
@@ -84,29 +81,18 @@ class LogInController: UIViewController {
         logInButton.backgroundColor = OrangeColor
     }
     
-    func login() {
-        if let user = userNameField.text, let password = passwordField.text {
-            if !user.isEmpty && !password.isEmpty {
-               viewModel.logIn(userName: user, pass: password)
-            }
-        }
-    }
-    
     // MARK: - IB Actions
     @IBAction func didTapOnView(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
 }
 
+// MARK: - Extensions
 extension LogInController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == userNameField {
-            passwordField.becomeFirstResponder()
-        } else {
-            if logInButton.isEnabled {
-                view.endEditing(true)
-                login()
-            }
+        if logInButton.isEnabled {
+            view.endEditing(true)
+            viewModel.buttonPressed.onNext(())
         }
         return true
     }

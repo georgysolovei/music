@@ -16,6 +16,10 @@ let SecretKey = "0ff85c899eef572bf1626832c1c69ca1"
 let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 let OrangeColor = UIColor.orange
 
+struct Global {
+    static let error = "Error"
+}
+
 func isNilOrEmpty(_ value : String?) -> Bool {
     return (value == nil) || value!.isEmpty
 }

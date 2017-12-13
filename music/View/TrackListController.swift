@@ -57,7 +57,7 @@ class TrackListController: UIViewController {
             .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { errorMessage in
-                self.showAlert(title: "Error", message: errorMessage!)
+                self.showAlert(title: Global.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
     }
