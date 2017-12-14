@@ -52,5 +52,3 @@ extension AuthCoordinator : CoordinatorProtocol {
         authDelegate.logIn()
     }
 }
-
-

@@ -7,9 +7,10 @@
 //
 
 import RxSwift
+import Foundation
 
 protocol LoginViewModelProtocol: class {
-    func logIn(userName:String, pass:String)
+  //  func logIn(userName:String, pass:String)
     var isLoading:    Variable<Bool>   { get }
     var errorMessage: Variable<String?>{ get }
     var username:     Variable<String?>{ get }
@@ -18,7 +19,7 @@ protocol LoginViewModelProtocol: class {
     var buttonPressed: PublishSubject<Void>{ get }
 }
 
-final class LogInViewModel {
+final class LogInViewModel: LoginViewModelProtocol  {
     var isLoading    = Variable(false)
     var errorMessage = Variable<String?>(nil)
     var username     = Variable<String?>(nil)
@@ -30,29 +31,26 @@ final class LogInViewModel {
     let loginModel : LogInModel
     let disposeBag = DisposeBag()
 
-
     init() {
         loginModel = LogInModel()
+        
         isValid = Observable.combineLatest(self.username.asObservable(), self.password.asObservable()) { (username, password) in
             guard let username = username else { return false }
             guard let password = password else { return false }
 
-            return username.count > 0 && password.count > 0
+            return !username.isEmpty && !password.isEmpty
         }
         
-        buttonPressed.subscribe(onNext: {
-            self.logIn(userName: self.username.value!, pass: self.password.value!)
-        }).disposed(by: disposeBag)
-    }
-}
-
-extension LogInViewModel : LoginViewModelProtocol {
-
-    func logIn(userName: String, pass: String) {
-        let spinner = isLoading
-    
-        spinner.value = true
-        RequestManager.getMobileSession(userName: userName, password: pass)
+        buttonPressed
+            .asObservable()
+            .flatMap({ (_) -> Observable<String> in
+                RequestManager.getMobileSession(userName: self.username.value!, password: self.password.value!)
+            })
+            .retryWhen({ (err) -> Observable<String> in
+                
+                return Observable.just("TEST")
+            })
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { event in
                 if !isNilOrEmpty(event) {
                     self.loginModel.saveSessionKey(event)
@@ -60,10 +58,36 @@ extension LogInViewModel : LoginViewModelProtocol {
                 }
             }, onError: { error in
                 print(error)
-                spinner.value = false
+                self.isLoading.value = false
                 self.errorMessage.value = String(describing: error)
             }, onCompleted: {
-                spinner.value = false
-            }).disposed(by: disposeBag)
+                print("Completed")
+                self.isLoading.value = false
+            }, onDisposed:{
+                print("Disposed")
+            })
+            .disposed(by: disposeBag)
     }
 }
+
+//extension LogInViewModel : LoginViewModelProtocol {
+//
+//    func logIn(userName: String, pass: String) {
+//        let spinner = isLoading
+//
+//        spinner.value = true
+//        RequestManager.getMobileSession(userName: userName, password: pass)
+//            .subscribe(onNext: { event in
+//                if !isNilOrEmpty(event) {
+//                    self.loginModel.saveSessionKey(event)
+//                    self.sessionKey.value = event
+//                }
+//            }, onError: { error in
+//                print(error)
+//                spinner.value = false
+//                self.errorMessage.value = String(describing: error)
+//            }, onCompleted: {
+//                spinner.value = false
+//            }).disposed(by: disposeBag)
+//    }
+//}

@@ -14,10 +14,10 @@ import RxCocoa
 class LogInController: UIViewController {
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var logInButton: LogInButton!
     
     var viewModel: LoginViewModelProtocol!
-    var disposeBag : DisposeBag!
+    var disposeBag: DisposeBag!
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -27,13 +27,14 @@ class LogInController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        disableLoginButton()
+
+        logInButton.isEnabled = false
         disposeBag = DisposeBag()
         
         viewModel.isValid
             .asObservable()
             .bind(onNext: { isEnabled in
-                isEnabled ? self.enableLoginButton() : self.disableLoginButton()
+                self.logInButton.isEnabled = isEnabled
         })
             .disposed(by: disposeBag)
         
@@ -68,17 +69,6 @@ class LogInController: UIViewController {
         super.viewWillDisappear(animated)
         view.endEditing(true)
         disposeBag = nil
-    }
-    
-    // MARK: - Methods
-    func disableLoginButton() {
-        logInButton.isEnabled = false
-        logInButton.backgroundColor = UIColor.lightGray
-    }
-
-    func enableLoginButton() {
-        logInButton.isEnabled = true
-        logInButton.backgroundColor = OrangeColor
     }
     
     // MARK: - IB Actions

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09DA27A8E2A04BA64795A7D6 /* Pods_music.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34559EB322C96EFAD5006C0E /* Pods_music.framework */; };
 		0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */; };
+		0B2545EB1FE1226C0052D449 /* LogInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545EA1FE1226C0052D449 /* LogInButton.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
 		0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45CD651FBEDF190052761C /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistController.swift; sourceTree = "<group>"; };
+		0B2545EA1FE1226C0052D449 /* LogInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInButton.swift; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
 		0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -95,9 +97,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B2545E91FE122460052D449 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				0B2545EA1FE1226C0052D449 /* LogInButton.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		0B2FBF701FC2B8DA009C657C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0B2545E91FE122460052D449 /* Custom */,
 				0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */,
 				8E2987881FCF49FC00C1F24B /* TrackCell.swift */,
 				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
@@ -420,6 +431,7 @@
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
 				0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */,
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
+				0B2545EB1FE1226C0052D449 /* LogInButton.swift in Sources */,
 				0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0B5682CB1FE012C500CA62A8 /* UIViewController+Alert.swift in Sources */,

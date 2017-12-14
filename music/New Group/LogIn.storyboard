@@ -57,7 +57,7 @@
                                                             <outlet property="delegate" destination="UX4-vG-y97" id="dDd-jo-rSt"/>
                                                         </connections>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vej-uj-JDe">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vej-uj-JDe" customClass="LogInButton" customModule="music" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="112" width="335" height="48"/>
                                                         <color key="backgroundColor" red="1" green="0.57647061349999995" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -112,7 +112,7 @@
                     <navigationItem key="navigationItem" id="prR-2Z-WLh"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="logInButton" destination="vej-uj-JDe" id="uat-1g-lau"/>
+                        <outlet property="logInButton" destination="vej-uj-JDe" id="FYh-4E-pVQ"/>
                         <outlet property="passwordField" destination="LGe-C8-jcf" id="YT4-Hp-RwH"/>
                         <outlet property="userNameField" destination="xIm-yP-UkA" id="DlX-L6-Qhl"/>
                     </connections>

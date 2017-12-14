@@ -13,8 +13,9 @@ import NVActivityIndicatorView
 
 class ArtistController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-
-    var artistViewModel : ArtistViewModelProtocol?
+    @IBOutlet weak var logOutButton: UIBarButtonItem!
+    
+    var artistViewModel : ArtistViewModelProtocol!
     var disposeBag : DisposeBag!
     struct Const {
         static let cell = "ArtistCell"
@@ -34,7 +35,7 @@ class ArtistController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.addSubview(self.refreshControl)
-       
+        
         navigationController?.navigationBar.tintColor = UIColor.orange
     }
     
@@ -44,17 +45,26 @@ class ArtistController: UIViewController {
         navigationItem.backBarButtonItem?.title = ""
         
         disposeBag = DisposeBag()
-
-        artistViewModel?.artists
+        
+        logOutButton
+            .rx
+            .tap
             .asObservable()
+            .bind(to: artistViewModel.logOutTapped)
+            .disposed(by: disposeBag)
+        
+        artistViewModel
+            .artists
+            .asObservable()
+            .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe({ _ in
-                self.tableView.reloadData()
+                self.updateTableView()
             })
             .disposed(by: disposeBag)
-
         
-        artistViewModel?.isLoading
+        artistViewModel
+            .isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { isLoading in
@@ -62,7 +72,7 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel?.isRefreshing
+        artistViewModel.isRefreshing
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { isRefreshing in
@@ -72,7 +82,7 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel?.errorMessage
+        artistViewModel.errorMessage
             .asObservable()
             .skip(1)
             .observeOn(MainScheduler.instance)
@@ -87,25 +97,31 @@ class ArtistController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         disposeBag = nil
     }
-
+    
     // MARK: - Methods
     @objc func handleRefresh() {
-        artistViewModel?.loadArtists()
+        artistViewModel.loadArtists()
+    }
+    
+    fileprivate func updateTableView() {
+        // self.tableView.reloadData()
+        
+        self.tableView.beginUpdates()
+        
+        let newRows = self.artistViewModel.getNewRows()
+        
+        self.tableView.insertRows(at: newRows, with: .none)
+        
+        self.tableView.endUpdates()
     }
     
     // MARK: - IB Actions
-    @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
-        artistViewModel?.logOut()
-    }
-    
     @IBAction func linkTapped(_ sender: UIButton) {
         let cellTapped = sender.superview!.superview
         if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
-
-            guard let artistViewModel = artistViewModel else { return }
-
+            
             let artist = artistViewModel.getArtistForIndex(indexTapped)
-           
+            
             guard let link = URL(string: artist.url) else { return }
             UIApplication.shared.open(link, options: [:], completionHandler: nil)
         }
@@ -121,11 +137,10 @@ extension ArtistController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
         let cellNumber = indexPath.row
-        guard let artistViewModel = artistViewModel else { return cell }
-
+        
         let currentArtist = artistViewModel.getArtistForIndex(cellNumber)
         let imageUrl = URL.init(string: currentArtist.imageUrl)
-
+        
         cell.artistImageView.kf.indicatorType = .activity
         cell.artistImageView.kf.setImage(with: imageUrl)
         cell.artistLabel.text = currentArtist.name
@@ -143,17 +158,17 @@ extension ArtistController : UITableViewDelegate {
 }
 
 extension ArtistController : UITableViewDataSourcePrefetching {
-   
+    
     // TODO: Magic Numbers
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let artistCount = artistViewModel?.numberOfRows else { return }
-        if indexPaths.last?.row == artistCount - 60 || indexPaths.last?.row == artistCount - 1 {
+        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 {
             artistViewModel?.didScrollToBottom()
         }
     }
     
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-
+        
     }
 }
 

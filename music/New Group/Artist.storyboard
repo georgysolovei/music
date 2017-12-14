@@ -89,9 +89,6 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Dy-Qa-k6r">
                                                     <rect key="frame" x="158" y="91.5" width="96" height="30"/>
                                                     <state key="normal" title="Link at last.fm"/>
-                                                    <connections>
-                                                        <action selector="linkTapped:" destination="jYf-li-onM" eventType="touchUpInside" id="5s0-xa-8Po"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -146,13 +143,10 @@
                         <viewLayoutGuide key="safeArea" id="8z6-x6-Cmf"/>
                     </view>
                     <navigationItem key="navigationItem" title="Artists" id="yNg-SD-YX9">
-                        <barButtonItem key="leftBarButtonItem" title="Log out" id="vfY-1h-rmH">
-                            <connections>
-                                <action selector="logOutTapped:" destination="jYf-li-onM" id="yoT-Cf-42i"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Log out" id="vfY-1h-rmH"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="logOutButton" destination="vfY-1h-rmH" id="7GB-fV-s1b"/>
                         <outlet property="tableView" destination="vbP-Up-UW0" id="JnB-AC-cYi"/>
                         <segue destination="JzC-gU-FoG" kind="show" identifier="TrackListSegue" id="QEX-Uo-kDd"/>
                     </connections>
