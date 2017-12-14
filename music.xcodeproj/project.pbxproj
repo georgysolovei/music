@@ -10,6 +10,7 @@
 		09DA27A8E2A04BA64795A7D6 /* Pods_music.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34559EB322C96EFAD5006C0E /* Pods_music.framework */; };
 		0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */; };
 		0B2545EB1FE1226C0052D449 /* LogInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545EA1FE1226C0052D449 /* LogInButton.swift */; };
+		0B2545ED1FE2B3770052D449 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545EC1FE2B3770052D449 /* ArtistCell.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
 		0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45CD651FBEDF190052761C /* AppDelegate.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistController.swift; sourceTree = "<group>"; };
 		0B2545EA1FE1226C0052D449 /* LogInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInButton.swift; sourceTree = "<group>"; };
+		0B2545EC1FE2B3770052D449 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
 		0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				0B2545E91FE122460052D449 /* Custom */,
 				0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */,
 				8E2987881FCF49FC00C1F24B /* TrackCell.swift */,
+				0B2545EC1FE2B3770052D449 /* ArtistCell.swift */,
 				0B1E64A51FC54C6A000CBD84 /* ArtistController.swift */,
 				0B45CD671FBEDF190052761C /* LogInController.swift */,
 			);
@@ -422,6 +425,7 @@
 				0B2FBF731FC2B982009C657C /* Utility.swift in Sources */,
 				0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */,
 				8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */,
+				0B2545ED1FE2B3770052D449 /* ArtistCell.swift in Sources */,
 				8E2987891FCF49FC00C1F24B /* TrackCell.swift in Sources */,
 				0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */,
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,

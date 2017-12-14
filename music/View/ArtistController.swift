@@ -43,7 +43,30 @@ class ArtistController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
-        
+
+        setupObservables()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = true
+        disposeBag = nil
+    }
+    
+    // MARK: - Methods
+    @objc func handleRefresh() {
+        artistViewModel.loadArtists()
+    }
+    
+    fileprivate func updateTableView() {
+        // self.tableView.reloadData()
+        self.tableView.beginUpdates()
+        let newRows = self.artistViewModel.getNewRows()
+        self.tableView.insertRows(at: newRows, with: .none)
+        self.tableView.endUpdates()
+    }
+    
+    private func setupObservables() {
         disposeBag = DisposeBag()
         
         logOutButton
@@ -90,29 +113,17 @@ class ArtistController: UIViewController {
                 self.showAlert(title: Global.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.navigationBar.isHidden = true
-        disposeBag = nil
-    }
-    
-    // MARK: - Methods
-    @objc func handleRefresh() {
-        artistViewModel.loadArtists()
-    }
-    
-    fileprivate func updateTableView() {
-        // self.tableView.reloadData()
         
-        self.tableView.beginUpdates()
+        artistViewModel
+            .artists
+            .asObservable()
+            .bindTo(tableView.rx.items) {
+                (tableView: UITableView, index: Int, element: String) in
+                let cell = UITableViewCell(style: .default, reuseIdentifier:
+                    "cell")
+                cell.textLabel?.text = element
+                return cell }
         
-        let newRows = self.artistViewModel.getNewRows()
-        
-        self.tableView.insertRows(at: newRows, with: .none)
-        
-        self.tableView.endUpdates()
     }
     
     // MARK: - IB Actions
@@ -120,7 +131,7 @@ class ArtistController: UIViewController {
         let cellTapped = sender.superview!.superview
         if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
             
-            let artist = artistViewModel.getArtistForIndex(indexTapped)
+            let artist = artistViewModel.getArtistFor(indexTapped)
             
             guard let link = URL(string: artist.url) else { return }
             UIApplication.shared.open(link, options: [:], completionHandler: nil)
@@ -136,16 +147,9 @@ extension ArtistController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
-        let cellNumber = indexPath.row
         
-        let currentArtist = artistViewModel.getArtistForIndex(cellNumber)
-        let imageUrl = URL.init(string: currentArtist.imageUrl)
-        
-        cell.artistImageView.kf.indicatorType = .activity
-        cell.artistImageView.kf.setImage(with: imageUrl)
-        cell.artistLabel.text = currentArtist.name
-        cell.listenersCountLabel.text = String(currentArtist.listeners)
-        
+        cell.artist = artistViewModel.getArtistFor(indexPath.row)
+      
         return cell
     }
 }
@@ -153,7 +157,6 @@ extension ArtistController : UITableViewDataSource {
 extension ArtistController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         artistViewModel?.didSelectItemAt(indexPath.row)
-        
     }
 }
 
@@ -166,15 +169,5 @@ extension ArtistController : UITableViewDataSourcePrefetching {
             artistViewModel?.didScrollToBottom()
         }
     }
-    
-    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        
-    }
 }
 
-class ArtistCell : UITableViewCell {
-    @IBOutlet weak var artistImageView: UIImageView!
-    @IBOutlet weak var artistLabel: UILabel!
-    @IBOutlet weak var listenersCountLabel: UILabel!
-    @IBOutlet weak var linkButton: UIButton!
-}
