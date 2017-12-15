@@ -22,8 +22,6 @@ class TrackListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,6 +33,15 @@ class TrackListController: UIViewController {
         navBar.topItem?.title = ""
         navigationItem.title = viewModel.artistName
         
+        setUpObservables()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        disposeBag = nil
+    }
+    
+    private func setUpObservables() {
         disposeBag = DisposeBag()
         
         viewModel
@@ -44,7 +51,7 @@ class TrackListController: UIViewController {
             .subscribe({ _ in
                 self.tableView.reloadData()
             }).disposed(by: disposeBag)
-                
+        
         viewModel?.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
@@ -63,12 +70,6 @@ class TrackListController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        disposeBag = nil
-    }
-    
-    
     @IBAction func backTapped(_ sender: UIBarButtonItem) {
         viewModel.didPressBackButton()
     }
@@ -84,8 +85,4 @@ extension TrackListController : UITableViewDataSource {
         trackCell.viewModel = viewModel.trackCellViewModelAt(index: indexPath.row)
         return trackCell
     }
-}
-
-extension TrackListController : UITableViewDelegate {
-    
 }

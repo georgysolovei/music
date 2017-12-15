@@ -10,7 +10,9 @@ import RxSwift
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
-    var artists:      Variable<[Artist]?> { get }
+//    var artists:      Variable<[Artist]?> { get }
+    var newIndexPaths: Variable<[IndexPath]?> { get }
+
     var isLoading:    Variable<Bool>      { get }
     var isRefreshing: Variable<Bool>      { get }
     var isFinished:   Variable<Bool>      { get }
@@ -22,26 +24,27 @@ protocol ArtistViewModelProtocol : class {
     func didScrollToBottom()
     func didSelectItemAt(_ index:Int)
     func loadArtists()
-    func getNewRows() -> [IndexPath]
 }
 
 final class AtristViewModel {
-    var artists : Variable<[Artist]?>
-    let isLoading = Variable(false)
+    var artists      : Variable<[Artist]?>
+    var newIndexPaths: Variable<[IndexPath]?>
+    let isLoading    = Variable(false)
     var errorMessage : Variable<String?> = Variable(nil)
     var logOutTapped = PublishSubject<Void>()
-    var linkTapped = PublishSubject<Void>()
+    var linkTapped   = PublishSubject<Void>()
+    var isFinished   = Variable(false)
+    let isRefreshing = Variable<Bool>(false)
 
     var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
     private var page = 2
     var artistModel = ArtistModel()
-    var isFinished = Variable(false)
-    let isRefreshing = Variable<Bool>(false)
-    var newArtists = [Artist]()
     
     init() {
         artists = Variable(nil)
+        newIndexPaths = Variable(nil)
+        
         isLoading.value = true
         loadArtists()
         logOutTapped
@@ -50,6 +53,16 @@ final class AtristViewModel {
                 self.logOut()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func getNewRowsFor(_ newArtists:[Artist]) -> [IndexPath] {
+        
+        let newIndexPaths = newArtists.map{ artist -> IndexPath in
+            guard let indexOfNewArtist = artists.value?.index(of: artist) else { return IndexPath(row:0, section:0) }
+            let indexPath = IndexPath.init(row: indexOfNewArtist, section: 0)
+            return indexPath
+        }
+        return newIndexPaths
     }
 }
 
@@ -71,8 +84,8 @@ extension AtristViewModel : ArtistViewModelProtocol {
 
         RequestManager.getTopArtists(page: page)
             .subscribe(onNext: {
-                self.newArtists = $0
                 self.artists.value?.append(contentsOf: $0)
+                self.newIndexPaths.value = self.getNewRowsFor($0)
                 self.page += 1
                 self.isLoading.value = false
             }, onError:{ error in
@@ -105,8 +118,8 @@ extension AtristViewModel : ArtistViewModelProtocol {
         
         RequestManager.getTopArtists(page: page)
             .subscribe(onNext: {
-                self.newArtists = $0
                 self.artists.value = $0
+                self.newIndexPaths.value = self.getNewRowsFor($0)
                 
                 if self.isLoading.value == true {
                     self.isLoading.value = false
@@ -120,14 +133,5 @@ extension AtristViewModel : ArtistViewModelProtocol {
                 self.isLoading.value = false
                 
             }).disposed(by: disposeBag)
-    }
-    
-    func getNewRows() -> [IndexPath] {
-        let newIndexPaths = newArtists.map{ artist -> IndexPath in
-            guard let indexOfNewArtist = artists.value?.index(of: artist) else { return IndexPath() }
-            let indexPath = IndexPath.init(row: indexOfNewArtist, section: 0)
-            return indexPath
-        }
-        return newIndexPaths
     }
 }

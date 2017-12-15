@@ -23,24 +23,22 @@ class ArtistController: UIViewController {
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action:
-            #selector(ArtistController.handleRefresh),
-                                 for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(ArtistController.handleRefresh), for: UIControlEvents.valueChanged)
         refreshControl.tintColor = OrangeColor
-        
         return refreshControl
     }()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.addSubview(self.refreshControl)
         
-        navigationController?.navigationBar.tintColor = UIColor.orange
+        tableView.addSubview(self.refreshControl)
+        navigationController?.navigationBar.tintColor = OrangeColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
 
@@ -51,6 +49,8 @@ class ArtistController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
         disposeBag = nil
+        UIView.setAnimationsEnabled(true)
+
     }
     
     // MARK: - Methods
@@ -58,12 +58,12 @@ class ArtistController: UIViewController {
         artistViewModel.loadArtists()
     }
     
-    fileprivate func updateTableView() {
-        // self.tableView.reloadData()
+    fileprivate func updateTableViewWith(_ newIndexPaths:[IndexPath]) {
+        UIView.setAnimationsEnabled(false)
         self.tableView.beginUpdates()
-        let newRows = self.artistViewModel.getNewRows()
-        self.tableView.insertRows(at: newRows, with: .none)
+        self.tableView.insertRows(at: newIndexPaths, with: .none)
         self.tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
     }
     
     private func setupObservables() {
@@ -76,15 +76,15 @@ class ArtistController: UIViewController {
             .bind(to: artistViewModel.logOutTapped)
             .disposed(by: disposeBag)
         
-        artistViewModel
-            .artists
-            .asObservable()
-            .skip(1)
-            .observeOn(MainScheduler.instance)
-            .subscribe({ _ in
-                self.updateTableView()
-            })
-            .disposed(by: disposeBag)
+//        artistViewModel
+//            .artists
+//            .asObservable()
+//            .skip(1)
+//            .observeOn(MainScheduler.instance)
+//            .subscribe({ _ in
+//                self.updateTableView()
+//            })
+//            .disposed(by: disposeBag)
         
         artistViewModel
             .isLoading
@@ -114,25 +114,23 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-//        artistViewModel
-//            .artists
-//            .asObservable()
-//            .bindTo(tableView.rx.items) {
-//                (tableView: UITableView, index: Int, element: String) in
-//                let cell = UITableViewCell(style: .default, reuseIdentifier:
-//                    "cell")
-//                cell.textLabel?.text = element
-//                return cell }
-        
+        artistViewModel
+            .newIndexPaths
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { indexPaths in
+                guard let newIndexPaths = indexPaths else { return }
+                self.updateTableViewWith(newIndexPaths)
+            }).disposed(by: disposeBag)
     }
     
     // MARK: - IB Actions
     @IBAction func linkTapped(_ sender: UIButton) {
 //        let cellTapped = sender.superview!.superview
 //        if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
-//            
+//
 //            let artist = artistViewModel.getArtistCellViewModelFor(indexTapped)
-//            
+//
 //            guard let link = URL(string: artist.url) else { return }
 //            UIApplication.shared.open(link, options: [:], completionHandler: nil)
 //        }
@@ -147,9 +145,7 @@ extension ArtistController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
-        
         cell.viewModel = artistViewModel.getArtistCellViewModelFor(indexPath.row)
-      
         return cell
     }
 }
@@ -165,9 +161,8 @@ extension ArtistController : UITableViewDataSourcePrefetching {
     // TODO: Magic Numbers
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let artistCount = artistViewModel?.numberOfRows else { return }
-        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 {
+        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 || indexPaths.last?.row == artistCount - 30 {
             artistViewModel?.didScrollToBottom()
         }
     }
 }
-

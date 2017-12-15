@@ -9,10 +9,10 @@
 import UIKit
 
 class ArtistCell: UITableViewCell {
-        @IBOutlet weak var artistImageView: UIImageView!
-        @IBOutlet weak var artistLabel: UILabel!
-        @IBOutlet weak var listenersCountLabel: UILabel!
-        @IBOutlet weak var linkButton: UIButton!
+    @IBOutlet weak var artistImageView: UIImageView!
+    @IBOutlet weak var artistLabel: UILabel!
+    @IBOutlet weak var listenersCountLabel: UILabel!
+    @IBOutlet weak var linkButton: UIButton!
     
     var viewModel: ArtistCellViewModel? {
         didSet {
