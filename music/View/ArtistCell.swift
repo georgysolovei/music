@@ -14,13 +14,15 @@ class ArtistCell: UITableViewCell {
         @IBOutlet weak var listenersCountLabel: UILabel!
         @IBOutlet weak var linkButton: UIButton!
     
-    var artist: Artist? {
+    var viewModel: ArtistCellViewModel? {
         didSet {
-            let imageUrl = URL.init(string: artist!.imageUrl)
-            artistImageView.kf.indicatorType = .activity
-            artistImageView.kf.setImage(with: imageUrl)
-            artistLabel.text = artist!.name
-            listenersCountLabel.text = String(artist!.listeners)
+            if let urlString = viewModel!.link {
+                let imageUrl = URL.init(string: urlString)
+                artistImageView.kf.indicatorType = .activity
+                artistImageView.kf.setImage(with: imageUrl)
+            }
+            artistLabel.text = viewModel!.artistName
+            listenersCountLabel.text = viewModel!.listenersCount
         }
     }
 }

@@ -18,7 +18,7 @@ protocol ArtistViewModelProtocol : class {
     var logOutTapped: PublishSubject<Void>{ get }
     var linkTapped:   PublishSubject<Void>{ get }
 
-    func getArtistFor(_ index:Int) -> Artist
+    func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel
     func didScrollToBottom()
     func didSelectItemAt(_ index:Int)
     func loadArtists()
@@ -59,10 +59,12 @@ extension AtristViewModel : ArtistViewModelProtocol {
         return artists.value?.count ?? 0
     }
     
-    func getArtistFor(_ index:Int) -> Artist {
-        guard let artists = artists.value else { return Artist() }
+    func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel {
+        guard let artists = artists.value else { return ArtistCellViewModel(Artist()) }
         let artist = artists[index]
-        return artist
+        let artistCellViewModel = ArtistCellViewModel(artist)
+
+        return artistCellViewModel
     }
     
     func didScrollToBottom() {

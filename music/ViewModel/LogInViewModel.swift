@@ -52,6 +52,7 @@ final class LogInViewModel: LoginViewModelProtocol  {
             })
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { event in
+                print(event)
                 if !isNilOrEmpty(event) {
                     self.loginModel.saveSessionKey(event)
                     self.sessionKey.value = event

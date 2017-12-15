@@ -23,7 +23,7 @@ final class JsonParser {
             let artist = Artist()
             
             artist.name      = jsonArtist.dictionaryValue["name"]?.stringValue ?? ""
-            artist.listeners = jsonArtist.dictionaryValue["listeners"]?.intValue ?? 0
+            artist.listeners = jsonArtist.dictionaryValue["listeners"]?.stringValue ?? ""
             artist.url       = jsonArtist.dictionaryValue["url"]?.stringValue ?? ""
             
             guard let imageUrls = jsonArtist.dictionaryValue["image"]?.array else { continue }
@@ -52,9 +52,9 @@ final class JsonParser {
             let track = Track()
             
             track.name      = jsonTrack.dictionaryValue["name"]?.stringValue ?? ""
-            track.listeners = jsonTrack.dictionaryValue["listeners"]?.intValue ?? 0
-            track.playcount = jsonTrack.dictionaryValue["playcount"]?.intValue ?? 0
-            track.rank      = jsonTrack.dictionaryValue["@attr"]?.dictionaryValue["rank"]?.intValue ?? 0
+            track.listeners = jsonTrack.dictionaryValue["listeners"]?.stringValue ?? ""
+            track.playcount = jsonTrack.dictionaryValue["playcount"]?.stringValue ?? ""
+            track.rank      = jsonTrack.dictionaryValue["@attr"]?.dictionaryValue["rank"]?.stringValue ?? ""
             
             guard let imageUrls = jsonTrack.dictionaryValue["image"]?.array else { continue }
             

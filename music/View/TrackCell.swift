@@ -15,14 +15,13 @@ class TrackCell: UITableViewCell {
     @IBOutlet weak var listenersLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     
-    var track: Track? {
+    var viewModel: TrackCellViewModel? {
         didSet {
-            nameLabel.text = track?.name ?? "Song name"
-            playCountLabel.text = track != nil ? String(describing: track!.playcount) : ""
-            listenersLabel.text = track != nil ? String(describing: track!.listeners) : ""
-            rankLabel.text      = track != nil ? String(describing: track!.rank)      : ""
-            
-            nameLabel.textColor = OrangeColor
+            nameLabel.text = viewModel?.trackName
+            playCountLabel.text = viewModel?.playCount
+            listenersLabel.text = viewModel?.listenersCount
+            rankLabel.text      = viewModel?.rank
+            nameLabel.textColor = viewModel?.textColor
         }
     }
 }

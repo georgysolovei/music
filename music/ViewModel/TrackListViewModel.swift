@@ -11,10 +11,11 @@ import RxSwift
 protocol TrackListViewModelProtocol : class {
     var tracksCount: Int { get }
     var isLoading: Variable<Bool> { get }
-    func trackAt(index:Int) -> Track?
+    func trackCellViewModelAt(index:Int) -> TrackCellViewModel
     func didPressBackButton()
     var errorMessage : Variable<String?> { get }
     var artistName: String { set get }
+    var tracks:Variable<[Track]?> { get }
 }
 
 class TrackListViewModel  {
@@ -56,10 +57,12 @@ extension TrackListViewModel : TrackListViewModelProtocol {
         return tracks.value?.count ?? 0
     }
 
-    func trackAt(index:Int) -> Track? {
-        guard let tracks = tracks.value else { return Track() }
+    func trackCellViewModelAt(index:Int) -> TrackCellViewModel {
+        guard let tracks = tracks.value else { return TrackCellViewModel(Track()) }
         let track = tracks[index]
-        return track
+        let trackCellViewModel = TrackCellViewModel(track)
+
+        return trackCellViewModel
     }
     
     func didPressBackButton() {

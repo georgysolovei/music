@@ -9,9 +9,9 @@
 import RealmSwift
 
 class Track: Object {
-    @objc dynamic var name = ""
-    @objc dynamic var playcount = 0
-    @objc dynamic var listeners = 0
-    @objc dynamic var imageUrl = ""
-    @objc dynamic var rank = 0
+    @objc dynamic var name      = ""
+    @objc dynamic var playcount = ""
+    @objc dynamic var listeners = ""
+    @objc dynamic var imageUrl  = ""
+    @objc dynamic var rank      = ""
 }

@@ -37,7 +37,8 @@ class TrackListController: UIViewController {
         
         disposeBag = DisposeBag()
         
-        (viewModel as! TrackListViewModel).tracks
+        viewModel
+            .tracks
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe({ _ in
@@ -79,9 +80,9 @@ extension TrackListController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Const.trackCell) as! TrackCell
-        cell.track = viewModel.trackAt(index: indexPath.row)
-        return cell
+        let trackCell = tableView.dequeueReusableCell(withIdentifier: Const.trackCell) as! TrackCell
+        trackCell.viewModel = viewModel.trackCellViewModelAt(index: indexPath.row)
+        return trackCell
     }
 }
 

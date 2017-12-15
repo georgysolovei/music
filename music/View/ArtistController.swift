@@ -114,28 +114,28 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel
-            .artists
-            .asObservable()
-            .bindTo(tableView.rx.items) {
-                (tableView: UITableView, index: Int, element: String) in
-                let cell = UITableViewCell(style: .default, reuseIdentifier:
-                    "cell")
-                cell.textLabel?.text = element
-                return cell }
+//        artistViewModel
+//            .artists
+//            .asObservable()
+//            .bindTo(tableView.rx.items) {
+//                (tableView: UITableView, index: Int, element: String) in
+//                let cell = UITableViewCell(style: .default, reuseIdentifier:
+//                    "cell")
+//                cell.textLabel?.text = element
+//                return cell }
         
     }
     
     // MARK: - IB Actions
     @IBAction func linkTapped(_ sender: UIButton) {
-        let cellTapped = sender.superview!.superview
-        if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
-            
-            let artist = artistViewModel.getArtistFor(indexTapped)
-            
-            guard let link = URL(string: artist.url) else { return }
-            UIApplication.shared.open(link, options: [:], completionHandler: nil)
-        }
+//        let cellTapped = sender.superview!.superview
+//        if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
+//            
+//            let artist = artistViewModel.getArtistCellViewModelFor(indexTapped)
+//            
+//            guard let link = URL(string: artist.url) else { return }
+//            UIApplication.shared.open(link, options: [:], completionHandler: nil)
+//        }
     }
 }
 
@@ -148,7 +148,7 @@ extension ArtistController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
         
-        cell.artist = artistViewModel.getArtistFor(indexPath.row)
+        cell.viewModel = artistViewModel.getArtistCellViewModelFor(indexPath.row)
       
         return cell
     }

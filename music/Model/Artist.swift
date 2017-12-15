@@ -10,7 +10,7 @@ import RealmSwift
 
 class Artist: Object {
     @objc dynamic var name = ""
-    @objc dynamic var listeners = 0
+    @objc dynamic var listeners = ""
     @objc dynamic var url = ""
     @objc dynamic var imageUrl = ""
 }
