@@ -10,12 +10,11 @@ import RxSwift
 import Foundation
 
 protocol LoginViewModelProtocol: class {
-  //  func logIn(userName:String, pass:String)
     var isLoading:    Variable<Bool>   { get }
     var errorMessage: Variable<String?>{ get }
     var username:     Variable<String?>{ get }
     var password:     Variable<String?>{ get }
-    var isValid:      Observable<Bool> { get }
+    var isInputValid:      Observable<Bool> { get }
     var buttonPressed: PublishSubject<Void>{ get }
 }
 
@@ -25,16 +24,20 @@ final class LogInViewModel: LoginViewModelProtocol  {
     var username     = Variable<String?>(nil)
     var password     = Variable<String?>(nil)
     var sessionKey   = Variable<String?>(nil)
-    var isValid: Observable<Bool>
+    var isInputValid: Observable<Bool>
     var buttonPressed = PublishSubject<Void>()
 
     let loginModel : LogInModel
     let disposeBag = DisposeBag()
 
+    private struct Const {
+        static let loginFailed = "Login failed"
+    }
+    
     init() {
         loginModel = LogInModel()
         
-        isValid = Observable.combineLatest(self.username.asObservable(), self.password.asObservable()) { (username, password) in
+        isInputValid = Observable.combineLatest(self.username.asObservable(), self.password.asObservable()) { (username, password) in
             guard let username = username else { return false }
             guard let password = password else { return false }
 
@@ -44,28 +47,17 @@ final class LogInViewModel: LoginViewModelProtocol  {
         buttonPressed
             .asObservable()
             .flatMap({ (_) -> Observable<String> in
-                RequestManager.getMobileSession(userName: self.username.value!, password: self.password.value!)
-            })
-            .retryWhen({ (err) -> Observable<String> in
-                
-                return Observable.just("TEST")
+                RequestManager.getMobileSession(userName: self.username.value!, password: self.password.value!).catchErrorJustReturn(Const.loginFailed)
             })
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { event in
                 print(event)
-                if !isNilOrEmpty(event) {
+                if event.description == Const.loginFailed {
+                    self.errorMessage.value = String(describing: event.description)
+                } else if !isNilOrEmpty(event) {
                     self.loginModel.saveSessionKey(event)
                     self.sessionKey.value = event
                 }
-            }, onError: { error in
-                print(error)
-                self.isLoading.value = false
-                self.errorMessage.value = String(describing: error)
-            }, onCompleted: {
-                print("Completed")
-                self.isLoading.value = false
-            }, onDisposed:{
-                print("Disposed")
             })
             .disposed(by: disposeBag)
     }

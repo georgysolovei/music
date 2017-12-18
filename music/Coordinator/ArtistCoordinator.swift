@@ -43,6 +43,16 @@ extension ArtistCoordinator : CoordinatorProtocol {
         artistViewModel.transitionDelegate = self
         artistController.artistViewModel = artistViewModel
 
+        artistViewModel.link
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { event in
+                guard let stringUrl = event?.description else { return }
+                guard let link = URL(string: stringUrl) else { return }
+                UIApplication.shared.open(link, options: [:], completionHandler: nil)
+            })
+            .disposed(by: disposeBag)
+        
         artistViewModel.isFinished.asObservable().subscribe(onNext: { event in
             if event == true {
                 self.finish()

@@ -31,7 +31,7 @@ class LogInController: UIViewController {
         logInButton.isEnabled = false
         disposeBag = DisposeBag()
         
-        viewModel.isValid
+        viewModel.isInputValid
             .asObservable()
             .bind(onNext: { isEnabled in
                 self.logInButton.isEnabled = isEnabled

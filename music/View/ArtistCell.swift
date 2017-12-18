@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class ArtistCell: UITableViewCell {
     @IBOutlet weak var artistImageView: UIImageView!
@@ -14,15 +15,21 @@ class ArtistCell: UITableViewCell {
     @IBOutlet weak var listenersCountLabel: UILabel!
     @IBOutlet weak var linkButton: UIButton!
     
-    var viewModel: ArtistCellViewModel? {
+    var viewModel: ArtistCellViewModelProtocol? {
         didSet {
-            if let urlString = viewModel!.link {
+            if let urlString = viewModel!.imageLink {
                 let imageUrl = URL.init(string: urlString)
                 artistImageView.kf.indicatorType = .activity
                 artistImageView.kf.setImage(with: imageUrl)
             }
             artistLabel.text = viewModel!.artistName
             listenersCountLabel.text = viewModel!.listenersCount
+            
+            linkButton.rx
+                .tap
+                .asObservable()
+                .bind(to: viewModel!.linkTapped)
+                .disposed(by: rx.disposeBag)
         }
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import RxSwift
 class TrackCell: UITableViewCell {
     @IBOutlet weak var trackImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -15,9 +15,12 @@ class TrackCell: UITableViewCell {
     @IBOutlet weak var listenersLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     
+    var disposeBag : DisposeBag!
+
     var viewModel: TrackCellViewModel? {
         didSet {
-            nameLabel.text = viewModel?.trackName
+            disposeBag = DisposeBag()
+            nameLabel.text      = viewModel?.trackName
             playCountLabel.text = viewModel?.playCount
             listenersLabel.text = viewModel?.listenersCount
             rankLabel.text      = viewModel?.rank

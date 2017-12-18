@@ -10,16 +10,14 @@ import RxSwift
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
-//    var artists:      Variable<[Artist]?> { get }
     var newIndexPaths: Variable<[IndexPath]?> { get }
-
+    
     var isLoading:    Variable<Bool>      { get }
     var isRefreshing: Variable<Bool>      { get }
     var isFinished:   Variable<Bool>      { get }
     var errorMessage: Variable<String?>   { get }
     var logOutTapped: PublishSubject<Void>{ get }
-    var linkTapped:   PublishSubject<Void>{ get }
-
+    
     func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel
     func didScrollToBottom()
     func didSelectItemAt(_ index:Int)
@@ -32,10 +30,11 @@ final class AtristViewModel {
     let isLoading    = Variable(false)
     var errorMessage : Variable<String?> = Variable(nil)
     var logOutTapped = PublishSubject<Void>()
-    var linkTapped   = PublishSubject<Void>()
     var isFinished   = Variable(false)
     let isRefreshing = Variable<Bool>(false)
-
+    
+    var link : Variable<String?> = Variable(nil)
+    
     var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
     private var page = 2
@@ -50,7 +49,8 @@ final class AtristViewModel {
         logOutTapped
             .asObservable()
             .subscribe(onNext:{
-                self.logOut()
+                self.artistModel.deleteSessionKey()
+                self.isFinished.value = true
             })
             .disposed(by: disposeBag)
     }
@@ -67,7 +67,7 @@ final class AtristViewModel {
 }
 
 extension AtristViewModel : ArtistViewModelProtocol {
-
+    
     var numberOfRows: Int {
         return artists.value?.count ?? 0
     }
@@ -76,12 +76,18 @@ extension AtristViewModel : ArtistViewModelProtocol {
         guard let artists = artists.value else { return ArtistCellViewModel(Artist()) }
         let artist = artists[index]
         let artistCellViewModel = ArtistCellViewModel(artist)
-
+        artistCellViewModel.link
+            .asObservable()
+            .subscribeOn(MainScheduler.instance)
+            .subscribe(onNext: { link in
+                self.link.value = link
+            })
+            .disposed(by: disposeBag)
         return artistCellViewModel
     }
     
     func didScrollToBottom() {
-
+        
         RequestManager.getTopArtists(page: page)
             .subscribe(onNext: {
                 self.artists.value?.append(contentsOf: $0)
@@ -98,11 +104,6 @@ extension AtristViewModel : ArtistViewModelProtocol {
             }, onCompleted: {
                 self.isLoading.value = false
             }).disposed(by: disposeBag)
-    }
-    
-    private func logOut() {
-        artistModel.deleteSessionKey()
-        isFinished.value = true
     }
     
     func didSelectItemAt(_ index:Int) {

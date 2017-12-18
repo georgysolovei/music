@@ -76,16 +76,6 @@ class ArtistController: UIViewController {
             .bind(to: artistViewModel.logOutTapped)
             .disposed(by: disposeBag)
         
-//        artistViewModel
-//            .artists
-//            .asObservable()
-//            .skip(1)
-//            .observeOn(MainScheduler.instance)
-//            .subscribe({ _ in
-//                self.updateTableView()
-//            })
-//            .disposed(by: disposeBag)
-        
         artistViewModel
             .isLoading
             .asObservable()
@@ -122,18 +112,6 @@ class ArtistController: UIViewController {
                 guard let newIndexPaths = indexPaths else { return }
                 self.updateTableViewWith(newIndexPaths)
             }).disposed(by: disposeBag)
-    }
-    
-    // MARK: - IB Actions
-    @IBAction func linkTapped(_ sender: UIButton) {
-//        let cellTapped = sender.superview!.superview
-//        if let indexTapped = tableView.indexPath(for: cellTapped as! ArtistCell)?.row {
-//
-//            let artist = artistViewModel.getArtistCellViewModelFor(indexTapped)
-//
-//            guard let link = URL(string: artist.url) else { return }
-//            UIApplication.shared.open(link, options: [:], completionHandler: nil)
-//        }
     }
 }
 

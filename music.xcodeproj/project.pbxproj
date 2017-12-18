@@ -13,6 +13,7 @@
 		0B2545ED1FE2B3770052D449 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545EC1FE2B3770052D449 /* ArtistCell.swift */; };
 		0B2545EF1FE3C7EA0052D449 /* ArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545EE1FE3C7EA0052D449 /* ArtistCellViewModel.swift */; };
 		0B2545F11FE3D31C0052D449 /* TrackCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545F01FE3D31C0052D449 /* TrackCellViewModel.swift */; };
+		0B2545F31FE7DBD60052D449 /* UITableView+DisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545F21FE7DBD60052D449 /* UITableView+DisposeBag.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
 		0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45CD651FBEDF190052761C /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 		0B2545EC1FE2B3770052D449 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		0B2545EE1FE3C7EA0052D449 /* ArtistCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCellViewModel.swift; sourceTree = "<group>"; };
 		0B2545F01FE3D31C0052D449 /* TrackCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCellViewModel.swift; sourceTree = "<group>"; };
+		0B2545F21FE7DBD60052D449 /* UITableView+DisposeBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+DisposeBag.swift"; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
 		0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		0B5682C91FE0127400CA62A8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0B2545F21FE7DBD60052D449 /* UITableView+DisposeBag.swift */,
 				0B94B4FB1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift */,
 				0B5682CC1FE0130E00CA62A8 /* String+Error.swift */,
 				0B5682CA1FE012C500CA62A8 /* UIViewController+Alert.swift */,
@@ -454,6 +457,7 @@
 				0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */,
 				0B5BA65F1FC3134300E3FE5D /* PersistencyManager.swift in Sources */,
 				0BD22F931FCC3BA2004BB863 /* AtristViewModel.swift in Sources */,
+				0B2545F31FE7DBD60052D449 /* UITableView+DisposeBag.swift in Sources */,
 				0BD22F951FCC3FAA004BB863 /* ArtistModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
