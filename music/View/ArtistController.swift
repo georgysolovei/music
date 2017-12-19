@@ -56,14 +56,19 @@ class ArtistController: UIViewController {
     
     // MARK: - Methods
     @objc func handleRefresh() {
-        artistViewModel.loadArtists()
+        artistViewModel.refresh()
     }
     
     fileprivate func updateTableViewWith(_ newIndexPaths:[IndexPath]) {
         
-        self.tableView.beginUpdates()
-        self.tableView.insertRows(at: newIndexPaths, with: .right)
-        self.tableView.endUpdates()
+        if artistViewModel.isRefreshing.value {
+            self.tableView.reloadData()
+            self.artistViewModel.isRefreshing.value = false
+        } else {
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: newIndexPaths, with: .none)
+            self.tableView.endUpdates()
+        }
     }
     
     private func setupObservables() {
@@ -72,6 +77,7 @@ class ArtistController: UIViewController {
         artistViewModel
             .newIndexPaths
             .asObservable()
+            .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { indexPaths in
                 guard let newIndexPaths = indexPaths else { return }
@@ -142,7 +148,7 @@ extension ArtistController : UITableViewDataSourcePrefetching {
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let artistCount = artistViewModel?.numberOfRows else { return }
         if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 || indexPaths.last?.row == artistCount - 30 {
-            artistViewModel?.didScrollToBottom()
+            artistViewModel?.loadMore()
         }
     }
 }

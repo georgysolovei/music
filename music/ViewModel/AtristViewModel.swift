@@ -17,11 +17,11 @@ protocol ArtistViewModelProtocol : class {
     var isFinished:   Variable<Bool>      { get }
     var errorMessage: Variable<String?>   { get }
     var logOutTapped: PublishSubject<Void>{ get }
-    
+
     func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel
-    func didScrollToBottom()
     func didSelectItemAt(_ index:Int)
-    func loadArtists()
+    func refresh()
+    func loadMore()
 }
 
 final class AtristViewModel {
@@ -32,21 +32,31 @@ final class AtristViewModel {
     var logOutTapped = PublishSubject<Void>()
     var isFinished   = Variable(false)
     let isRefreshing = Variable<Bool>(false)
-    
+    var page         = Variable(Const.defaultPage)
+
     var link : Variable<String?> = Variable(nil)
     
     var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
-    private var page = 2
     var artistModel = ArtistModel()
+    
+    private struct Const {
+        static let defaultPage = 2
+    }
     
     init() {
         artists = Variable(nil)
         newIndexPaths = Variable(nil)
         
         isLoading.value = true
-        loadArtists()
-       
+
+        page.asObservable()
+            .observeOn(backgroundScheduler)
+            .subscribe(onNext: { event in
+                self.loadArtists()
+            })
+            .disposed(by: disposeBag)
+        
         logOutTapped
             .asObservable()
             .subscribe(onNext:{
@@ -87,26 +97,6 @@ extension AtristViewModel : ArtistViewModelProtocol {
         return artistCellViewModel
     }
     
-    func didScrollToBottom() {
-        
-        RequestManager.getTopArtists(page: page)
-            .subscribe(onNext: {
-                self.artists.value?.append(contentsOf: $0)
-                self.newIndexPaths.value = self.getNewRowsFor($0)
-                self.page += 1
-//                self.isLoading.value = false
-            }, onError:{ error in
-                print(error)
-                self.errorMessage.value = String(describing: error)
-//                self.isLoading.value = false
-//                if self.isRefreshing.value == true {
-//                    self.isRefreshing.value = false
-//                }
-            }, onCompleted: {
-//                self.isLoading.value = false
-            }).disposed(by: disposeBag)
-    }
-    
     func didSelectItemAt(_ index:Int) {
         guard let artists = artists.value else { return }
         let selectedArtist = artists[index]
@@ -118,22 +108,39 @@ extension AtristViewModel : ArtistViewModelProtocol {
             isRefreshing.value = true
         }
         
-        RequestManager.getTopArtists(page: page)
+        RequestManager.getTopArtists(page: page.value)
             .subscribe(onNext: {
-                self.artists.value = $0
+                if self.page.value == Const.defaultPage {
+                    self.artists.value = $0
+                } else {
+                    self.artists.value?.append(contentsOf: $0)
+                }
+                
                 self.newIndexPaths.value = self.getNewRowsFor($0)
                 
-//                if self.isLoading.value == true {
-//                    self.isLoading.value = false
-//                } else {
+                if self.isLoading.value == true {
+                    self.isLoading.value = false
+                }
+//                else {
 //                    self.isRefreshing.value = false
 //                }
                 
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)
                 print(error.localizedDescription)
-//                self.isLoading.value = false
+                self.isLoading.value = false
                 
             }).disposed(by: disposeBag)
     }
+    
+    func refresh() {
+        isRefreshing.value = true
+        page.value = Const.defaultPage
+    }
+    
+    func loadMore() {
+        page.value += 1
+    }
+    
+    
 }
