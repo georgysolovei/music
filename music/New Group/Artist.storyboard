@@ -132,12 +132,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vbP-Up-UW0" firstAttribute="top" secondItem="8z6-x6-Cmf" secondAttribute="top" id="0Vg-9B-MwB"/>
                             <constraint firstItem="e5J-08-xkq" firstAttribute="centerX" secondItem="6Mx-34-3dp" secondAttribute="centerX" id="2dR-My-z0h"/>
+                            <constraint firstItem="vbP-Up-UW0" firstAttribute="leading" secondItem="8z6-x6-Cmf" secondAttribute="leading" id="568-t7-w87"/>
                             <constraint firstItem="e5J-08-xkq" firstAttribute="leading" secondItem="8z6-x6-Cmf" secondAttribute="leading" id="MRE-EN-xfD"/>
-                            <constraint firstItem="vbP-Up-UW0" firstAttribute="leading" secondItem="8z6-x6-Cmf" secondAttribute="leading" id="V1S-jB-Mau"/>
-                            <constraint firstItem="vbP-Up-UW0" firstAttribute="trailing" secondItem="8z6-x6-Cmf" secondAttribute="trailing" id="gCi-6X-yY4"/>
-                            <constraint firstItem="vbP-Up-UW0" firstAttribute="bottom" secondItem="8z6-x6-Cmf" secondAttribute="bottom" id="i8D-B5-l2I"/>
+                            <constraint firstItem="vbP-Up-UW0" firstAttribute="top" secondItem="8z6-x6-Cmf" secondAttribute="top" id="N72-9T-UW6"/>
+                            <constraint firstItem="vbP-Up-UW0" firstAttribute="trailing" secondItem="8z6-x6-Cmf" secondAttribute="trailing" id="cQA-wQ-5o4"/>
+                            <constraint firstItem="vbP-Up-UW0" firstAttribute="bottom" secondItem="8z6-x6-Cmf" secondAttribute="bottom" id="iLC-oa-q6Y"/>
                             <constraint firstItem="e5J-08-xkq" firstAttribute="centerY" secondItem="6Mx-34-3dp" secondAttribute="centerY" id="lpT-mE-O2i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8z6-x6-Cmf"/>

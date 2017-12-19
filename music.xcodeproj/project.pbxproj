@@ -30,7 +30,6 @@
 		0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF71FCEA7BB00E6104A /* Track.swift */; };
 		0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */; };
 		0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */; };
-		0B9E8AFE1FCED99700E6104A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AFD1FCED99700E6104A /* Coordinator.swift */; };
 		0B9E8B061FCEE52B00E6104A /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8B051FCEE52A00E6104A /* R.generated.swift */; };
 		0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8B071FCEE70300E6104A /* TrackListViewModel.swift */; };
 		0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */; };
@@ -73,7 +72,6 @@
 		0B9E8AF71FCEA7BB00E6104A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListController.swift; sourceTree = "<group>"; };
 		0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListCoordinator.swift; sourceTree = "<group>"; };
-		0B9E8AFD1FCED99700E6104A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0B9E8B051FCEE52A00E6104A /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		0B9E8B071FCEE70300E6104A /* TrackListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListViewModel.swift; sourceTree = "<group>"; };
 		0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -213,7 +211,6 @@
 				0BB165181FCD3FB600782FD0 /* AuthCoordinator.swift */,
 				0BB1651A1FCD444400782FD0 /* ArtistCoordinator.swift */,
 				0B9E8AFB1FCED3C000E6104A /* TrackListCoordinator.swift */,
-				0B9E8AFD1FCED99700E6104A /* Coordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -430,7 +427,6 @@
 				0B5682CD1FE0130E00CA62A8 /* String+Error.swift in Sources */,
 				0B94B4FC1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift in Sources */,
 				0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */,
-				0B9E8AFE1FCED99700E6104A /* Coordinator.swift in Sources */,
 				0B2FBF731FC2B982009C657C /* Utility.swift in Sources */,
 				0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */,
 				8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */,

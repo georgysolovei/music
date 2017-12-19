@@ -46,6 +46,7 @@ final class AtristViewModel {
         
         isLoading.value = true
         loadArtists()
+       
         logOutTapped
             .asObservable()
             .subscribe(onNext:{
@@ -93,16 +94,16 @@ extension AtristViewModel : ArtistViewModelProtocol {
                 self.artists.value?.append(contentsOf: $0)
                 self.newIndexPaths.value = self.getNewRowsFor($0)
                 self.page += 1
-                self.isLoading.value = false
+//                self.isLoading.value = false
             }, onError:{ error in
                 print(error)
                 self.errorMessage.value = String(describing: error)
-                self.isLoading.value = false
-                if self.isRefreshing.value == true {
-                    self.isRefreshing.value = false
-                }
+//                self.isLoading.value = false
+//                if self.isRefreshing.value == true {
+//                    self.isRefreshing.value = false
+//                }
             }, onCompleted: {
-                self.isLoading.value = false
+//                self.isLoading.value = false
             }).disposed(by: disposeBag)
     }
     
@@ -122,16 +123,16 @@ extension AtristViewModel : ArtistViewModelProtocol {
                 self.artists.value = $0
                 self.newIndexPaths.value = self.getNewRowsFor($0)
                 
-                if self.isLoading.value == true {
-                    self.isLoading.value = false
-                } else {
-                    self.isRefreshing.value = false
-                }
+//                if self.isLoading.value == true {
+//                    self.isLoading.value = false
+//                } else {
+//                    self.isRefreshing.value = false
+//                }
                 
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)
                 print(error.localizedDescription)
-                self.isLoading.value = false
+//                self.isLoading.value = false
                 
             }).disposed(by: disposeBag)
     }

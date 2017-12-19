@@ -12,19 +12,20 @@ protocol TrackListViewModelDelegate : class {
     func didPressBackButton()
 }
 
-class TrackListCoordinator : Coordinator {
+class TrackListCoordinator  {
     
     var artist : Artist
     var navigationController : UINavigationController?
 
     weak var trackListDelegate : TrackListCoordinatorDelegate?
-    
+    weak var window: UIWindow!
+
     init(window:UIWindow, artist: Artist) {
+        self.window = window
         self.artist = artist
-        super.init(window: window)
     }
     
-    override func start() {
+    func start() {
         let trackListController = R.storyboard.artist.trackListController()
         let trackListViewModel  = TrackListViewModel(artist:artist)
        

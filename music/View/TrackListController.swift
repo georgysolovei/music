@@ -27,10 +27,10 @@ class TrackListController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
-        guard let navBar = navigationController?.navigationBar else { return }
-        navBar.isHidden = false
-        navBar.tintColor = OrangeColor
-        navBar.topItem?.title = ""
+        let navBar = navigationController?.navigationBar
+        navBar?.isHidden = false
+        navBar?.tintColor = OrangeColor
+        navBar?.topItem?.title = ""
         navigationItem.title = viewModel.artistName
         
         setUpObservables()

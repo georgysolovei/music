@@ -13,7 +13,6 @@ class TrackCellViewModel {
     var listenersCount: String?
     var rank: String?
     var textColor = OrangeColor
-  //  nameLabel.textColor = OrangeColor
     
     private var track: Track
 

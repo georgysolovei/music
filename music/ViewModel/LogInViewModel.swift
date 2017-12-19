@@ -7,14 +7,13 @@
 //
 
 import RxSwift
-import Foundation
 
 protocol LoginViewModelProtocol: class {
     var isLoading:    Variable<Bool>   { get }
     var errorMessage: Variable<String?>{ get }
     var username:     Variable<String?>{ get }
     var password:     Variable<String?>{ get }
-    var isInputValid:      Observable<Bool> { get }
+    var isInputValid:  Observable<Bool> { get }
     var buttonPressed: PublishSubject<Void>{ get }
 }
 
@@ -62,25 +61,3 @@ final class LogInViewModel: LoginViewModelProtocol  {
             .disposed(by: disposeBag)
     }
 }
-
-//extension LogInViewModel : LoginViewModelProtocol {
-//
-//    func logIn(userName: String, pass: String) {
-//        let spinner = isLoading
-//
-//        spinner.value = true
-//        RequestManager.getMobileSession(userName: userName, password: pass)
-//            .subscribe(onNext: { event in
-//                if !isNilOrEmpty(event) {
-//                    self.loginModel.saveSessionKey(event)
-//                    self.sessionKey.value = event
-//                }
-//            }, onError: { error in
-//                print(error)
-//                spinner.value = false
-//                self.errorMessage.value = String(describing: error)
-//            }, onCompleted: {
-//                spinner.value = false
-//            }).disposed(by: disposeBag)
-//    }
-//}

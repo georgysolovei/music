@@ -38,10 +38,7 @@ final class RequestManager {
         
         return sessionManager.rx
             .data(.post, ApiBaseUrl, parameters: params)
-            .subscribeOn(backgroundScheduler)
-//            .do(onError: { error in
-//                throw XmlParser.parseHttpError(error)
-//            })
+            .observeOn(backgroundScheduler)
             .map({ data -> String in
                 if let key = XmlParser.getSessionKeyFrom(data) {
                     return key
@@ -60,11 +57,7 @@ final class RequestManager {
         
         return sessionManager.rx.json(.post, ApiBaseUrl, parameters: params)
             .observeOn(backgroundScheduler)
-//            .do(onError: { error in
-//                throw error.localizedDescription
-//            })
             .map({ jsonArtists -> [Artist] in
-                
                 let artists = JSON(jsonArtists)
                 return JsonParser.parseArtists(artists)
             })

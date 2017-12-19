@@ -25,6 +25,7 @@ class ArtistController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(ArtistController.handleRefresh), for: UIControlEvents.valueChanged)
         refreshControl.tintColor = OrangeColor
+
         return refreshControl
     }()
     
@@ -41,7 +42,7 @@ class ArtistController: UIViewController {
         
         navigationController?.navigationBar.isHidden = false
         navigationItem.backBarButtonItem?.title = ""
-
+        
         setupObservables()
     }
     
@@ -59,18 +60,26 @@ class ArtistController: UIViewController {
     }
     
     fileprivate func updateTableViewWith(_ newIndexPaths:[IndexPath]) {
-        UIView.setAnimationsEnabled(false)
+        
         self.tableView.beginUpdates()
-        self.tableView.insertRows(at: newIndexPaths, with: .none)
+        self.tableView.insertRows(at: newIndexPaths, with: .right)
         self.tableView.endUpdates()
-        UIView.setAnimationsEnabled(true)
     }
     
     private func setupObservables() {
         disposeBag = DisposeBag()
+      
+        artistViewModel
+            .newIndexPaths
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { indexPaths in
+                guard let newIndexPaths = indexPaths else { return }
+                self.updateTableViewWith(newIndexPaths)
+            })
+            .disposed(by: disposeBag)
         
-        logOutButton
-            .rx
+        logOutButton.rx
             .tap
             .asObservable()
             .bind(to: artistViewModel.logOutTapped)
@@ -85,7 +94,8 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel.isRefreshing
+        artistViewModel
+            .isRefreshing
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { isRefreshing in
@@ -104,14 +114,6 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel
-            .newIndexPaths
-            .asObservable()
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { indexPaths in
-                guard let newIndexPaths = indexPaths else { return }
-                self.updateTableViewWith(newIndexPaths)
-            }).disposed(by: disposeBag)
     }
 }
 
