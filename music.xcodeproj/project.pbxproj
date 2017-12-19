@@ -42,6 +42,8 @@
 		0BD22F931FCC3BA2004BB863 /* AtristViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */; };
 		0BD22F951FCC3FAA004BB863 /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */; };
 		0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD75BED1FC2EF740030D27D /* XmlParser.swift */; };
+		0BF4CA181FE951AE00358424 /* RootObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF4CA171FE951AE00358424 /* RootObject.swift */; };
+		0BF4CA1A1FE954D900358424 /* ArtistRealmArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF4CA191FE954D900358424 /* ArtistRealmArray.swift */; };
 		8E2987891FCF49FC00C1F24B /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2987881FCF49FC00C1F24B /* TrackCell.swift */; };
 		8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A3F8A1FC2034D000820AF /* RequestManager.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +86,8 @@
 		0BD22F921FCC3BA2004BB863 /* AtristViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtristViewModel.swift; sourceTree = "<group>"; };
 		0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
 		0BD75BED1FC2EF740030D27D /* XmlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmlParser.swift; sourceTree = "<group>"; };
+		0BF4CA171FE951AE00358424 /* RootObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootObject.swift; sourceTree = "<group>"; };
+		0BF4CA191FE954D900358424 /* ArtistRealmArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistRealmArray.swift; sourceTree = "<group>"; };
 		34559EB322C96EFAD5006C0E /* Pods_music.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_music.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		35AD351E5FCB60FF31B2A57D /* Pods-music.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-music.debug.xcconfig"; path = "Pods/Target Support Files/Pods-music/Pods-music.debug.xcconfig"; sourceTree = "<group>"; };
 		8E2987881FCF49FC00C1F24B /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
@@ -195,11 +199,9 @@
 		0B5BA6611FC3187900E3FE5D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0BF4CA161FE9514100358424 /* Persisted Objects */,
 				0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */,
 				0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */,
-				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
-				0B5BA6641FC4269300E3FE5D /* Artist.swift */,
-				0B9E8AF71FCEA7BB00E6104A /* Track.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -225,6 +227,18 @@
 				0BD22F8C1FCC1609004BB863 /* LogInViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0BF4CA161FE9514100358424 /* Persisted Objects */ = {
+			isa = PBXGroup;
+			children = (
+				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
+				0B5BA6641FC4269300E3FE5D /* Artist.swift */,
+				0BF4CA191FE954D900358424 /* ArtistRealmArray.swift */,
+				0B9E8AF71FCEA7BB00E6104A /* Track.swift */,
+				0BF4CA171FE951AE00358424 /* RootObject.swift */,
+			);
+			path = "Persisted Objects";
 			sourceTree = "<group>";
 		};
 		8E4A3F891FC20339000820AF /* Service Layer */ = {
@@ -431,6 +445,7 @@
 				0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */,
 				8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */,
 				0B2545ED1FE2B3770052D449 /* ArtistCell.swift in Sources */,
+				0BF4CA181FE951AE00358424 /* RootObject.swift in Sources */,
 				8E2987891FCF49FC00C1F24B /* TrackCell.swift in Sources */,
 				0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */,
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,
@@ -446,6 +461,7 @@
 				0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0B5682CB1FE012C500CA62A8 /* UIViewController+Alert.swift in Sources */,
+				0BF4CA1A1FE954D900358424 /* ArtistRealmArray.swift in Sources */,
 				0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */,
 				0B9E8B061FCEE52B00E6104A /* R.generated.swift in Sources */,
 				0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */,

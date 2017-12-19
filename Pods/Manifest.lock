@@ -2,9 +2,9 @@ PODS:
   - Alamofire (4.6.0)
   - Kingfisher (4.5.0)
   - KissXML (5.2.0)
-  - NVActivityIndicatorView (4.1.0):
-    - NVActivityIndicatorView/Presenter (= 4.1.0)
-  - NVActivityIndicatorView/Presenter (4.1.0)
+  - NVActivityIndicatorView (4.1.1):
+    - NVActivityIndicatorView/Presenter (= 4.1.1)
+  - NVActivityIndicatorView/Presenter (4.1.1)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
@@ -41,7 +41,7 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
   KissXML: 1c1eeeb6b94e4522cd2f2373e5d0d03c9227738f
-  NVActivityIndicatorView: dc4726052dc24e89fa8576d43acf9e96f61d49db
+  NVActivityIndicatorView: 60109b9bf46efc2e71ab81453196ccdfdfeea870
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180

@@ -108,6 +108,8 @@ extension AtristViewModel : ArtistViewModelProtocol {
             isRefreshing.value = true
         }
         
+        artists.value = PersistencyManager.shared.getArtistsFor(page: page.value)
+            
         RequestManager.getTopArtists(page: page.value)
             .subscribe(onNext: {
                 if self.page.value == Const.defaultPage {
@@ -124,6 +126,8 @@ extension AtristViewModel : ArtistViewModelProtocol {
 //                else {
 //                    self.isRefreshing.value = false
 //                }
+                
+                _ = PersistencyManager.shared.cacheArtistsFor(page:self.page.value, artists:$0 )
                 
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)

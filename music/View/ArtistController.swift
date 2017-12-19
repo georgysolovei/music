@@ -50,8 +50,6 @@ class ArtistController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
         disposeBag = nil
-        UIView.setAnimationsEnabled(true)
-
     }
     
     // MARK: - Methods
@@ -119,7 +117,6 @@ class ArtistController: UIViewController {
                 self.showAlert(title: Global.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
-        
     }
 }
 
