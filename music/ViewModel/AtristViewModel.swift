@@ -45,7 +45,9 @@ final class AtristViewModel {
     }
     
     init() {
-        artists = Variable(nil)
+        
+        artists = Variable(artistModel.cachedArtists)
+        
         newIndexPaths = Variable(nil)
         
         isLoading.value = true
@@ -108,26 +110,27 @@ extension AtristViewModel : ArtistViewModelProtocol {
             isRefreshing.value = true
         }
         
-        artists.value = PersistencyManager.shared.getArtistsFor(page: page.value)
-            
         RequestManager.getTopArtists(page: page.value)
             .subscribe(onNext: {
-                if self.page.value == Const.defaultPage {
-                    self.artists.value = $0
-                } else {
-                    self.artists.value?.append(contentsOf: $0)
-                }
                 
-                self.newIndexPaths.value = self.getNewRowsFor($0)
+                let fetchedArtists = $0
                 
+                    if self.page.value == Const.defaultPage {
+                        self.artists.value = fetchedArtists
+                    } else {
+                        self.artists.value?.append(contentsOf: fetchedArtists)
+                    }
+
+                self.newIndexPaths.value = self.getNewRowsFor(self.artists.value!)
+
+                self.artistModel.cacheArtistsFor(page: self.page.value, artists: fetchedArtists)
+
                 if self.isLoading.value == true {
                     self.isLoading.value = false
                 }
 //                else {
 //                    self.isRefreshing.value = false
 //                }
-                
-                _ = PersistencyManager.shared.cacheArtistsFor(page:self.page.value, artists:$0 )
                 
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)
@@ -145,6 +148,4 @@ extension AtristViewModel : ArtistViewModelProtocol {
     func loadMore() {
         page.value += 1
     }
-    
-    
 }

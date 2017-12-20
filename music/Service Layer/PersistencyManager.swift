@@ -17,7 +17,6 @@ final class PersistencyManager {
         let realm = try! Realm()
 
         try! realm.write {
-            
             let sessionKey = SessionKey(key)
             realm.add(sessionKey)
         }
@@ -44,28 +43,42 @@ final class PersistencyManager {
     
     // MARK: - Artists
     public func getArtistsFor(page:Int) -> [Artist]? {
+        
         let realm = try! Realm()
-        
-        guard let artists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page)  else { return nil }
-        
+        guard let artists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return nil }
         return Array(artists.artists)
     }
     
-    public func cacheArtistsFor(page:Int, artists:[Artist]) -> [Int]? {
+    public func cacheArtistsFor(page:Int, artists:[Artist]) -> [Int]? { // return indexes to reload
         let realm = try! Realm()
+
+        let retrievedArtists = getArtistsFor(page:page)
         
-        let artistRealmArray = ArtistRealmArray(artists: artists, page: page)
-        
-        try! realm.write {
-            realm.add(artistRealmArray)
+        if retrievedArtists == nil {
+            let artistRealmArray = ArtistRealmArray(artists: artists, page: page)
+            try! realm.write {
+                realm.add(artistRealmArray)
+            }
+        } else {
+            try! realm.write {
+                replace(artists, at: page)
+            }
         }
-        return getIndexesOfReplacedArtists(artists)
+        return getIndexesOfReplacedArtists(retrivedArtists: retrievedArtists, downloadedArtists: artists)
+    }
+    
+    public func clearAll() {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
     }
     
     // MARK: - Private
-    private func getIndexesOfReplacedArtists(_ artists:[Artist]) -> [Int]? {
+    private func getIndexesOfReplacedArtists(retrivedArtists:[Artist]?, downloadedArtists:[Artist]) -> [Int]? {
+        if retrivedArtists == nil { return nil }
+        
         let realm = try! Realm()
-
         let artistRealmArrays = realm.objects(ArtistRealmArray.self)
         let artists = Array(artistRealmArrays.flatMap({ $0.artists }))
         
@@ -85,6 +98,14 @@ final class PersistencyManager {
         return indexes
     }
     
+    private func replace(_ artists:[Artist], at page:Int) {
+        let realm = try! Realm()
+        guard let retrievedArtists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return }
+        let newRealmArray = List<Artist>()
+        newRealmArray.append(objectsIn: artists)
+        retrievedArtists.artists = newRealmArray
+    }
+
     private func clearCacheIfNeeded() {
         
     }

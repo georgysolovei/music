@@ -11,9 +11,9 @@ protocol ArtistCellViewModelProtocol : class {
     var artistName:     String? { get }
     var listenersCount: String? { get }
     
-    var imageLink:           String? { get }
+    var imageLink:  String? { get }
     var linkTapped: PublishSubject<Void> { get }
-    var link : Variable<String?> { get }
+    var link:       Variable<String?> { get }
 }
 
 class ArtistCellViewModel : ArtistCellViewModelProtocol {
@@ -27,7 +27,7 @@ class ArtistCellViewModel : ArtistCellViewModelProtocol {
         return artist.listeners
     }
     var imageLink: String? {
-        return artist.imageUrl
+        return self.artist.imageUrl
     }
     
     private var artist: Artist

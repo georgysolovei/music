@@ -56,3 +56,12 @@ func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable{
     
     return Disposables.create(bindToUIDisposable, bindToVariable)
 }
+
+func performOnMainThread(_ closure: @escaping () -> Void) {
+    if Thread.isMainThread {
+        closure()
+    }
+    else {
+        DispatchQueue.main.async(execute: closure)
+    }
+}

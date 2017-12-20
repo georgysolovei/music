@@ -6,12 +6,35 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
+import RxSwift
+
 final class ArtistModel {
+    
+    var rowToUpdate : Variable<Int?> = Variable(nil)
+    
+    private struct Const {
+        static let defaultPage = 2
+    }
+    var cachedArtists : [Artist]? {
+        return PersistencyManager.shared.getArtistsFor(page: Const.defaultPage)
+    }
+    
     func deleteSessionKey() {
         PersistencyManager.shared.deleteSessionKey()
     }
     
     func getSessionKey() -> String? {
         return PersistencyManager.shared.getSessionKey()
+    }
+    
+    func cacheArtistsFor(page:Int, artists:[Artist]) {
+        guard let indexes = PersistencyManager.shared.cacheArtistsFor(page:page, artists:artists) else { return }
+        for artisIndex in indexes {
+            rowToUpdate.value = artisIndex
+        }
+    }
+    
+    func clearCache() {
+        PersistencyManager.shared.clearAll()
     }
 }

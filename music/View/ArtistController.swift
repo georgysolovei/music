@@ -59,9 +59,10 @@ class ArtistController: UIViewController {
     
     fileprivate func updateTableViewWith(_ newIndexPaths:[IndexPath]) {
         
-        if artistViewModel.isRefreshing.value {
+        if artistViewModel.isRefreshing.value || newIndexPaths.count == artistViewModel.numberOfRows {
             self.tableView.reloadData()
             self.artistViewModel.isRefreshing.value = false
+        
         } else {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: newIndexPaths, with: .none)
