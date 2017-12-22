@@ -118,6 +118,18 @@ class ArtistController: UIViewController {
                 self.showAlert(title: Global.error, message: errorMessage!)
             })
             .disposed(by: disposeBag)
+        
+        artistViewModel.rowToUpdate
+            .asObservable()
+            .skip(1)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { row in
+                let indexPath = IndexPath(row:row, section:0)
+                if row < self.artistViewModel.numberOfRows {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -129,7 +141,9 @@ extension ArtistController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
-        cell.viewModel = artistViewModel.getArtistCellViewModelFor(indexPath.row)
+        performOnMainThread {
+            cell.viewModel = self.artistViewModel.getArtistCellViewModelFor(indexPath.row)
+        }
         return cell
     }
 }

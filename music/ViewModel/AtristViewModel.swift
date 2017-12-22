@@ -17,6 +17,7 @@ protocol ArtistViewModelProtocol : class {
     var isFinished:   Variable<Bool>      { get }
     var errorMessage: Variable<String?>   { get }
     var logOutTapped: PublishSubject<Void>{ get }
+    var rowToUpdate:  Variable<Int>       { get }
 
     func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel
     func didSelectItemAt(_ index:Int)
@@ -33,6 +34,7 @@ final class AtristViewModel {
     var isFinished   = Variable(false)
     let isRefreshing = Variable<Bool>(false)
     var page         = Variable(Const.defaultPage)
+    var rowToUpdate  = Variable<Int>(0)
 
     var link : Variable<String?> = Variable(nil)
     
@@ -45,12 +47,13 @@ final class AtristViewModel {
     }
     
     init() {
-        
-        artists = Variable(artistModel.cachedArtists)
+        artists = Variable(artistModel.cachedArtistsFor(Const.defaultPage))
         
         newIndexPaths = Variable(nil)
         
-        isLoading.value = true
+        if isNilOrEmpty(artists.value) {
+            isLoading.value = true
+        }
 
         page.asObservable()
             .observeOn(backgroundScheduler)
@@ -64,6 +67,15 @@ final class AtristViewModel {
             .subscribe(onNext:{
                 self.artistModel.deleteSessionKey()
                 self.isFinished.value = true
+            })
+            .disposed(by: disposeBag)
+    
+        artistModel.rowToUpdate
+            .asObservable()
+            .subscribe(onNext: { event in
+                if let row = event {
+                    self.rowToUpdate.value = row
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -105,25 +117,41 @@ extension AtristViewModel : ArtistViewModelProtocol {
         transitionDelegate?.transitionToArtist(selectedArtist)
     }
     
-    func loadArtists() {
+    private func loadArtists() {
         if isLoading.value == false {
             isRefreshing.value = true
         }
         
+        if self.page.value > Const.defaultPage {
+            
+            // TODO: - To background
+            performOnMainThread {
+                if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+                    self.artists.value?.append(contentsOf: retrievedArtists)
+                    self.newIndexPaths.value = self.getNewRowsFor(self.artists.value!)
+                    print("MAIN THREAD")
+                }
+            }
+        }
+        
+        print("Request for PAGE:", page.value)
+
         RequestManager.getTopArtists(page: page.value)
             .subscribe(onNext: {
-                
+                print($0.count)
                 let fetchedArtists = $0
-                
-                    if self.page.value == Const.defaultPage {
-                        self.artists.value = fetchedArtists
-                    } else {
-                        self.artists.value?.append(contentsOf: fetchedArtists)
-                    }
-
-                self.newIndexPaths.value = self.getNewRowsFor(self.artists.value!)
-
                 self.artistModel.cacheArtistsFor(page: self.page.value, artists: fetchedArtists)
+
+                performOnMainThread {
+                    if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+                        if self.page.value == Const.defaultPage {
+                            self.artists.value = retrievedArtists
+                        } else {
+                            self.artists.value?.append(contentsOf: retrievedArtists)
+                        }
+                        self.newIndexPaths.value = self.getNewRowsFor(self.artists.value!)
+                    }
+                }
 
                 if self.isLoading.value == true {
                     self.isLoading.value = false
@@ -131,7 +159,6 @@ extension AtristViewModel : ArtistViewModelProtocol {
 //                else {
 //                    self.isRefreshing.value = false
 //                }
-                
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)
                 print(error.localizedDescription)

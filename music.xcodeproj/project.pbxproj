@@ -26,6 +26,7 @@
 		0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6621FC318B400E3FE5D /* SessionKey.swift */; };
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
+		0B62EA281FED32AA00BD1DD8 /* Artist+comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B62EA271FED32AA00BD1DD8 /* Artist+comparable.swift */; };
 		0B94B4FC1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94B4FB1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift */; };
 		0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF71FCEA7BB00E6104A /* Track.swift */; };
 		0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */; };
@@ -70,6 +71,7 @@
 		0B5BA6621FC318B400E3FE5D /* SessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKey.swift; sourceTree = "<group>"; };
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
+		0B62EA271FED32AA00BD1DD8 /* Artist+comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Artist+comparable.swift"; sourceTree = "<group>"; };
 		0B94B4FB1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActvityIndicator.swift"; sourceTree = "<group>"; };
 		0B9E8AF71FCEA7BB00E6104A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		0B5682C91FE0127400CA62A8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0B62EA271FED32AA00BD1DD8 /* Artist+comparable.swift */,
 				0B2545F21FE7DBD60052D449 /* UITableView+DisposeBag.swift */,
 				0B94B4FB1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift */,
 				0B5682CC1FE0130E00CA62A8 /* String+Error.swift */,
@@ -441,6 +444,7 @@
 				0B5682CD1FE0130E00CA62A8 /* String+Error.swift in Sources */,
 				0B94B4FC1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift in Sources */,
 				0BD22F8D1FCC1609004BB863 /* LogInViewModel.swift in Sources */,
+				0B62EA281FED32AA00BD1DD8 /* Artist+comparable.swift in Sources */,
 				0B2FBF731FC2B982009C657C /* Utility.swift in Sources */,
 				0BB165191FCD3FB600782FD0 /* AuthCoordinator.swift in Sources */,
 				8E4A3F8B1FC2034D000820AF /* RequestManager.swift in Sources */,

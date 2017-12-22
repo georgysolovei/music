@@ -42,17 +42,17 @@ final class PersistencyManager {
     }
     
     // MARK: - Artists
-    public func getArtistsFor(page:Int) -> [Artist]? {
-        
+    public func getArtistsFor(_ page:Int) -> [Artist]? {
         let realm = try! Realm()
         guard let artists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return nil }
+    
         return Array(artists.artists)
     }
     
     public func cacheArtistsFor(page:Int, artists:[Artist]) -> [Int]? { // return indexes to reload
         let realm = try! Realm()
 
-        let retrievedArtists = getArtistsFor(page:page)
+        let retrievedArtists = getArtistsFor(page)
         
         if retrievedArtists == nil {
             let artistRealmArray = ArtistRealmArray(artists: artists, page: page)
@@ -60,11 +60,15 @@ final class PersistencyManager {
                 realm.add(artistRealmArray)
             }
         } else {
-            try! realm.write {
-                replace(artists, at: page)
+
+            let indexesOfReplacedArtists = compareArtists(artistsFromRealm: retrievedArtists!, artistsFromWeb: artists)
+           
+            if !isNilOrEmpty(indexesOfReplacedArtists) {
+                replaceOldArtistsWith(artists, at: page)
             }
+            return indexesOfReplacedArtists.isEmpty ? nil : indexesOfReplacedArtists
         }
-        return getIndexesOfReplacedArtists(retrivedArtists: retrievedArtists, downloadedArtists: artists)
+            return nil
     }
     
     public func clearAll() {
@@ -75,35 +79,44 @@ final class PersistencyManager {
     }
     
     // MARK: - Private
-    private func getIndexesOfReplacedArtists(retrivedArtists:[Artist]?, downloadedArtists:[Artist]) -> [Int]? {
-        if retrivedArtists == nil { return nil }
+    private func compareArtists(artistsFromRealm:[Artist], artistsFromWeb:[Artist]) -> [Int] {
         
         let realm = try! Realm()
         let artistRealmArrays = realm.objects(ArtistRealmArray.self)
-        let artists = Array(artistRealmArrays.flatMap({ $0.artists }))
-        
-        var indexes: [Int]?
+        // let artists = Array(artistRealmArrays.flatMap({ $0.artists }))
+        let artists = List<Artist>()
+        artists.append(objectsIn: Array(artistRealmArrays.flatMap({ $0.artists })))
+
+        var indexes = [Int]()
             
-        for item in artists {
-            if artists.contains(item) {
-                guard let index = artists.index(of: item) else { continue }
-                if indexes == nil {
-                    indexes = [Int]()
-                    indexes?.append(index)
-                } else {
-                    indexes?.append(index)
-                }
+        for realmArtist in artistsFromRealm {
+            guard let indexInRealmArtists = artistsFromRealm.index(of: realmArtist) else { return [Int]() }
+            let webArtist = artistsFromWeb[indexInRealmArtists]
+            if !(realmArtist == webArtist) {
+                let generalIndex = artists.index(of: realmArtist)
+                indexes.append(generalIndex!)
             }
         }
+        
+        // TEST
+//        try! realm.write {
+//            artists[0].name = "TEST"
+//        }
+        
+        print("INDEXES TO BE REPLACED:", indexes)
         return indexes
     }
     
-    private func replace(_ artists:[Artist], at page:Int) {
+    private func replaceOldArtistsWith(_ newArtists:[Artist], at page:Int) {
         let realm = try! Realm()
-        guard let retrievedArtists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return }
-        let newRealmArray = List<Artist>()
-        newRealmArray.append(objectsIn: artists)
-        retrievedArtists.artists = newRealmArray
+        guard let artistsRealmArray = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return }
+        let newRealmArtists = List<Artist>()
+        newRealmArtists.append(objectsIn:newArtists)
+        
+        try! realm.write {
+     //       artistsRealmArray.artists = List<Artist>()
+            artistsRealmArray.setValue(newRealmArtists, forKey: "artists")
+        }
     }
 
     private func clearCacheIfNeeded() {

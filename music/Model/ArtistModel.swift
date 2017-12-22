@@ -12,11 +12,8 @@ final class ArtistModel {
     
     var rowToUpdate : Variable<Int?> = Variable(nil)
     
-    private struct Const {
-        static let defaultPage = 2
-    }
-    var cachedArtists : [Artist]? {
-        return PersistencyManager.shared.getArtistsFor(page: Const.defaultPage)
+    func cachedArtistsFor(_ page:Int) -> [Artist]? {
+        return PersistencyManager.shared.getArtistsFor(page)
     }
     
     func deleteSessionKey() {
@@ -28,7 +25,7 @@ final class ArtistModel {
     }
     
     func cacheArtistsFor(page:Int, artists:[Artist]) {
-        guard let indexes = PersistencyManager.shared.cacheArtistsFor(page:page, artists:artists) else { return }
+        guard let indexes = PersistencyManager.shared.cacheArtistsFor(page: page, artists:artists) else { return }
         for artisIndex in indexes {
             rowToUpdate.value = artisIndex
         }
