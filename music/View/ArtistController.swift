@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 import RxSwift
 import NVActivityIndicatorView
+import RealmSwift
 
 class ArtistController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -61,6 +62,7 @@ class ArtistController: UIViewController {
         
         if artistViewModel.isRefreshing.value || newIndexPaths.count == artistViewModel.numberOfRows {
             self.tableView.reloadData()
+            print("tableView.reloadData()")
             self.artistViewModel.isRefreshing.value = false
         
         } else {
@@ -73,16 +75,15 @@ class ArtistController: UIViewController {
     private func setupObservables() {
         disposeBag = DisposeBag()
       
-        artistViewModel
-            .newIndexPaths
-            .asObservable()
-            .skip(1)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { indexPaths in
-                guard let newIndexPaths = indexPaths else { return }
-                self.updateTableViewWith(newIndexPaths)
-            })
-            .disposed(by: disposeBag)
+//        artistViewModel.newIndexPaths
+//            .asObservable()
+//            .skip(1)
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { indexPaths in
+//                guard let newIndexPaths = indexPaths else { return }
+//                self.updateTableViewWith(newIndexPaths)
+//            })
+//            .disposed(by: disposeBag)
         
         logOutButton.rx
             .tap
@@ -90,8 +91,7 @@ class ArtistController: UIViewController {
             .bind(to: artistViewModel.logOutTapped)
             .disposed(by: disposeBag)
         
-        artistViewModel
-            .isLoading
+        artistViewModel.isLoading
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { isLoading in
@@ -99,8 +99,7 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel
-            .isRefreshing
+        artistViewModel.isRefreshing
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { isRefreshing in
@@ -119,17 +118,31 @@ class ArtistController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        artistViewModel.rowToUpdate
+        artistViewModel.realmChanges
             .asObservable()
-            .skip(1)
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { row in
-                let indexPath = IndexPath(row:row, section:0)
-                if row < self.artistViewModel.numberOfRows {
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
+            .subscribe(onNext: { changes in
+                guard let changes = changes else { return }
+                
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: changes.0, with: .automatic)
+                self.tableView.deleteRows(at: changes.1, with: .automatic)
+                self.tableView.reloadRows(at: changes.2, with: .automatic)
+                self.tableView.endUpdates()
             })
             .disposed(by: disposeBag)
+        
+//        artistViewModel.rowToUpdate
+//            .asObservable()
+//            .skip(1)
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { row in
+//                let indexPath = IndexPath(row:row, section:0)
+//                if row < self.artistViewModel.numberOfRows {
+//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//                }
+//            })
+//            .disposed(by: disposeBag)
     }
 }
 
@@ -141,9 +154,7 @@ extension ArtistController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.cell) as! ArtistCell
-        performOnMainThread {
-            cell.viewModel = self.artistViewModel.getArtistCellViewModelFor(indexPath.row)
-        }
+        cell.viewModel = self.artistViewModel.getArtistCellViewModelFor(indexPath.row)
         return cell
     }
 }

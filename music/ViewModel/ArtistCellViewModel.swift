@@ -14,9 +14,12 @@ protocol ArtistCellViewModelProtocol : class {
     var imageLink:  String? { get }
     var linkTapped: PublishSubject<Void> { get }
     var link:       Variable<String?> { get }
+    var cellNumber: Int { get }
 }
 
 class ArtistCellViewModel : ArtistCellViewModelProtocol {
+    var cellNumber: Int
+    
     var linkTapped = PublishSubject<Void>()
     let disposeBag = DisposeBag()
     var link = Variable<String?>(nil)
@@ -30,18 +33,19 @@ class ArtistCellViewModel : ArtistCellViewModelProtocol {
         return self.artist.imageUrl
     }
     
+    var artistCellModel = ArtistCellModel()
     private var artist: Artist
     
-    init(_ artist:Artist) {
-        self.artist = artist
+    init(_ artist:Artist, cellNumber:Int) {
+//        self.artist = artist
+        self.artist = artistCellModel.getArtistFor(cellNumber) ?? Artist()
+
+        self.cellNumber = cellNumber
         linkTapped
             .asObservable()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {event in
                 self.link.value = artist.url
-          //      self.link.value = nil
             }).disposed(by: disposeBag)
     }
-    
-
 }

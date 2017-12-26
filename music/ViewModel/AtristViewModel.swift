@@ -7,18 +7,18 @@
 //
 
 import RxSwift
+import RealmSwift
+import UIKit
 
 protocol ArtistViewModelProtocol : class {
     var numberOfRows: Int{ get }
-    var newIndexPaths: Variable<[IndexPath]?> { get }
-    
     var isLoading:    Variable<Bool>      { get }
     var isRefreshing: Variable<Bool>      { get }
     var isFinished:   Variable<Bool>      { get }
     var errorMessage: Variable<String?>   { get }
     var logOutTapped: PublishSubject<Void>{ get }
-    var rowToUpdate:  Variable<Int>       { get }
-
+    var realmChanges: Variable<([IndexPath], [IndexPath], [IndexPath])?> { get }
+    
     func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel
     func didSelectItemAt(_ index:Int)
     func refresh()
@@ -26,32 +26,30 @@ protocol ArtistViewModelProtocol : class {
 }
 
 final class AtristViewModel {
-    var artists      : Variable<[Artist]?>
-    var newIndexPaths: Variable<[IndexPath]?>
     let isLoading    = Variable(false)
-    var errorMessage : Variable<String?> = Variable(nil)
+    var errorMessage:  Variable<String?> = Variable(nil)
     var logOutTapped = PublishSubject<Void>()
     var isFinished   = Variable(false)
     let isRefreshing = Variable<Bool>(false)
     var page         = Variable(Const.defaultPage)
-    var rowToUpdate  = Variable<Int>(0)
-
-    var link : Variable<String?> = Variable(nil)
+    var realmChanges: Variable<([IndexPath], [IndexPath], [IndexPath])?> = Variable(nil)
     
+    var link : Variable<String?> = Variable(nil)
+    var displayArtists : DisplayArtists
+
     var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
     var artistModel = ArtistModel()
-    
+    var notificationToken: NotificationToken? = nil
+
     private struct Const {
         static let defaultPage = 2
     }
     
     init() {
-        artists = Variable(artistModel.cachedArtistsFor(Const.defaultPage))
-        
-        newIndexPaths = Variable(nil)
-        
-        if isNilOrEmpty(artists.value) {
+
+        self.displayArtists = artistModel.displayArtists.first!
+        if isNilOrEmpty(self.displayArtists.artists) {
             isLoading.value = true
         }
 
@@ -69,38 +67,48 @@ final class AtristViewModel {
                 self.isFinished.value = true
             })
             .disposed(by: disposeBag)
-    
-        artistModel.rowToUpdate
-            .asObservable()
-            .subscribe(onNext: { event in
-                if let row = event {
-                    self.rowToUpdate.value = row
-                }
-            })
-            .disposed(by: disposeBag)
+        
+        let displayArtists = artistModel.displayArtists
+        notificationToken = displayArtists.observe { [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .initial:
+                print("")
+            case .update(_, let deletions, let insertions, let modifications):
+               
+                self?.realmChanges.value = (insertions.map({ IndexPath(row: $0, section: 0) }),
+                                             deletions.map({ IndexPath(row: $0, section: 0) }),
+                                         modifications.map({ IndexPath(row: $0, section: 0) }))
+            case .error(let error):
+                fatalError("\(error)")
+            }
+        }
     }
     
     func getNewRowsFor(_ newArtists:[Artist]) -> [IndexPath] {
         
         let newIndexPaths = newArtists.map{ artist -> IndexPath in
-            guard let indexOfNewArtist = artists.value?.index(of: artist) else { return IndexPath(row:0, section:0) }
+            guard let indexOfNewArtist = displayArtists.artists.index(of: artist) else { return IndexPath(row:0, section:0) }
             let indexPath = IndexPath.init(row: indexOfNewArtist, section: 0)
             return indexPath
         }
         return newIndexPaths
+    }
+    
+    deinit {
+        print("deinit")
+        artistModel.clearDisplayArtists()
     }
 }
 
 extension AtristViewModel : ArtistViewModelProtocol {
     
     var numberOfRows: Int {
-        return artists.value?.count ?? 0
+        return displayArtists.artists.count
     }
     
     func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel {
-        guard let artists = artists.value else { return ArtistCellViewModel(Artist()) }
-        let artist = artists[index]
-        let artistCellViewModel = ArtistCellViewModel(artist)
+        let artist = displayArtists.artists[index]
+        let artistCellViewModel = ArtistCellViewModel(artist, cellNumber: index)
         artistCellViewModel.link
             .asObservable()
             .subscribeOn(MainScheduler.instance)
@@ -112,8 +120,7 @@ extension AtristViewModel : ArtistViewModelProtocol {
     }
     
     func didSelectItemAt(_ index:Int) {
-        guard let artists = artists.value else { return }
-        let selectedArtist = artists[index]
+        let selectedArtist = displayArtists.artists[index]
         transitionDelegate?.transitionToArtist(selectedArtist)
     }
     
@@ -124,32 +131,25 @@ extension AtristViewModel : ArtistViewModelProtocol {
         
         if self.page.value > Const.defaultPage {
             
-            // TODO: - To background
-            performOnMainThread {
-                if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
-                    self.artists.value?.append(contentsOf: retrievedArtists)
-                    self.newIndexPaths.value = self.getNewRowsFor(self.artists.value!)
-                    print("MAIN THREAD")
-                }
+            if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+       //         self.displayArtists.artists.append(contentsOf: retrievedArtists)
             }
         }
         
         print("Request for PAGE:", page.value)
-
+        
         RequestManager.getTopArtists(page: page.value)
+            .observeOn(backgroundScheduler)
             .subscribe(onNext: {
                 print($0.count)
-                let fetchedArtists = $0
-                self.artistModel.cacheArtistsFor(page: self.page.value, artists: fetchedArtists)
+                
+                self.artistModel.cacheArtistsFor(page: self.page.value, artists: $0)
 
-                performOnMainThread {
-                    if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
-                        if self.page.value == Const.defaultPage {
-                            self.artists.value = retrievedArtists
-                        } else {
-                            self.artists.value?.append(contentsOf: retrievedArtists)
-                        }
-                        self.newIndexPaths.value = self.getNewRowsFor(self.artists.value!)
+                if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+                    if self.page.value == Const.defaultPage {
+      //                  self.displayArtists.artists = retrievedArtists
+                    } else {
+      //                  self.displayArtists.artists.append(contentsOf: retrievedArtists)
                     }
                 }
 
@@ -163,7 +163,7 @@ extension AtristViewModel : ArtistViewModelProtocol {
                 self.errorMessage.value = String(describing: error)
                 print(error.localizedDescription)
                 self.isLoading.value = false
-                
+
             }).disposed(by: disposeBag)
     }
     

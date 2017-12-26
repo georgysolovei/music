@@ -45,7 +45,7 @@ final class PersistencyManager {
     public func getArtistsFor(_ page:Int) -> [Artist]? {
         let realm = try! Realm()
         guard let artists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return nil }
-    
+        
         return Array(artists.artists)
     }
     
@@ -71,10 +71,30 @@ final class PersistencyManager {
             return nil
     }
     
-    public func clearAll() {
+    public func getArtistFor(_ index:Int) -> Artist? {
         let realm = try! Realm()
-        try! realm.write {
-            realm.deleteAll()
+        let realmArtists = realm.objects(Artist.self)
+        let artist = realmArtists.filter{ realmArtists.index(of: $0) == index }.first
+        
+        return artist
+    }
+    
+    public func getDisplayArtists() -> Results<DisplayArtists> {
+        let realm = try! Realm()
+
+        if realm.objects(DisplayArtists.self).first == nil {
+            let displayArtists = DisplayArtists()
+            try! realm.write {
+                realm.add(displayArtists)
+            }
+        }
+        return realm.objects(DisplayArtists.self)
+    }
+    
+    public func clearDisplayArtists() {
+        let realm = try! Realm()
+         try! realm.write {
+            realm.delete(realm.objects(DisplayArtists.self))
         }
     }
     
@@ -103,7 +123,7 @@ final class PersistencyManager {
 //            artists[0].name = "TEST"
 //        }
         
-        print("INDEXES TO BE REPLACED:", indexes)
+ //       print("INDEXES TO BE REPLACED:", indexes)
         return indexes
     }
     

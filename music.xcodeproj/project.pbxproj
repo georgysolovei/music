@@ -27,6 +27,8 @@
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
 		0B62EA281FED32AA00BD1DD8 /* Artist+comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B62EA271FED32AA00BD1DD8 /* Artist+comparable.swift */; };
+		0B62EA2A1FF2669B00BD1DD8 /* ArtistCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B62EA291FF2669B00BD1DD8 /* ArtistCellModel.swift */; };
+		0B62EA2C1FF2A07900BD1DD8 /* DisplayArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B62EA2B1FF2A07900BD1DD8 /* DisplayArtists.swift */; };
 		0B94B4FC1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94B4FB1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift */; };
 		0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF71FCEA7BB00E6104A /* Track.swift */; };
 		0B9E8AFA1FCEC6B400E6104A /* TrackListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */; };
@@ -72,6 +74,8 @@
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
 		0B62EA271FED32AA00BD1DD8 /* Artist+comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Artist+comparable.swift"; sourceTree = "<group>"; };
+		0B62EA291FF2669B00BD1DD8 /* ArtistCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCellModel.swift; sourceTree = "<group>"; };
+		0B62EA2B1FF2A07900BD1DD8 /* DisplayArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayArtists.swift; sourceTree = "<group>"; };
 		0B94B4FB1FD80C2600F6A30B /* UIViewController+ActvityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActvityIndicator.swift"; sourceTree = "<group>"; };
 		0B9E8AF71FCEA7BB00E6104A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		0B9E8AF91FCEC6B400E6104A /* TrackListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListController.swift; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 				0BF4CA161FE9514100358424 /* Persisted Objects */,
 				0BD22F8E1FCC2C35004BB863 /* LoginModel.swift */,
 				0BD22F941FCC3FAA004BB863 /* ArtistModel.swift */,
+				0B62EA291FF2669B00BD1DD8 /* ArtistCellModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 			children = (
 				0B5BA6621FC318B400E3FE5D /* SessionKey.swift */,
 				0B5BA6641FC4269300E3FE5D /* Artist.swift */,
+				0B62EA2B1FF2A07900BD1DD8 /* DisplayArtists.swift */,
 				0BF4CA191FE954D900358424 /* ArtistRealmArray.swift */,
 				0B9E8AF71FCEA7BB00E6104A /* Track.swift */,
 				0BF4CA171FE951AE00358424 /* RootObject.swift */,
@@ -456,6 +462,7 @@
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
 				0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */,
 				0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */,
+				0B62EA2C1FF2A07900BD1DD8 /* DisplayArtists.swift in Sources */,
 				0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */,
 				0BB1651B1FCD444400782FD0 /* ArtistCoordinator.swift in Sources */,
 				0B1E64A61FC54C6A000CBD84 /* ArtistController.swift in Sources */,
@@ -463,6 +470,7 @@
 				0B2545EB1FE1226C0052D449 /* LogInButton.swift in Sources */,
 				0B2545F11FE3D31C0052D449 /* TrackCellViewModel.swift in Sources */,
 				0B9E8B081FCEE70300E6104A /* TrackListViewModel.swift in Sources */,
+				0B62EA2A1FF2669B00BD1DD8 /* ArtistCellModel.swift in Sources */,
 				0BD75BEE1FC2EF740030D27D /* XmlParser.swift in Sources */,
 				0B5682CB1FE012C500CA62A8 /* UIViewController+Alert.swift in Sources */,
 				0BF4CA1A1FE954D900358424 /* ArtistRealmArray.swift in Sources */,

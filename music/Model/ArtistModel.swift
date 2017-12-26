@@ -7,10 +7,13 @@
 //
 
 import RxSwift
+import RealmSwift
 
 final class ArtistModel {
     
-    var rowToUpdate : Variable<Int?> = Variable(nil)
+    var displayArtists: Results<DisplayArtists> {
+        return PersistencyManager.shared.getDisplayArtists()
+    }
     
     func cachedArtistsFor(_ page:Int) -> [Artist]? {
         return PersistencyManager.shared.getArtistsFor(page)
@@ -26,12 +29,10 @@ final class ArtistModel {
     
     func cacheArtistsFor(page:Int, artists:[Artist]) {
         guard let indexes = PersistencyManager.shared.cacheArtistsFor(page: page, artists:artists) else { return }
-        for artisIndex in indexes {
-            rowToUpdate.value = artisIndex
-        }
     }
     
-    func clearCache() {
-        PersistencyManager.shared.clearAll()
+    func clearDisplayArtists() {
+        
     }
+    
 }
