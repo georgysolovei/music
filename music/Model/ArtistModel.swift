@@ -12,10 +12,18 @@ import RealmSwift
 final class ArtistModel {
     
     var displayArtists: Results<DisplayArtists> {
-        return PersistencyManager.shared.getDisplayArtists()
+        let realm = try! Realm()
+        
+        if realm.objects(DisplayArtists.self).first == nil {
+            let displayArtists = DisplayArtists()
+            try! realm.write {
+                realm.add(displayArtists)
+            }
+        }
+        return realm.objects(DisplayArtists.self)
     }
     
-    func cachedArtistsFor(_ page:Int) -> [Artist]? {
+    func cachedArtistsFor(_ page:Int) -> List<Artist>? {
         return PersistencyManager.shared.getArtistsFor(page)
     }
     
@@ -29,6 +37,17 @@ final class ArtistModel {
     
     func cacheArtistsFor(page:Int, artists:[Artist]) {
         guard let indexes = PersistencyManager.shared.cacheArtistsFor(page: page, artists:artists) else { return }
+    }
+    
+    func saveToDisplayArtists(_ fetchedArtists:List<Artist>, isReplace:Bool = false) {
+        let realm = try! Realm()
+
+        try! realm.write {
+            if isReplace == true {
+//                 realm.objects(DisplayArtists.self).first?.artists.removeAll()
+            }
+            realm.objects(DisplayArtists.self).first?.artists.append(objectsIn: fetchedArtists)
+        }
     }
     
     func clearDisplayArtists() {

@@ -42,11 +42,11 @@ final class PersistencyManager {
     }
     
     // MARK: - Artists
-    public func getArtistsFor(_ page:Int) -> [Artist]? {
+    public func getArtistsFor(_ page:Int) -> List<Artist>? {
         let realm = try! Realm()
         guard let artists = realm.object(ofType: ArtistRealmArray.self, forPrimaryKey: page) else { return nil }
         
-        return Array(artists.artists)
+        return artists.artists
     }
     
     public func cacheArtistsFor(page:Int, artists:[Artist]) -> [Int]? { // return indexes to reload
@@ -79,18 +79,6 @@ final class PersistencyManager {
         return artist
     }
     
-    public func getDisplayArtists() -> Results<DisplayArtists> {
-        let realm = try! Realm()
-
-        if realm.objects(DisplayArtists.self).first == nil {
-            let displayArtists = DisplayArtists()
-            try! realm.write {
-                realm.add(displayArtists)
-            }
-        }
-        return realm.objects(DisplayArtists.self)
-    }
-    
     public func clearDisplayArtists() {
         let realm = try! Realm()
          try! realm.write {
@@ -99,7 +87,7 @@ final class PersistencyManager {
     }
     
     // MARK: - Private
-    private func compareArtists(artistsFromRealm:[Artist], artistsFromWeb:[Artist]) -> [Int] {
+    private func compareArtists(artistsFromRealm:List<Artist>, artistsFromWeb:[Artist]) -> [Int] {
         
         let realm = try! Realm()
         let artistRealmArrays = realm.objects(ArtistRealmArray.self)
