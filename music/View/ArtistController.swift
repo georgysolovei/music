@@ -74,16 +74,6 @@ class ArtistController: UIViewController {
     
     private func setupObservables() {
         disposeBag = DisposeBag()
-      
-//        artistViewModel.newIndexPaths
-//            .asObservable()
-//            .skip(1)
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { indexPaths in
-//                guard let newIndexPaths = indexPaths else { return }
-//                self.updateTableViewWith(newIndexPaths)
-//            })
-//            .disposed(by: disposeBag)
         
         logOutButton.rx
             .tap
@@ -121,6 +111,7 @@ class ArtistController: UIViewController {
         artistViewModel.realmChanges
             .asObservable()
             .observeOn(MainScheduler.instance)
+            .skip(1)
             .subscribe(onNext: { changes in
                 guard let changes = changes else { return }
                 
@@ -131,18 +122,6 @@ class ArtistController: UIViewController {
                 self.tableView.endUpdates()
             })
             .disposed(by: disposeBag)
-        
-//        artistViewModel.rowToUpdate
-//            .asObservable()
-//            .skip(1)
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { row in
-//                let indexPath = IndexPath(row:row, section:0)
-//                if row < self.artistViewModel.numberOfRows {
-//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//                }
-//            })
-//            .disposed(by: disposeBag)
     }
 }
 

@@ -32,7 +32,7 @@ final class AtristViewModel {
     var isFinished   = Variable(false)
     let isRefreshing = Variable<Bool>(false)
     var page         = Variable(Const.defaultPage)
-    var realmChanges: Variable<([IndexPath], [IndexPath], [IndexPath])?> = Variable(nil)
+    var realmChanges:  Variable<([IndexPath], [IndexPath], [IndexPath])?> = Variable(nil)
     
     var link : Variable<String?> = Variable(nil)
    
@@ -43,20 +43,21 @@ final class AtristViewModel {
     var disposeBag = DisposeBag()
     weak var transitionDelegate : TransitionProtocol?
     var artistModel = ArtistModel()
-    var token : NotificationToken?
+    var notificationToken : NotificationToken?
 
     private struct Const {
         static let defaultPage = 2
     }
     
     init() {
-
-        if isNilOrEmpty(self.displayArtists) {
-            isLoading.value = true
-        }
-
+        
+        artistModel.clearDisplayArtists()
+        
         page.asObservable()
             .observeOn(backgroundScheduler)
+            .skipWhile {_ in
+                return !self.displayArtists.isEmpty
+            }
             .subscribe(onNext: { event in
                 self.loadArtists()
             })
@@ -70,15 +71,15 @@ final class AtristViewModel {
             })
             .disposed(by: disposeBag)
         
-        token = displayArtists.observe { change in
+        notificationToken = displayArtists.observe { change in
             switch change {
             case .initial:
                 print("subsribed")
             case .update(_, let deletions, let insertions, let modifications):
-               
+                print(".update")
                 self.realmChanges.value = (insertions.map({ IndexPath(row: $0, section: 0) }),
-                                             deletions.map({ IndexPath(row: $0, section: 0) }),
-                                         modifications.map({ IndexPath(row: $0, section: 0) }))
+                                            deletions.map({ IndexPath(row: $0, section: 0) }),
+                                        modifications.map({ IndexPath(row: $0, section: 0) }))
             case .error(let error):
                 fatalError("\(error)")
             }
@@ -93,11 +94,6 @@ final class AtristViewModel {
             return indexPath
         }
         return newIndexPaths
-    }
-    
-    deinit {
-        print("deinit")
-        artistModel.clearDisplayArtists()
     }
 }
 
@@ -126,37 +122,35 @@ extension AtristViewModel : ArtistViewModelProtocol {
     }
     
     private func loadArtists() {
-        if isLoading.value == false {
-            isRefreshing.value = true
-        }
         
-        if self.page.value > Const.defaultPage {
-            
-            if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
-                self.displayArtists.append(objectsIn: retrievedArtists)
-            }
+        // DataBase request
+        //--------------------------------------------------
+        let isReplace = self.page.value == Const.defaultPage
+        if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+            self.artistModel.saveToDisplayArtists(retrievedArtists, isReplace:isReplace)
+        } else {
+            isLoading.value = true
         }
         
         print("Request for PAGE:", page.value)
         
+        // Network request
+        //--------------------------------------------------
         RequestManager.getTopArtists(page: page.value)
             .observeOn(backgroundScheduler)
             .subscribe(onNext: {
                 print($0.count)
                 
-                self.artistModel.cacheArtistsFor(page: self.page.value, artists: $0)
+                let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value)
+                let indexesToReplace = self.artistModel.cacheArtistsFor(page: self.page.value, artists: $0)
 
-                if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
-                    let isReplace = self.page.value == Const.defaultPage
-                    self.artistModel.saveToDisplayArtists(retrievedArtists, isReplace:isReplace)
+                if retrievedArtists == nil || !isNilOrEmpty(indexesToReplace) {
+                    if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+                        self.artistModel.saveToDisplayArtists(retrievedArtists, isReplace:isReplace)
+                    }
                 }
-
-                if self.isLoading.value == true {
-                    self.isLoading.value = false
-                }
-//                else {
-//                    self.isRefreshing.value = false
-//                }
+  
+                self.isLoading.value = false
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)
                 print(error.localizedDescription)

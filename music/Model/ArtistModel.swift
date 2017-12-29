@@ -35,8 +35,8 @@ final class ArtistModel {
         return PersistencyManager.shared.getSessionKey()
     }
     
-    func cacheArtistsFor(page:Int, artists:[Artist]) {
-        guard let indexes = PersistencyManager.shared.cacheArtistsFor(page: page, artists:artists) else { return }
+    func cacheArtistsFor(page:Int, artists:[Artist]) -> [Int]? {
+       return PersistencyManager.shared.cacheArtistsFor(page: page, artists:artists)
     }
     
     func saveToDisplayArtists(_ fetchedArtists:List<Artist>, isReplace:Bool = false) {
@@ -44,14 +44,17 @@ final class ArtistModel {
 
         try! realm.write {
             if isReplace == true {
-//                 realm.objects(DisplayArtists.self).first?.artists.removeAll()
+                 realm.objects(DisplayArtists.self).first?.artists.removeAll()
             }
             realm.objects(DisplayArtists.self).first?.artists.append(objectsIn: fetchedArtists)
         }
     }
     
     func clearDisplayArtists() {
-        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.objects(DisplayArtists.self).first?.artists.removeAll()
+        }
     }
     
 }
