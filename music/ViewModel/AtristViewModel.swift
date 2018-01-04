@@ -141,10 +141,10 @@ extension AtristViewModel : ArtistViewModelProtocol {
             .subscribe(onNext: {
                 print($0.count)
                 
-                let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value)
+                let realmArtists = self.artistModel.cachedArtistsFor(self.page.value)
                 let indexesToReplace = self.artistModel.cacheArtistsFor(page: self.page.value, artists: $0)
 
-                if retrievedArtists == nil || !isNilOrEmpty(indexesToReplace) {
+                if realmArtists == nil || !isNilOrEmpty(indexesToReplace) {
                     if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
                         self.artistModel.saveToDisplayArtists(retrievedArtists, isReplace:isReplace)
                     }

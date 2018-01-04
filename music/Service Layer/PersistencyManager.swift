@@ -111,7 +111,7 @@ final class PersistencyManager {
 //            artists[0].name = "TEST"
 //        }
         
-        print("INDEXES TO BE REPLACED:", indexes)
+        print("INDEXES TO REPLACE:", indexes)
         return indexes
     }
     
