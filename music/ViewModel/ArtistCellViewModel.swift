@@ -37,7 +37,6 @@ class ArtistCellViewModel : ArtistCellViewModelProtocol {
     private var artist: Artist
     
     init(_ artist:Artist, cellNumber:Int) {
-//        self.artist = artist
         self.artist = artistCellModel.getArtistFor(cellNumber) ?? Artist()
 
         self.cellNumber = cellNumber

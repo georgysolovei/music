@@ -18,8 +18,9 @@ class ArtistController: UIViewController {
     
     var artistViewModel : ArtistViewModelProtocol!
     var disposeBag : DisposeBag!
-    struct Const {
+    private struct Const {
         static let cell = "ArtistCell"
+        static let error = "Error"
     }
     
     lazy var refreshControl: UIRefreshControl = {
@@ -78,7 +79,7 @@ class ArtistController: UIViewController {
         logOutButton.rx
             .tap
             .asObservable()
-            .bind(to: artistViewModel.logOutTapped)
+            .bind(to: artistViewModel.logOut)
             .disposed(by: disposeBag)
         
         artistViewModel.isLoading
@@ -104,7 +105,7 @@ class ArtistController: UIViewController {
             .skip(1)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { errorMessage in
-                self.showAlert(title: Global.error, message: errorMessage!)
+                self.showAlert(title: Global.error, message: errorMessage ?? Const.error)
             })
             .disposed(by: disposeBag)
         
@@ -116,9 +117,11 @@ class ArtistController: UIViewController {
                 guard let changes = changes else { return }
                 
                 self.tableView.beginUpdates()
+                
                 self.tableView.insertRows(at: changes.0, with: .automatic)
                 self.tableView.deleteRows(at: changes.1, with: .automatic)
                 self.tableView.reloadRows(at: changes.2, with: .automatic)
+                
                 self.tableView.endUpdates()
             })
             .disposed(by: disposeBag)

@@ -16,8 +16,8 @@ protocol ArtistViewModelProtocol : class {
     var isRefreshing: Variable<Bool>      { get }
     var isFinished:   Variable<Bool>      { get }
     var errorMessage: Variable<String?>   { get }
-    var logOutTapped: PublishSubject<Void>{ get }
     var realmChanges: Variable<([IndexPath], [IndexPath], [IndexPath])?> { get }
+    var logOut: PublishSubject<Void>{ get }
     
     func getArtistCellViewModelFor(_ index:Int) -> ArtistCellViewModel
     func didSelectItemAt(_ index:Int)
@@ -26,14 +26,16 @@ protocol ArtistViewModelProtocol : class {
 }
 
 final class AtristViewModel {
-    let isLoading    = Variable(false)
-    var errorMessage:  Variable<String?> = Variable(nil)
-    var logOutTapped = PublishSubject<Void>()
-    var isFinished   = Variable(false)
-    let isRefreshing = Variable<Bool>(false)
-    var page         = Variable(Const.defaultPage)
-    var realmChanges:  Variable<([IndexPath], [IndexPath], [IndexPath])?> = Variable(nil)
     
+    let isLoading    = Variable(false)
+    let isRefreshing = Variable<Bool>(false)
+    var isFinished   = Variable(false)
+    var errorMessage:  Variable<String?> = Variable(nil)
+    var realmChanges:  Variable<([IndexPath], [IndexPath], [IndexPath])?> = Variable(nil)
+    var logOut = PublishSubject<Void>()
+    
+    var page = Variable(Const.defaultPage)
+
     var link : Variable<String?> = Variable(nil)
    
     var displayArtists : List<Artist> {
@@ -46,7 +48,7 @@ final class AtristViewModel {
     var notificationToken : NotificationToken?
 
     private struct Const {
-        static let defaultPage = 2
+        static let defaultPage = 1
     }
     
     init() {
@@ -63,8 +65,7 @@ final class AtristViewModel {
             })
             .disposed(by: disposeBag)
         
-        logOutTapped
-            .asObservable()
+        logOut.asObservable()
             .subscribe(onNext:{
                 self.artistModel.deleteSessionKey()
                 self.isFinished.value = true
@@ -126,8 +127,9 @@ extension AtristViewModel : ArtistViewModelProtocol {
         // DataBase request
         //--------------------------------------------------
         let isReplace = self.page.value == Const.defaultPage
-        if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
-            self.artistModel.saveToDisplayArtists(retrievedArtists, isReplace:isReplace)
+       
+        if let realmArtists = self.artistModel.cachedArtistsFor(self.page.value) {
+            self.artistModel.saveToDisplayArtists(realmArtists, isReplace:isReplace)
         } else {
             isLoading.value = true
         }

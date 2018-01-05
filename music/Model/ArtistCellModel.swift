@@ -10,7 +10,10 @@ import RealmSwift
 
 class ArtistCellModel {
     func getArtistFor(_ index:Int) -> Artist? {
-        let artist = PersistencyManager.shared.getArtistFor(index)
+        let realm = try! Realm()
+        let realmArtists = realm.objects(Artist.self)
+        let artist = realmArtists.filter{ realmArtists.index(of: $0) == index }.first
+        
         return artist
     }
 }

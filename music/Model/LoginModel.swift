@@ -6,8 +6,15 @@
 //  Copyright © 2017 mac-167. All rights reserved.
 //
 
+import RealmSwift
+
 final class LogInModel {
     func saveSessionKey(_ key:String) {
-        PersistencyManager.shared.saveSessionKey(key)
+            let realm = try! Realm()
+            
+            try! realm.write {
+                let sessionKey = SessionKey(key)
+                realm.add(sessionKey)
+            }
     }
 }

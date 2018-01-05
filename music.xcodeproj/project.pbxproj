@@ -22,7 +22,6 @@
 		0B45CD701FBEDF190052761C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B45CD6E1FBEDF190052761C /* LaunchScreen.storyboard */; };
 		0B5682CB1FE012C500CA62A8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5682CA1FE012C500CA62A8 /* UIViewController+Alert.swift */; };
 		0B5682CD1FE0130E00CA62A8 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5682CC1FE0130E00CA62A8 /* String+Error.swift */; };
-		0B5BA65F1FC3134300E3FE5D /* PersistencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA65E1FC3134300E3FE5D /* PersistencyManager.swift */; };
 		0B5BA6631FC318B400E3FE5D /* SessionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6621FC318B400E3FE5D /* SessionKey.swift */; };
 		0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6641FC4269300E3FE5D /* Artist.swift */; };
 		0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BA6661FC4279600E3FE5D /* JsonParser.swift */; };
@@ -69,7 +68,6 @@
 		0B45CD711FBEDF190052761C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B5682CA1FE012C500CA62A8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		0B5682CC1FE0130E00CA62A8 /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
-		0B5BA65E1FC3134300E3FE5D /* PersistencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistencyManager.swift; sourceTree = "<group>"; };
 		0B5BA6621FC318B400E3FE5D /* SessionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKey.swift; sourceTree = "<group>"; };
 		0B5BA6641FC4269300E3FE5D /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		0B5BA6661FC4279600E3FE5D /* JsonParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParser.swift; sourceTree = "<group>"; };
@@ -254,7 +252,6 @@
 			isa = PBXGroup;
 			children = (
 				8E4A3F8A1FC2034D000820AF /* RequestManager.swift */,
-				0B5BA65E1FC3134300E3FE5D /* PersistencyManager.swift */,
 				0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */,
 				0BD75BED1FC2EF740030D27D /* XmlParser.swift */,
 				0B5BA6661FC4279600E3FE5D /* JsonParser.swift */,
@@ -479,7 +476,6 @@
 				0B9E8AFC1FCED3C000E6104A /* TrackListCoordinator.swift in Sources */,
 				0B5BA6651FC4269300E3FE5D /* Artist.swift in Sources */,
 				0B5BA6671FC4279600E3FE5D /* JsonParser.swift in Sources */,
-				0B5BA65F1FC3134300E3FE5D /* PersistencyManager.swift in Sources */,
 				0BD22F931FCC3BA2004BB863 /* AtristViewModel.swift in Sources */,
 				0B2545F31FE7DBD60052D449 /* UITableView+DisposeBag.swift in Sources */,
 				0BD22F951FCC3FAA004BB863 /* ArtistModel.swift in Sources */,

@@ -29,7 +29,7 @@ final class RootCoordinator : RootCoordinatorProtocol {
     
     func start() {
         
-        let sessionKey = PersistencyManager.shared.getSessionKey()
+        let sessionKey = ArtistModel().getSessionKey()
         
         if isNilOrEmpty(sessionKey) {
             showAuthCoordinator()
