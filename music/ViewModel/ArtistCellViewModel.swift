@@ -37,7 +37,7 @@ class ArtistCellViewModel : ArtistCellViewModelProtocol {
     private var artist: Artist
     
     init(_ artist:Artist, cellNumber:Int) {
-        self.artist = artistCellModel.getArtistFor(cellNumber) ?? Artist()
+        self.artist = artist
 
         self.cellNumber = cellNumber
         linkTapped

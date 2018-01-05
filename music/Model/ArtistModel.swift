@@ -117,12 +117,7 @@ final class ArtistModel {
                 indexes.append(generalIndex!)
             }
         }
-        
-        // TEST
-        //        try! realm.write {
-        //            artists[0].name = "TEST"
-        //        }
-        
+                
         print("INDEXES TO REPLACE:", indexes)
         return indexes
     }

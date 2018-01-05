@@ -59,20 +59,6 @@ class ArtistController: UIViewController {
         artistViewModel.refresh()
     }
     
-    fileprivate func updateTableViewWith(_ newIndexPaths:[IndexPath]) {
-        
-        if artistViewModel.isRefreshing.value || newIndexPaths.count == artistViewModel.numberOfRows {
-            self.tableView.reloadData()
-            print("tableView.reloadData()")
-            self.artistViewModel.isRefreshing.value = false
-        
-        } else {
-            self.tableView.beginUpdates()
-            self.tableView.insertRows(at: newIndexPaths, with: .none)
-            self.tableView.endUpdates()
-        }
-    }
-    
     private func setupObservables() {
         disposeBag = DisposeBag()
         
@@ -116,13 +102,15 @@ class ArtistController: UIViewController {
             .subscribe(onNext: { changes in
                 guard let changes = changes else { return }
                 
-                self.tableView.beginUpdates()
-                
-                self.tableView.insertRows(at: changes.0, with: .automatic)
-                self.tableView.deleteRows(at: changes.1, with: .automatic)
-                self.tableView.reloadRows(at: changes.2, with: .automatic)
-                
-                self.tableView.endUpdates()
+                UIView.performWithoutAnimation {
+                    self.tableView.beginUpdates()
+                    
+                    self.tableView.insertRows(at: changes.0, with: .automatic)
+                    self.tableView.deleteRows(at: changes.1, with: .automatic)
+                    self.tableView.reloadRows(at: changes.2, with: .automatic)
+                    
+                    self.tableView.endUpdates()
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -152,7 +140,7 @@ extension ArtistController : UITableViewDataSourcePrefetching {
     // TODO: Magic Numbers
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let artistCount = artistViewModel?.numberOfRows else { return }
-        if indexPaths.last?.row == artistCount - 50 || indexPaths.last?.row == artistCount - 1 || indexPaths.last?.row == artistCount - 30 {
+        if indexPaths.last?.row == artistCount - 50 || (indexPaths.last?.row == artistCount - 1 && !artistViewModel.isLoading.value) {
             artistViewModel?.loadMore()
         }
     }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Kingfisher
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootCoordinator.start()
 
         window!.isHidden = false
-
+        let cache = KingfisherManager.shared.cache
+        cache.maxDiskCacheSize = 50 * 1024 * 1024
         return true
     }
 

@@ -48,7 +48,7 @@ final class AtristViewModel {
     var notificationToken : NotificationToken?
 
     private struct Const {
-        static let defaultPage = 1
+        static let defaultPage = 2
     }
     
     init() {
@@ -75,7 +75,7 @@ final class AtristViewModel {
         notificationToken = displayArtists.observe { change in
             switch change {
             case .initial:
-                print("subsribed")
+                print("subscribed")
             case .update(_, let deletions, let insertions, let modifications):
                 print(".update")
                 self.realmChanges.value = (insertions.map({ IndexPath(row: $0, section: 0) }),
@@ -143,8 +143,15 @@ extension AtristViewModel : ArtistViewModelProtocol {
             .subscribe(onNext: {
                 print($0.count)
                 
+                let artistsFromWeb = $0
+                
+                // TEST
+//                if self.page.value == Const.defaultPage {
+//                    artistsFromWeb[0].name = "TEST"
+//                }
+               
                 let realmArtists = self.artistModel.cachedArtistsFor(self.page.value)
-                let indexesToReplace = self.artistModel.cacheArtistsFor(page: self.page.value, artists: $0)
+                let indexesToReplace = self.artistModel.cacheArtistsFor(page: self.page.value, artists: artistsFromWeb)
 
                 if realmArtists == nil || !isNilOrEmpty(indexesToReplace) {
                     if let retrievedArtists = self.artistModel.cachedArtistsFor(self.page.value) {
@@ -153,10 +160,19 @@ extension AtristViewModel : ArtistViewModelProtocol {
                 }
   
                 self.isLoading.value = false
+                
+                if self.isRefreshing.value == true {
+                    self.isRefreshing.value = false
+                }
+                
             }, onError:{ error in
                 self.errorMessage.value = String(describing: error)
                 print(error.localizedDescription)
                 self.isLoading.value = false
+                
+                if self.isRefreshing.value == true {
+                    self.isRefreshing.value = false
+                }
 
             }).disposed(by: disposeBag)
     }
