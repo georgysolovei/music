@@ -12,7 +12,7 @@ import RxSwift
 import NVActivityIndicatorView
 import RealmSwift
 
-class ArtistController: UIViewController {
+class ArtistController: BaseController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
@@ -34,9 +34,13 @@ class ArtistController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.addSubview(self.refreshControl)
         navigationController?.navigationBar.tintColor = OrangeColor
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.showOfflineView()
     }
     
     override func viewWillAppear(_ animated: Bool) {

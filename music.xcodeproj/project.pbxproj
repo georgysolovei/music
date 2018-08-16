@@ -14,6 +14,8 @@
 		0B2545EF1FE3C7EA0052D449 /* ArtistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545EE1FE3C7EA0052D449 /* ArtistCellViewModel.swift */; };
 		0B2545F11FE3D31C0052D449 /* TrackCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545F01FE3D31C0052D449 /* TrackCellViewModel.swift */; };
 		0B2545F31FE7DBD60052D449 /* UITableView+DisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2545F21FE7DBD60052D449 /* UITableView+DisposeBag.swift */; };
+		0B2659172004F36A00C95823 /* OfflineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2659162004F36A00C95823 /* OfflineView.xib */; };
+		0B265919200500FF00C95823 /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B265918200500FF00C95823 /* BaseController.swift */; };
 		0B2FBF731FC2B982009C657C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF721FC2B982009C657C /* Utility.swift */; };
 		0B2FBF751FC2BEE2009C657C /* Md5HashGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */; };
 		0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45CD651FBEDF190052761C /* AppDelegate.swift */; };
@@ -57,6 +59,8 @@
 		0B2545EE1FE3C7EA0052D449 /* ArtistCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCellViewModel.swift; sourceTree = "<group>"; };
 		0B2545F01FE3D31C0052D449 /* TrackCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCellViewModel.swift; sourceTree = "<group>"; };
 		0B2545F21FE7DBD60052D449 /* UITableView+DisposeBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+DisposeBag.swift"; sourceTree = "<group>"; };
+		0B2659162004F36A00C95823 /* OfflineView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfflineView.xib; sourceTree = "<group>"; };
+		0B265918200500FF00C95823 /* BaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
 		0B2FBF721FC2B982009C657C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0B2FBF741FC2BEE2009C657C /* Md5HashGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Md5HashGenerator.swift; sourceTree = "<group>"; };
 		0B2FBF761FC2BFAA009C657C /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		0B2545E91FE122460052D449 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				0B265918200500FF00C95823 /* BaseController.swift */,
 				0B2545EA1FE1226C0052D449 /* LogInButton.swift */,
 			);
 			path = Custom;
@@ -195,6 +200,7 @@
 				0BB1651E1FCD5C8500782FD0 /* Artist.storyboard */,
 				0B45CD6E1FBEDF190052761C /* LaunchScreen.storyboard */,
 				0BB1651C1FCD5BD100782FD0 /* LogIn.storyboard */,
+				0B2659162004F36A00C95823 /* OfflineView.xib */,
 				0B45CD6C1FBEDF190052761C /* Assets.xcassets */,
 			);
 			name = Resources;
@@ -339,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B2659172004F36A00C95823 /* OfflineView.xib in Resources */,
 				0BB1651D1FCD5BD100782FD0 /* LogIn.storyboard in Resources */,
 				0B45CD701FBEDF190052761C /* LaunchScreen.storyboard in Resources */,
 				0B45CD6D1FBEDF190052761C /* Assets.xcassets in Resources */,
@@ -456,6 +463,7 @@
 				8E2987891FCF49FC00C1F24B /* TrackCell.swift in Sources */,
 				0BD22F8F1FCC2C35004BB863 /* LoginModel.swift in Sources */,
 				0B45CD681FBEDF190052761C /* LogInController.swift in Sources */,
+				0B265919200500FF00C95823 /* BaseController.swift in Sources */,
 				0B45CD661FBEDF190052761C /* AppDelegate.swift in Sources */,
 				0B9E8AF81FCEA7BB00E6104A /* Track.swift in Sources */,
 				0BD22F8A1FCC0B71004BB863 /* RootCordinator.swift in Sources */,
